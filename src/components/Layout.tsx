@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import {
   LayoutDashboard, Map, Users, Store, ClipboardList,
-  LogOut, Menu, X
+  LogOut, Menu, X, ChevronDown
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -24,6 +24,12 @@ const navItems = {
   ],
 }
 
+const roleLabels = {
+  admin: 'Amministratore',
+  brand: 'Cliente',
+  merchandiser: 'Merchandiser',
+}
+
 export default function Layout({ children }: { children: ReactNode }) {
   const { user, logout } = useAuth()
   const location = useLocation()
@@ -34,53 +40,62 @@ export default function Layout({ children }: { children: ReactNode }) {
   const items = navItems[user.ruolo] || []
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ backgroundColor: '#f7f9fc' }}>
       {/* Top bar */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button className="lg:hidden" onClick={() => setMobileOpen(!mobileOpen)}>
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">L+</span>
-              </div>
-              <span className="font-bold text-gray-900 hidden sm:block">LogPlus</span>
-            </Link>
+      <header className="bg-white border-b border-brand-100 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-3">
+              <button className="lg:hidden p-1 -ml-1" onClick={() => setMobileOpen(!mobileOpen)}>
+                {mobileOpen ? <X size={20} className="text-brand-600" /> : <Menu size={20} className="text-brand-600" />}
+              </button>
+              <Link to="/" className="flex items-center gap-2.5">
+                <div className="w-8 h-8 bg-brand-900 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-xs tracking-tight">L+</span>
+                </div>
+                <span className="font-semibold text-brand-900 tracking-tight hidden sm:block">LogPlus</span>
+              </Link>
+            </div>
+
+            {/* Desktop nav */}
+            <nav className="hidden lg:flex items-center gap-0.5">
+              {items.map(item => {
+                const Icon = item.icon
+                const active = location.pathname === item.to
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors duration-150 ${
+                      active
+                        ? 'bg-accent-50 text-accent-700'
+                        : 'text-brand-500 hover:text-brand-700 hover:bg-brand-50'
+                    }`}
+                  >
+                    <Icon size={15} />
+                    {item.label}
+                  </Link>
+                )
+              })}
+            </nav>
           </div>
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {items.map(item => {
-              const Icon = item.icon
-              const active = location.pathname === item.to
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-                    active ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-gray-100'
-                  }`}
-                >
-                  <Icon size={16} />
-                  {item.label}
-                </Link>
-              )
-            })}
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <div className="text-right hidden sm:block">
-              <p className="text-sm font-medium text-gray-900">{user.nome} {user.cognome}</p>
-              <p className="text-xs text-gray-500 capitalize">{user.ruolo}</p>
+          <div className="flex items-center gap-2">
+            <div className="text-right mr-1 hidden sm:block">
+              <p className="text-[13px] font-medium text-brand-800">{user.nome} {user.cognome}</p>
+              <p className="text-[11px] text-brand-400">{roleLabels[user.ruolo]}</p>
+            </div>
+            <div className="w-8 h-8 rounded-md bg-brand-100 flex items-center justify-center">
+              <span className="text-xs font-semibold text-brand-600">
+                {user.nome[0]}{user.cognome[0]}
+              </span>
             </div>
             <button
               onClick={logout}
-              className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+              className="p-2 text-brand-400 hover:text-danger-500 hover:bg-danger-50 rounded-md transition-colors duration-150"
               title="Esci"
             >
-              <LogOut size={18} />
+              <LogOut size={16} />
             </button>
           </div>
         </div>
@@ -88,7 +103,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-2 space-y-1">
+        <div className="lg:hidden bg-white border-b border-brand-100 px-4 py-2 space-y-0.5 shadow-card">
           {items.map(item => {
             const Icon = item.icon
             const active = location.pathname === item.to
@@ -97,11 +112,11 @@ export default function Layout({ children }: { children: ReactNode }) {
                 key={item.to}
                 to={item.to}
                 onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition ${
-                  active ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-gray-100'
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors duration-150 ${
+                  active ? 'bg-accent-50 text-accent-700' : 'text-brand-600 hover:bg-brand-50'
                 }`}
               >
-                <Icon size={18} />
+                <Icon size={16} />
                 {item.label}
               </Link>
             )
@@ -110,7 +125,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       )}
 
       {/* Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         {children}
       </main>
     </div>

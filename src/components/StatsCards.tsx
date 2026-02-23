@@ -1,5 +1,5 @@
 import { Farmacia, Rilievo, getStatoFarmacia } from '../types'
-import { Store, CheckCircle2, Clock, AlertCircle } from 'lucide-react'
+import { Store, CheckCircle2, Clock, AlertCircle, TrendingUp } from 'lucide-react'
 
 interface Props {
   farmacie: Farmacia[]
@@ -14,45 +14,50 @@ export default function StatsCards({ farmacie, rilievi }: Props) {
   const percentuale = totale > 0 ? Math.round((completate / totale) * 100) : 0
 
   const cards = [
-    { label: 'Totale Farmacie', value: totale, icon: Store, color: 'text-blue-600', bg: 'bg-blue-50' },
-    { label: 'Completate', value: completate, icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-50' },
-    { label: 'In Corso', value: inCorso, icon: Clock, color: 'text-yellow-600', bg: 'bg-yellow-50' },
-    { label: 'Da Fare', value: daFare, icon: AlertCircle, color: 'text-red-600', bg: 'bg-red-50' },
+    { label: 'Totale farmacie', value: totale, icon: Store, color: 'text-accent-600', bg: 'bg-accent-50', border: 'border-accent-100' },
+    { label: 'Completate', value: completate, icon: CheckCircle2, color: 'text-success-600', bg: 'bg-success-50', border: 'border-success-100' },
+    { label: 'In corso', value: inCorso, icon: Clock, color: 'text-warning-500', bg: 'bg-warning-50', border: 'border-warning-100' },
+    { label: 'Da fare', value: daFare, icon: AlertCircle, color: 'text-danger-500', bg: 'bg-danger-50', border: 'border-danger-100' },
   ]
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {cards.map(c => {
           const Icon = c.icon
           return (
-            <div key={c.label} className="bg-white rounded-xl border border-gray-200 p-4">
-              <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-lg ${c.bg}`}>
-                  <Icon size={20} className={c.color} />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-gray-900">{c.value}</p>
-                  <p className="text-xs text-gray-500">{c.label}</p>
+            <div key={c.label} className="card p-4">
+              <div className="flex items-start justify-between mb-3">
+                <div className={`p-2 rounded-md ${c.bg} border ${c.border}`}>
+                  <Icon size={16} className={c.color} />
                 </div>
               </div>
+              <p className="text-2xl font-semibold text-brand-900 tracking-tight">{c.value}</p>
+              <p className="text-xs text-brand-500 mt-0.5">{c.label}</p>
             </div>
           )
         })}
       </div>
+
       {/* Progress bar */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-gray-700">Avanzamento complessivo</span>
-          <span className="text-sm font-bold text-blue-600">{percentuale}%</span>
+      <div className="card p-4">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <TrendingUp size={15} className="text-brand-500" />
+            <span className="text-sm font-medium text-brand-700">Avanzamento complessivo</span>
+          </div>
+          <span className="text-sm font-semibold text-brand-900">{percentuale}%</span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-3">
+        <div className="w-full bg-brand-100 rounded-full h-2">
           <div
-            className="h-3 rounded-full bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-500"
+            className="h-2 rounded-full bg-accent-500 transition-all duration-700 ease-out"
             style={{ width: `${percentuale}%` }}
           />
         </div>
-        <p className="text-xs text-gray-400 mt-1">{completate} su {totale} farmacie completate</p>
+        <div className="flex items-center justify-between mt-2">
+          <p className="text-xs text-brand-400">{completate} di {totale} farmacie</p>
+          <p className="text-xs text-brand-400">{daFare} rimanenti</p>
+        </div>
       </div>
     </div>
   )

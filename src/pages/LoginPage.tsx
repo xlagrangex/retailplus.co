@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { LogIn, Eye, EyeOff } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff, Shield, Users, BarChart3 } from 'lucide-react'
 
 const demoAccounts = [
-  { email: 'admin@logplus.it', label: 'Admin', color: 'bg-purple-100 text-purple-700' },
-  { email: 'brand@cosmetica.it', label: 'Brand (Cliente)', color: 'bg-blue-100 text-blue-700' },
-  { email: 'anna@logplus.it', label: 'Merchandiser (Anna)', color: 'bg-green-100 text-green-700' },
+  { email: 'admin@logplus.it', label: 'Amministratore', desc: 'Gestione completa', icon: Shield },
+  { email: 'brand@cosmetica.it', label: 'Cliente Brand', desc: 'Dashboard e reportistica', icon: BarChart3 },
+  { email: 'anna@logplus.it', label: 'Merchandiser', desc: 'Operativita sul campo', icon: Users },
 ]
 
 export default function LoginPage() {
@@ -19,95 +19,159 @@ export default function LoginPage() {
     e.preventDefault()
     setError('')
     if (!login(email, password)) {
-      setError('Email non trovata. Usa uno degli account demo.')
+      setError('Credenziali non valide. Verifica email e password.')
     }
   }
 
   function quickLogin(demoEmail: string) {
     if (!login(demoEmail, 'demo')) {
-      setError('Errore login demo')
+      setError('Errore di accesso')
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-xl">L+</span>
+    <div className="min-h-screen flex">
+      {/* Left panel - branding */}
+      <div className="hidden lg:flex lg:w-[480px] bg-brand-900 text-white flex-col justify-between p-12 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} />
+        <div className="relative">
+          <div className="flex items-center gap-3 mb-16">
+            <div className="w-10 h-10 bg-white/10 backdrop-blur rounded-lg flex items-center justify-center border border-white/20">
+              <span className="font-bold text-lg">L+</span>
             </div>
-            <h1 className="text-3xl font-bold text-gray-900">LogPlus</h1>
+            <span className="font-semibold text-lg tracking-tight">LogPlus</span>
           </div>
-          <p className="text-gray-500">Gestione Espositori Farmacia</p>
+          <h1 className="text-3xl font-bold leading-tight mb-4">
+            Piattaforma di gestione<br />allestimenti retail
+          </h1>
+          <p className="text-brand-300 text-base leading-relaxed max-w-sm">
+            Coordina il rollout di espositori su centinaia di punti vendita.
+            Traccia ogni fase, dalla rilevazione al completamento.
+          </p>
         </div>
-
-        {/* Login Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="relative space-y-4">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center">
+              <span className="text-accent-200 font-semibold text-sm">500</span>
+            </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <p className="text-sm font-medium">Punti vendita</p>
+              <p className="text-xs text-brand-400">Copertura nazionale</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center">
+              <span className="text-accent-200 font-semibold text-sm">3</span>
+            </div>
+            <div>
+              <p className="text-sm font-medium">Fasi operative</p>
+              <p className="text-xs text-brand-400">Rilievo, montaggio, completamento</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center">
+              <span className="text-success-400 font-semibold text-sm">RT</span>
+            </div>
+            <div>
+              <p className="text-sm font-medium">Monitoraggio in tempo reale</p>
+              <p className="text-xs text-brand-400">Dashboard e mappa interattiva</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right panel - login form */}
+      <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
+        <div className="w-full max-w-[400px]">
+          {/* Mobile logo */}
+          <div className="lg:hidden flex items-center gap-2.5 mb-10">
+            <div className="w-9 h-9 bg-brand-900 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">L+</span>
+            </div>
+            <span className="font-semibold text-brand-900 tracking-tight">LogPlus</span>
+          </div>
+
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-brand-900">Accedi alla piattaforma</h2>
+            <p className="text-sm text-brand-500 mt-1">Inserisci le tue credenziali per continuare</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="label">Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                placeholder="email@esempio.it"
+                className="input"
+                placeholder="nome@azienda.it"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <label className="label">Password</label>
               <div className="relative">
                 <input
                   type={showPw ? 'text' : 'password'}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition pr-10"
-                  placeholder="Password"
+                  className="input pr-10"
+                  placeholder="Inserisci password"
                   required
                 />
-                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
+                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-400 hover:text-brand-600 transition">
+                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
             </div>
 
             {error && (
-              <p className="text-red-600 text-sm bg-red-50 p-2 rounded">{error}</p>
+              <div className="flex items-center gap-2 p-3 bg-danger-50 border border-danger-100 rounded-md">
+                <p className="text-danger-600 text-sm">{error}</p>
+              </div>
             )}
 
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-medium hover:bg-blue-700 transition flex items-center justify-center gap-2"
-            >
-              <LogIn size={18} />
-              Accedi
+            <button type="submit" className="btn-primary w-full">
+              Accedi <ArrowRight size={16} />
             </button>
           </form>
 
-          {/* Quick Demo Access */}
-          <div className="mt-6 pt-6 border-t border-gray-100">
-            <p className="text-xs text-gray-400 uppercase tracking-wider mb-3 text-center">Accesso rapido demo</p>
+          {/* Demo access */}
+          <div className="mt-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px flex-1 bg-brand-100" />
+              <span className="text-xs text-brand-400 font-medium uppercase tracking-wider">Accesso demo</span>
+              <div className="h-px flex-1 bg-brand-100" />
+            </div>
             <div className="space-y-2">
-              {demoAccounts.map(acc => (
-                <button
-                  key={acc.email}
-                  onClick={() => quickLogin(acc.email)}
-                  className="w-full text-left px-4 py-2.5 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition flex items-center justify-between"
-                >
-                  <span className="text-sm text-gray-700">{acc.email}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${acc.color}`}>{acc.label}</span>
-                </button>
-              ))}
+              {demoAccounts.map(acc => {
+                const Icon = acc.icon
+                return (
+                  <button
+                    key={acc.email}
+                    onClick={() => quickLogin(acc.email)}
+                    className="w-full text-left px-4 py-3 rounded-md border border-brand-100 hover:border-accent-200 hover:bg-accent-50/50 transition-all duration-150 flex items-center gap-3 group"
+                  >
+                    <div className="w-8 h-8 rounded bg-brand-50 group-hover:bg-accent-50 flex items-center justify-center transition-colors">
+                      <Icon size={15} className="text-brand-500 group-hover:text-accent-600 transition-colors" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-brand-800">{acc.label}</p>
+                      <p className="text-xs text-brand-400">{acc.desc}</p>
+                    </div>
+                    <ArrowRight size={14} className="text-brand-300 group-hover:text-accent-500 transition-colors" />
+                  </button>
+                )
+              })}
             </div>
           </div>
-        </div>
 
-        <p className="text-center text-xs text-gray-400 mt-6">
-          Demo - Password qualsiasi
-        </p>
+          <p className="text-center text-xs text-brand-400 mt-8">
+            LogPlus v1.0 — Ambiente demo
+          </p>
+        </div>
       </div>
     </div>
   )
