@@ -91,24 +91,24 @@ export const mockAssegnazioni: Assegnazione[] = [
 // Alcuni rilievi pre-compilati per la demo
 export const mockRilievi: Rilievo[] = [
   // Farmacia f1 - tutte e 3 le fasi complete (verde)
-  { id: 'r1', farmaciaId: 'f1', merchandiserId: 'merch-1', fase: 1, profondita: 35, larghezza: 80, altezza: 200, numScaffali: 5, fotoUrl: '', completata: true, dataCompletamento: '2026-02-15' },
-  { id: 'r2', farmaciaId: 'f1', merchandiserId: 'merch-1', fase: 2, fotoUrl: '', completata: true, dataCompletamento: '2026-02-18', note: 'Plexiglass montato senza problemi' },
-  { id: 'r3', farmaciaId: 'f1', merchandiserId: 'merch-1', fase: 3, fotoUrl: '', completata: true, dataCompletamento: '2026-02-20', note: 'Prodotti posizionati tutti' },
+  { id: 'r1', farmaciaId: 'f1', merchandiserId: 'merch-1', fase: 1, profonditaScaffale: 35, profonditaMensola: 30, larghezza: 80, altezza: 200, numScaffali: 5, foto: [], completata: true, dataCompletamento: '2026-02-15', oraCompletamento: '10:30' },
+  { id: 'r2', farmaciaId: 'f1', merchandiserId: 'merch-1', fase: 2, pezziRicevuti: true, montaggioCompleto: true, foto: [], completata: true, dataCompletamento: '2026-02-18', oraCompletamento: '14:15', note: 'Plexiglass montato senza problemi, biadesivo tiene bene' },
+  { id: 'r3', farmaciaId: 'f1', merchandiserId: 'merch-1', fase: 3, prodottiPosizionati: true, foto: [], completata: true, dataCompletamento: '2026-02-20', oraCompletamento: '11:00', note: 'Tutti i prodotti posizionati correttamente' },
   // Farmacia f2 - fase 1 e 2 complete (giallo)
-  { id: 'r4', farmaciaId: 'f2', merchandiserId: 'merch-1', fase: 1, profondita: 30, larghezza: 90, altezza: 180, numScaffali: 4, fotoUrl: '', completata: true, dataCompletamento: '2026-02-16' },
-  { id: 'r5', farmaciaId: 'f2', merchandiserId: 'merch-1', fase: 2, fotoUrl: '', completata: true, dataCompletamento: '2026-02-19' },
+  { id: 'r4', farmaciaId: 'f2', merchandiserId: 'merch-1', fase: 1, profonditaScaffale: 30, profonditaMensola: 28, larghezza: 90, altezza: 180, numScaffali: 4, foto: [], completata: true, dataCompletamento: '2026-02-16', oraCompletamento: '09:45' },
+  { id: 'r5', farmaciaId: 'f2', merchandiserId: 'merch-1', fase: 2, pezziRicevuti: true, montaggioCompleto: true, foto: [], completata: true, dataCompletamento: '2026-02-19', oraCompletamento: '16:30' },
   // Farmacia f3 - solo fase 1 (giallo)
-  { id: 'r6', farmaciaId: 'f3', merchandiserId: 'merch-1', fase: 1, profondita: 40, larghezza: 100, altezza: 210, numScaffali: 6, fotoUrl: '', completata: true, dataCompletamento: '2026-02-17' },
+  { id: 'r6', farmaciaId: 'f3', merchandiserId: 'merch-1', fase: 1, profonditaScaffale: 40, profonditaMensola: 35, larghezza: 100, altezza: 210, numScaffali: 6, foto: [], completata: true, dataCompletamento: '2026-02-17', oraCompletamento: '11:20' },
   // Farmacia f11 - tutte complete (verde)
-  { id: 'r7', farmaciaId: 'f11', merchandiserId: 'merch-2', fase: 1, profondita: 32, larghezza: 85, altezza: 195, numScaffali: 5, fotoUrl: '', completata: true, dataCompletamento: '2026-02-14' },
-  { id: 'r8', farmaciaId: 'f11', merchandiserId: 'merch-2', fase: 2, fotoUrl: '', completata: true, dataCompletamento: '2026-02-17' },
-  { id: 'r9', farmaciaId: 'f11', merchandiserId: 'merch-2', fase: 3, fotoUrl: '', completata: true, dataCompletamento: '2026-02-21' },
+  { id: 'r7', farmaciaId: 'f11', merchandiserId: 'merch-2', fase: 1, profonditaScaffale: 32, profonditaMensola: 30, larghezza: 85, altezza: 195, numScaffali: 5, foto: [], completata: true, dataCompletamento: '2026-02-14', oraCompletamento: '10:00' },
+  { id: 'r8', farmaciaId: 'f11', merchandiserId: 'merch-2', fase: 2, pezziRicevuti: true, montaggioCompleto: true, foto: [], completata: true, dataCompletamento: '2026-02-17', oraCompletamento: '15:30' },
+  { id: 'r9', farmaciaId: 'f11', merchandiserId: 'merch-2', fase: 3, prodottiPosizionati: true, foto: [], completata: true, dataCompletamento: '2026-02-21', oraCompletamento: '12:00' },
   // Farmacia f18 - fase 1 completa (giallo)
-  { id: 'r10', farmaciaId: 'f18', merchandiserId: 'merch-3', fase: 1, profondita: 38, larghezza: 75, altezza: 190, numScaffali: 4, fotoUrl: '', completata: true, dataCompletamento: '2026-02-18' },
+  { id: 'r10', farmaciaId: 'f18', merchandiserId: 'merch-3', fase: 1, profonditaScaffale: 38, profonditaMensola: 34, larghezza: 75, altezza: 190, numScaffali: 4, foto: [], completata: true, dataCompletamento: '2026-02-18', oraCompletamento: '09:30' },
   // Farmacia f23 - tutte complete (verde)
-  { id: 'r11', farmaciaId: 'f23', merchandiserId: 'merch-3', fase: 1, profondita: 36, larghezza: 95, altezza: 200, numScaffali: 5, fotoUrl: '', completata: true, dataCompletamento: '2026-02-13' },
-  { id: 'r12', farmaciaId: 'f23', merchandiserId: 'merch-3', fase: 2, fotoUrl: '', completata: true, dataCompletamento: '2026-02-16' },
-  { id: 'r13', farmaciaId: 'f23', merchandiserId: 'merch-3', fase: 3, fotoUrl: '', completata: true, dataCompletamento: '2026-02-19' },
+  { id: 'r11', farmaciaId: 'f23', merchandiserId: 'merch-3', fase: 1, profonditaScaffale: 36, profonditaMensola: 33, larghezza: 95, altezza: 200, numScaffali: 5, foto: [], completata: true, dataCompletamento: '2026-02-13', oraCompletamento: '10:15' },
+  { id: 'r12', farmaciaId: 'f23', merchandiserId: 'merch-3', fase: 2, pezziRicevuti: true, montaggioCompleto: true, foto: [], completata: true, dataCompletamento: '2026-02-16', oraCompletamento: '14:00' },
+  { id: 'r13', farmaciaId: 'f23', merchandiserId: 'merch-3', fase: 3, prodottiPosizionati: true, foto: [], completata: true, dataCompletamento: '2026-02-19', oraCompletamento: '11:45' },
 ]
 
 // Helper per inizializzare localStorage

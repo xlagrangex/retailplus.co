@@ -35,16 +35,23 @@ export interface Rilievo {
   farmaciaId: string
   merchandiserId: string
   fase: FaseNumero
-  // Fase 1 - misure
-  profondita?: number
+  // Fase 1 - misure espositore
+  profonditaScaffale?: number
+  profonditaMensola?: number
   larghezza?: number
   altezza?: number
   numScaffali?: number
+  // Fase 2 - montaggio
+  pezziRicevuti?: boolean
+  montaggioCompleto?: boolean
+  // Fase 3 - prodotti
+  prodottiPosizionati?: boolean
   // Tutte le fasi
-  fotoUrl?: string
+  foto: string[] // array di foto (base64 o URL)
   note?: string
   completata: boolean
   dataCompletamento?: string
+  oraCompletamento?: string
 }
 
 export type StatoFarmacia = 'da_fare' | 'in_corso' | 'completata'
@@ -55,6 +62,13 @@ export function getStatoFarmacia(rilievi: Rilievo[], farmaciaId: string): StatoF
   if (fasiComplete === 0) return 'da_fare'
   if (fasiComplete >= 3) return 'completata'
   return 'in_corso'
+}
+
+export function getFaseCorrente(rilievi: Rilievo[], farmaciaId: string): FaseNumero {
+  const fasi = rilievi.filter(r => r.farmaciaId === farmaciaId && r.completata).map(r => r.fase)
+  if (!fasi.includes(1)) return 1
+  if (!fasi.includes(2)) return 2
+  return 3
 }
 
 export function getColoreStato(stato: StatoFarmacia): string {
@@ -78,5 +92,13 @@ export function getLabelFase(fase: FaseNumero): string {
     case 1: return 'Rilievo Misure'
     case 2: return 'Montaggio Plexiglass'
     case 3: return 'Caricamento Prodotti'
+  }
+}
+
+export function getDescrizioneFase(fase: FaseNumero): string {
+  switch (fase) {
+    case 1: return 'Rileva le misure dell\'espositore dedicato e fotografa lo stato attuale'
+    case 2: return 'Monta le elle di plexiglass colorato con biadesivo sull\'espositore'
+    case 3: return 'Posiziona i prodotti sugli scaffali e fotografa il risultato finale'
   }
 }
