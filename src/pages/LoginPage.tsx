@@ -150,6 +150,7 @@ export default function LoginPage() {
                 const Icon = acc.icon
                 return (
                   <button
+                    type="button"
                     key={acc.email}
                     onClick={() => quickLogin(acc.email)}
                     className="w-full text-left px-4 py-3 rounded-md border border-brand-100 hover:border-accent-200 hover:bg-accent-50/50 transition-all duration-150 flex items-center gap-3 group"

@@ -18,6 +18,33 @@ if (localStorage.getItem('logplus_data_version') !== DATA_VERSION) {
   initMockData()
 }
 
+function getRoutesForRole(ruolo: string) {
+  switch (ruolo) {
+    case 'admin':
+      return [
+        <Route key="admin" path="/admin" element={<AdminDashboard />} />,
+        <Route key="admin-farm" path="/admin/farmacie" element={<AdminFarmaciePage />} />,
+        <Route key="admin-merch" path="/admin/merchandiser" element={<AdminMerchandiserPage />} />,
+        <Route key="admin-map" path="/admin/mappa" element={<AdminMapPage />} />,
+        <Route key="admin-catch" path="*" element={<Navigate to="/admin" replace />} />,
+      ]
+    case 'brand':
+      return [
+        <Route key="brand" path="/brand" element={<BrandDashboard />} />,
+        <Route key="brand-map" path="/brand/mappa" element={<BrandMapPage />} />,
+        <Route key="brand-farm" path="/brand/farmacie" element={<BrandFarmaciePage />} />,
+        <Route key="brand-catch" path="*" element={<Navigate to="/brand" replace />} />,
+      ]
+    case 'merchandiser':
+      return [
+        <Route key="merch" path="/merchandiser" element={<MerchandiserPage />} />,
+        <Route key="merch-catch" path="*" element={<Navigate to="/merchandiser" replace />} />,
+      ]
+    default:
+      return [<Route key="fallback" path="*" element={<Navigate to="/" replace />} />]
+  }
+}
+
 function AppRoutes() {
   const { user } = useAuth()
 
@@ -26,34 +53,7 @@ function AppRoutes() {
   return (
     <Layout>
       <Routes>
-        {/* Admin routes */}
-        {user.ruolo === 'admin' && (
-          <>
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/farmacie" element={<AdminFarmaciePage />} />
-            <Route path="/admin/merchandiser" element={<AdminMerchandiserPage />} />
-            <Route path="/admin/mappa" element={<AdminMapPage />} />
-            <Route path="*" element={<Navigate to="/admin" replace />} />
-          </>
-        )}
-
-        {/* Brand routes */}
-        {user.ruolo === 'brand' && (
-          <>
-            <Route path="/brand" element={<BrandDashboard />} />
-            <Route path="/brand/mappa" element={<BrandMapPage />} />
-            <Route path="/brand/farmacie" element={<BrandFarmaciePage />} />
-            <Route path="*" element={<Navigate to="/brand" replace />} />
-          </>
-        )}
-
-        {/* Merchandiser routes */}
-        {user.ruolo === 'merchandiser' && (
-          <>
-            <Route path="/merchandiser" element={<MerchandiserPage />} />
-            <Route path="*" element={<Navigate to="/merchandiser" replace />} />
-          </>
-        )}
+        {getRoutesForRole(user.ruolo)}
       </Routes>
     </Layout>
   )
