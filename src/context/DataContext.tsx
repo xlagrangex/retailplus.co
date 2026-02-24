@@ -1,5 +1,14 @@
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
 import { Farmacia, Assegnazione, Rilievo, User } from '../types'
+import { isSupabaseConfigured } from '../lib/supabase'
+import {
+  fetchUsers, fetchFarmacie, fetchAssegnazioni, fetchRilievi,
+  insertFarmacia as sbInsertFarmacia, insertFarmacie as sbInsertFarmacie,
+  deleteFarmaciaDb, updateFarmaciaDb,
+  insertUser as sbInsertUser, deleteUserDb,
+  upsertAssegnazione, deleteAssegnazione,
+  upsertRilievo,
+} from '../data/supabase'
 import {
   getFarmacie, saveFarmacie,
   getAssegnazioni, saveAssegnazioni,
@@ -12,10 +21,12 @@ interface DataContextType {
   assegnazioni: Assegnazione[]
   rilievi: Rilievo[]
   users: User[]
+  isLoading: boolean
   refresh: () => void
   addFarmacia: (f: Farmacia) => void
   removeFarmacia: (id: string) => void
   importFarmacie: (farmacie: Farmacia[]) => void
+  updateFarmacia: (id: string, updates: Partial<Farmacia>) => void
   addUser: (u: User) => void
   removeUser: (id: string) => void
   assignFarmacia: (farmaciaId: string, merchandiserId: string) => void
@@ -26,80 +37,174 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | null>(null)
 
 export function DataProvider({ children }: { children: ReactNode }) {
-  const [farmacie, setFarmacie] = useState<Farmacia[]>(getFarmacie)
-  const [assegnazioni, setAssegnazioni] = useState<Assegnazione[]>(getAssegnazioni)
-  const [rilievi, setRilievi] = useState<Rilievo[]>(getRilievi)
-  const [users, setUsers] = useState<User[]>(getUsers)
+  const [farmacie, setFarmacie] = useState<Farmacia[]>(() => isSupabaseConfigured ? [] : getFarmacie())
+  const [assegnazioni, setAssegnazioni] = useState<Assegnazione[]>(() => isSupabaseConfigured ? [] : getAssegnazioni())
+  const [rilievi, setRilievi] = useState<Rilievo[]>(() => isSupabaseConfigured ? [] : getRilievi())
+  const [users, setUsers] = useState<User[]>(() => isSupabaseConfigured ? [] : getUsers())
+  const [isLoading, setIsLoading] = useState(isSupabaseConfigured)
+
+  // Initial fetch from Supabase
+  useEffect(() => {
+    if (!isSupabaseConfigured) return
+    let cancelled = false
+    async function load() {
+      try {
+        const [u, f, a, r] = await Promise.all([
+          fetchUsers(), fetchFarmacie(), fetchAssegnazioni(), fetchRilievi()
+        ])
+        if (!cancelled) {
+          setUsers(u)
+          setFarmacie(f)
+          setAssegnazioni(a)
+          setRilievi(r)
+          setIsLoading(false)
+        }
+      } catch (err) {
+        console.error('Error loading data from Supabase:', err)
+        if (!cancelled) setIsLoading(false)
+      }
+    }
+    load()
+    return () => { cancelled = true }
+  }, [])
 
   const refresh = useCallback(() => {
-    setFarmacie(getFarmacie())
-    setAssegnazioni(getAssegnazioni())
-    setRilievi(getRilievi())
-    setUsers(getUsers())
+    if (isSupabaseConfigured) {
+      Promise.all([fetchUsers(), fetchFarmacie(), fetchAssegnazioni(), fetchRilievi()])
+        .then(([u, f, a, r]) => { setUsers(u); setFarmacie(f); setAssegnazioni(a); setRilievi(r) })
+        .catch(console.error)
+    } else {
+      setFarmacie(getFarmacie())
+      setAssegnazioni(getAssegnazioni())
+      setRilievi(getRilievi())
+      setUsers(getUsers())
+    }
   }, [])
 
   const addFarmacia = useCallback((f: Farmacia) => {
-    const updated = [...getFarmacie(), f]
-    saveFarmacie(updated)
-    setFarmacie(updated)
+    if (isSupabaseConfigured) {
+      sbInsertFarmacia(f).then(() => {
+        fetchFarmacie().then(setFarmacie).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const updated = [...getFarmacie(), f]
+      saveFarmacie(updated)
+      setFarmacie(updated)
+    }
   }, [])
 
   const removeFarmacia = useCallback((id: string) => {
-    const updated = getFarmacie().filter(f => f.id !== id)
-    saveFarmacie(updated)
-    setFarmacie(updated)
+    if (isSupabaseConfigured) {
+      deleteFarmaciaDb(id).then(() => {
+        fetchFarmacie().then(setFarmacie).catch(console.error)
+        fetchAssegnazioni().then(setAssegnazioni).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const updated = getFarmacie().filter(f => f.id !== id)
+      saveFarmacie(updated)
+      setFarmacie(updated)
+    }
   }, [])
 
   const importFarmacie = useCallback((newFarmacie: Farmacia[]) => {
-    const existing = getFarmacie()
-    const merged = [...existing, ...newFarmacie.filter(nf => !existing.some(ef => ef.id === nf.id))]
-    saveFarmacie(merged)
-    setFarmacie(merged)
+    if (isSupabaseConfigured) {
+      sbInsertFarmacie(newFarmacie).then(() => {
+        fetchFarmacie().then(setFarmacie).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const existing = getFarmacie()
+      const merged = [...existing, ...newFarmacie.filter(nf => !existing.some(ef => ef.id === nf.id))]
+      saveFarmacie(merged)
+      setFarmacie(merged)
+    }
+  }, [])
+
+  const updateFarmacia = useCallback((id: string, updates: Partial<Farmacia>) => {
+    if (isSupabaseConfigured) {
+      updateFarmaciaDb(id, updates).then(() => {
+        fetchFarmacie().then(setFarmacie).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const current = getFarmacie()
+      const updated = current.map(f => f.id === id ? { ...f, ...updates } : f)
+      saveFarmacie(updated)
+      setFarmacie(updated)
+    }
   }, [])
 
   const addUser = useCallback((u: User) => {
-    const updated = [...getUsers(), u]
-    saveUsers(updated)
-    setUsers(updated)
+    if (isSupabaseConfigured) {
+      sbInsertUser(u).then(() => {
+        fetchUsers().then(setUsers).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const updated = [...getUsers(), u]
+      saveUsers(updated)
+      setUsers(updated)
+    }
   }, [])
 
   const removeUser = useCallback((id: string) => {
-    const updated = getUsers().filter(u => u.id !== id)
-    saveUsers(updated)
-    setUsers(updated)
+    if (isSupabaseConfigured) {
+      deleteUserDb(id).then(() => {
+        fetchUsers().then(setUsers).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const updated = getUsers().filter(u => u.id !== id)
+      saveUsers(updated)
+      setUsers(updated)
+    }
   }, [])
 
   const assignFarmacia = useCallback((farmaciaId: string, merchandiserId: string) => {
-    const current = getAssegnazioni().filter(a => a.farmaciaId !== farmaciaId)
-    const updated = [...current, { farmaciaId, merchandiserId }]
-    saveAssegnazioni(updated)
-    setAssegnazioni(updated)
+    if (isSupabaseConfigured) {
+      upsertAssegnazione(farmaciaId, merchandiserId).then(() => {
+        fetchAssegnazioni().then(setAssegnazioni).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const current = getAssegnazioni().filter(a => a.farmaciaId !== farmaciaId)
+      const updated = [...current, { farmaciaId, merchandiserId }]
+      saveAssegnazioni(updated)
+      setAssegnazioni(updated)
+    }
   }, [])
 
   const unassignFarmacia = useCallback((farmaciaId: string) => {
-    const updated = getAssegnazioni().filter(a => a.farmaciaId !== farmaciaId)
-    saveAssegnazioni(updated)
-    setAssegnazioni(updated)
+    if (isSupabaseConfigured) {
+      deleteAssegnazione(farmaciaId).then(() => {
+        fetchAssegnazioni().then(setAssegnazioni).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const updated = getAssegnazioni().filter(a => a.farmaciaId !== farmaciaId)
+      saveAssegnazioni(updated)
+      setAssegnazioni(updated)
+    }
   }, [])
 
   const saveRilievoFn = useCallback((r: Rilievo) => {
-    const current = getRilievi()
-    const existing = current.findIndex(x => x.farmaciaId === r.farmaciaId && x.fase === r.fase)
-    let updated: Rilievo[]
-    if (existing >= 0) {
-      updated = [...current]
-      updated[existing] = r
+    if (isSupabaseConfigured) {
+      upsertRilievo(r).then(() => {
+        fetchRilievi().then(setRilievi).catch(console.error)
+      }).catch(console.error)
     } else {
-      updated = [...current, r]
+      const current = getRilievi()
+      const existing = current.findIndex(x => x.farmaciaId === r.farmaciaId && x.fase === r.fase)
+      let updated: Rilievo[]
+      if (existing >= 0) {
+        updated = [...current]
+        updated[existing] = r
+      } else {
+        updated = [...current, r]
+      }
+      saveRilievi(updated)
+      setRilievi(updated)
     }
-    saveRilievi(updated)
-    setRilievi(updated)
   }, [])
 
   return (
     <DataContext.Provider value={{
-      farmacie, assegnazioni, rilievi, users, refresh,
-      addFarmacia, removeFarmacia, importFarmacie,
+      farmacie, assegnazioni, rilievi, users, isLoading, refresh,
+      addFarmacia, removeFarmacia, importFarmacie, updateFarmacia,
       addUser, removeUser,
       assignFarmacia, unassignFarmacia,
       saveRilievo: saveRilievoFn,

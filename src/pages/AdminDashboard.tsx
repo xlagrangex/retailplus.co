@@ -2,8 +2,13 @@ import { useState } from 'react'
 import { useData } from '../context/DataContext'
 import StatsCards from '../components/StatsCards'
 import FarmaciaMap from '../components/FarmaciaMap'
-import { getStatoFarmacia, getLabelStato, getColoreStato, User, Farmacia } from '../types'
-import { Upload, Plus, Trash2, UserPlus, Link2, Unlink, Search, MapPin, Users, AlertTriangle } from 'lucide-react'
+import { getStatoFarmacia, getLabelStato, getColoreStato, User, Farmacia, StatoFarmacia } from '../types'
+import { isSupabaseConfigured } from '../lib/supabase'
+import { uploadPlanogramma } from '../lib/supabase'
+import {
+  Upload, Plus, Trash2, UserPlus, Link2, Unlink, Search, MapPin, Users,
+  AlertTriangle, ImagePlus, ArrowRightLeft, X,
+} from 'lucide-react'
 import Papa from 'papaparse'
 
 export default function AdminDashboard() {
@@ -48,10 +53,11 @@ export default function AdminDashboard() {
 }
 
 export function AdminFarmaciePage() {
-  const { farmacie, rilievi, assegnazioni, users, addFarmacia, removeFarmacia, importFarmacie, assignFarmacia, unassignFarmacia } = useData()
+  const { farmacie, rilievi, assegnazioni, users, addFarmacia, removeFarmacia, importFarmacie, assignFarmacia, unassignFarmacia, updateFarmacia } = useData()
   const [search, setSearch] = useState('')
   const [showAdd, setShowAdd] = useState(false)
   const [assigning, setAssigning] = useState<string | null>(null)
+  const [uploadingPlanogramma, setUploadingPlanogramma] = useState<string | null>(null)
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
 
   const filtered = farmacie.filter(f =>
@@ -101,6 +107,32 @@ export function AdminFarmaciePage() {
     }
     addFarmacia(f)
     setShowAdd(false)
+  }
+
+  // Task 8: Planogramma upload
+  async function handlePlanogrammaUpload(farmaciaId: string, e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingPlanogramma(farmaciaId)
+
+    if (isSupabaseConfigured) {
+      try {
+        const url = await uploadPlanogramma(file, farmaciaId)
+        updateFarmacia(farmaciaId, { planogrammaUrl: url })
+      } catch (err) {
+        console.error('Upload planogramma failed:', err)
+        alert('Errore durante il caricamento del planogramma')
+      }
+    } else {
+      // Fallback: base64
+      const reader = new FileReader()
+      reader.onload = () => {
+        updateFarmacia(farmaciaId, { planogrammaUrl: reader.result as string })
+      }
+      reader.readAsDataURL(file)
+    }
+    setUploadingPlanogramma(null)
+    e.target.value = ''
   }
 
   return (
@@ -157,7 +189,7 @@ export function AdminFarmaciePage() {
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden sm:table-cell">Localita</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Stato</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Merchandiser</th>
-                <th className="text-right px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider w-16"></th>
+                <th className="text-right px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider w-24"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-brand-50">
@@ -165,11 +197,13 @@ export function AdminFarmaciePage() {
                 const stato = getStatoFarmacia(rilievi, f.id)
                 const assegnazione = assegnazioni.find(a => a.farmaciaId === f.id)
                 const merch = assegnazione ? users.find(u => u.id === assegnazione.merchandiserId) : null
-                const statoColors = {
+                const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
                   da_fare: { bg: 'bg-danger-50', text: 'text-danger-600', border: 'border-danger-100', dot: '#d64545' },
                   in_corso: { bg: 'bg-warning-50', text: 'text-warning-600', border: 'border-warning-100', dot: '#de911d' },
                   completata: { bg: 'bg-success-50', text: 'text-success-600', border: 'border-success-100', dot: '#3f9142' },
-                }[stato]!
+                  in_attesa: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', dot: '#6366f1' },
+                }
+                const sc = statoColors[stato]
 
                 return (
                   <tr key={f.id} className="hover:bg-brand-50/50 transition-colors">
@@ -179,8 +213,8 @@ export function AdminFarmaciePage() {
                     </td>
                     <td className="px-4 py-3.5 text-[13px] text-brand-600 hidden sm:table-cell">{f.citta}</td>
                     <td className="px-4 py-3.5">
-                      <span className={`badge ${statoColors.bg} ${statoColors.text} border ${statoColors.border}`}>
-                        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: statoColors.dot }} />
+                      <span className={`badge ${sc.bg} ${sc.text} border ${sc.border}`}>
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: sc.dot }} />
                         {getLabelStato(stato)}
                       </span>
                     </td>
@@ -215,12 +249,23 @@ export function AdminFarmaciePage() {
                       )}
                     </td>
                     <td className="px-4 py-3.5 text-right">
-                      <button
-                        onClick={() => { if (confirm('Eliminare questa farmacia?')) removeFarmacia(f.id) }}
-                        className="text-brand-300 hover:text-danger-500 transition-colors"
-                      >
-                        <Trash2 size={15} />
-                      </button>
+                      <div className="flex items-center gap-1 justify-end">
+                        {/* Task 8: Planogramma upload */}
+                        <label className="text-brand-300 hover:text-accent-500 transition-colors cursor-pointer p-1" title="Carica planogramma">
+                          {uploadingPlanogramma === f.id ? (
+                            <div className="w-4 h-4 border-2 border-accent-400 border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            <ImagePlus size={15} className={f.planogrammaUrl ? 'text-accent-500' : ''} />
+                          )}
+                          <input type="file" accept="image/*" className="hidden" onChange={e => handlePlanogrammaUpload(f.id, e)} />
+                        </label>
+                        <button
+                          onClick={() => { if (confirm('Eliminare questa farmacia?')) removeFarmacia(f.id) }}
+                          className="text-brand-300 hover:text-danger-500 transition-colors p-1"
+                        >
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 )
@@ -233,8 +278,12 @@ export function AdminFarmaciePage() {
   )
 }
 
+// ============================================================
+// MERCHANDISER PAGE (Task 9: stats + riassegnazione)
+// ============================================================
+
 export function AdminMerchandiserPage() {
-  const { users, assegnazioni, farmacie, rilievi, addUser, removeUser } = useData()
+  const { users, assegnazioni, farmacie, rilievi, addUser, removeUser, assignFarmacia, unassignFarmacia } = useData()
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
   const [showAdd, setShowAdd] = useState(false)
 
@@ -251,6 +300,18 @@ export function AdminMerchandiserPage() {
     }
     addUser(u)
     setShowAdd(false)
+  }
+
+  // Task 9: Stats helper
+  function getMerchandiserStats(merchandiserId: string) {
+    const mieAssegnazioni = assegnazioni.filter(a => a.merchandiserId === merchandiserId)
+    const mieFarmacie = farmacie.filter(f => mieAssegnazioni.some(a => a.farmaciaId === f.id))
+    const completate = mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
+    const inCorso = mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_corso').length
+    const daFare = mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'da_fare').length
+    const inAttesa = mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa').length
+    const percentuale = mieFarmacie.length > 0 ? Math.round((completate / mieFarmacie.length) * 100) : 0
+    return { mieFarmacie, completate, inCorso, daFare, inAttesa, percentuale }
   }
 
   return (
@@ -283,8 +344,7 @@ export function AdminMerchandiserPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {merchandisers.map(m => {
-          const mieAssegnazioni = assegnazioni.filter(a => a.merchandiserId === m.id)
-          const mieFarmacie = farmacie.filter(f => mieAssegnazioni.some(a => a.farmaciaId === f.id))
+          const stats = getMerchandiserStats(m.id)
           return (
             <div key={m.id} className="card p-5">
               <div className="flex items-start justify-between">
@@ -305,19 +365,61 @@ export function AdminMerchandiserPage() {
                 </button>
               </div>
               {m.telefono && <p className="text-xs text-brand-400 mt-2 ml-[52px]">{m.telefono}</p>}
-              <div className="mt-4 pt-4 border-t border-brand-50">
+
+              {/* Task 9: Statistics */}
+              {stats.mieFarmacie.length > 0 && (
+                <div className="mt-3 pt-3 border-t border-brand-50">
+                  <div className="flex items-center gap-3 text-[11px] mb-2">
+                    <span className="text-success-600 font-medium">{stats.completate} completate</span>
+                    <span className="text-warning-500">{stats.inCorso} in corso</span>
+                    <span className="text-danger-500">{stats.daFare} da fare</span>
+                    {stats.inAttesa > 0 && <span className="text-indigo-600">{stats.inAttesa} in attesa</span>}
+                  </div>
+                  {/* Progress bar */}
+                  <div className="w-full bg-brand-100 rounded-full h-1.5 mb-2">
+                    <div
+                      className="h-1.5 rounded-full bg-success-500 transition-all"
+                      style={{ width: `${stats.percentuale}%` }}
+                    />
+                  </div>
+                  <p className="text-[11px] text-brand-400 mb-3">{stats.percentuale}% completamento</p>
+                </div>
+              )}
+
+              <div className={`${stats.mieFarmacie.length > 0 ? '' : 'mt-4 pt-4 border-t border-brand-50'}`}>
                 <p className="text-xs font-semibold text-brand-500 uppercase tracking-wider mb-2">
-                  Farmacie assegnate ({mieFarmacie.length})
+                  Farmacie assegnate ({stats.mieFarmacie.length})
                 </p>
-                {mieFarmacie.length > 0 ? (
-                  <div className="space-y-1.5 max-h-32 overflow-y-auto">
-                    {mieFarmacie.map(f => (
-                      <div key={f.id} className="flex items-center gap-2 text-xs">
-                        <MapPin size={11} className="text-brand-400 shrink-0" />
-                        <span className="text-brand-600">{f.nome}</span>
-                        <span className="text-brand-400">{f.citta}</span>
-                      </div>
-                    ))}
+                {stats.mieFarmacie.length > 0 ? (
+                  <div className="space-y-1.5 max-h-40 overflow-y-auto">
+                    {stats.mieFarmacie.map(f => {
+                      const stato = getStatoFarmacia(rilievi, f.id)
+                      const statoColors: Record<string, string> = {
+                        da_fare: '#d64545', in_corso: '#de911d', completata: '#3f9142', in_attesa: '#6366f1',
+                      }
+                      return (
+                        <div key={f.id} className="flex items-center gap-2 text-xs group">
+                          <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: statoColors[stato] || '#627d98' }} />
+                          <span className="text-brand-600 flex-1 truncate">{f.nome}</span>
+                          <span className="text-brand-400">{f.citta}</span>
+                          {/* Task 9: Reassign dropdown */}
+                          <ReassignSelect
+                            farmaciaId={f.id}
+                            currentMerchandiserId={m.id}
+                            merchandisers={merchandisers}
+                            onReassign={(fId, newMId) => assignFarmacia(fId, newMId)}
+                          />
+                          {/* Task 9: Remove assignment */}
+                          <button
+                            onClick={() => unassignFarmacia(f.id)}
+                            className="text-brand-300 hover:text-danger-500 transition-colors opacity-0 group-hover:opacity-100 shrink-0"
+                            title="Rimuovi assegnazione"
+                          >
+                            <X size={12} />
+                          </button>
+                        </div>
+                      )
+                    })}
                   </div>
                 ) : (
                   <p className="text-xs text-brand-400 italic">Nessuna farmacia assegnata</p>
@@ -328,6 +430,46 @@ export function AdminMerchandiserPage() {
         })}
       </div>
     </div>
+  )
+}
+
+// Task 9: Reassignment dropdown component
+function ReassignSelect({
+  farmaciaId, currentMerchandiserId, merchandisers, onReassign
+}: {
+  farmaciaId: string
+  currentMerchandiserId: string
+  merchandisers: User[]
+  onReassign: (farmaciaId: string, newMerchandiserId: string) => void
+}) {
+  const [showSelect, setShowSelect] = useState(false)
+  const others = merchandisers.filter(m => m.id !== currentMerchandiserId)
+
+  if (!showSelect) {
+    return (
+      <button
+        onClick={() => setShowSelect(true)}
+        className="text-brand-300 hover:text-accent-500 transition-colors opacity-0 group-hover:opacity-100 shrink-0"
+        title="Riassegna"
+      >
+        <ArrowRightLeft size={12} />
+      </button>
+    )
+  }
+
+  return (
+    <select
+      className="text-[10px] border border-brand-200 rounded px-1 py-0.5 bg-white"
+      defaultValue=""
+      onChange={e => { if (e.target.value) { onReassign(farmaciaId, e.target.value); setShowSelect(false) } }}
+      onBlur={() => setShowSelect(false)}
+      autoFocus
+    >
+      <option value="">Riassegna a...</option>
+      {others.map(m => (
+        <option key={m.id} value={m.id}>{m.nome} {m.cognome}</option>
+      ))}
+    </select>
   )
 }
 

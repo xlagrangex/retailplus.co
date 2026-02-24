@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" fill="none">
+  <rect width="300" height="300" rx="12" fill="#f0f4f8"/>
+  <rect x="70" y="40" width="160" height="220" rx="4" fill="white" stroke="#bcccdc" stroke-width="2"/>
+  <!-- Shelves -->
+  <line x1="70" y1="100" x2="230" y2="100" stroke="#bcccdc" stroke-width="1.5"/>
+  <line x1="70" y1="150" x2="230" y2="150" stroke="#bcccdc" stroke-width="1.5"/>
+  <line x1="70" y1="200" x2="230" y2="200" stroke="#bcccdc" stroke-width="1.5"/>
+  <!-- Arrows with measurements -->
+  <line x1="40" y1="40" x2="40" y2="260" stroke="#0967d2" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <text x="30" y="155" font-size="11" fill="#0967d2" text-anchor="middle" transform="rotate(-90,30,155)">altezza</text>
+  <line x1="70" y1="275" x2="230" y2="275" stroke="#0967d2" stroke-width="1.5"/>
+  <text x="150" y="290" font-size="11" fill="#0967d2" text-anchor="middle">larghezza</text>
+  <!-- Ruler icon -->
+  <rect x="120" y="120" width="60" height="15" rx="2" fill="#e6f6ff" stroke="#0967d2" stroke-width="1"/>
+  <text x="150" y="131" font-size="9" fill="#0967d2" text-anchor="middle" font-weight="600">MISURE</text>
+</svg>

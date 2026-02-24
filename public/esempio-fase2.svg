@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" fill="none">
+  <rect width="300" height="300" rx="12" fill="#f0f4f8"/>
+  <rect x="70" y="40" width="160" height="220" rx="4" fill="white" stroke="#bcccdc" stroke-width="2"/>
+  <!-- Shelves -->
+  <line x1="70" y1="100" x2="230" y2="100" stroke="#bcccdc" stroke-width="1.5"/>
+  <line x1="70" y1="150" x2="230" y2="150" stroke="#bcccdc" stroke-width="1.5"/>
+  <line x1="70" y1="200" x2="230" y2="200" stroke="#bcccdc" stroke-width="1.5"/>
+  <!-- Plexiglass L-shapes (elle) -->
+  <path d="M90 80 L90 98 L120 98" stroke="#0552b5" stroke-width="2.5" fill="none"/>
+  <path d="M140 80 L140 98 L170 98" stroke="#0552b5" stroke-width="2.5" fill="none"/>
+  <path d="M190 80 L190 98 L220 98" stroke="#0552b5" stroke-width="2.5" fill="none"/>
+  <path d="M90 130 L90 148 L120 148" stroke="#0552b5" stroke-width="2.5" fill="none"/>
+  <path d="M140 130 L140 148 L170 148" stroke="#0552b5" stroke-width="2.5" fill="none"/>
+  <path d="M190 130 L190 148 L220 148" stroke="#0552b5" stroke-width="2.5" fill="none"/>
+  <!-- Tape icon -->
+  <rect x="110" y="215" width="80" height="20" rx="3" fill="#e6f6ff" stroke="#0552b5" stroke-width="1"/>
+  <text x="150" y="228" font-size="9" fill="#0552b5" text-anchor="middle" font-weight="600">MONTAGGIO</text>
+  <!-- Wrench -->
+  <circle cx="150" cy="175" r="15" fill="#e6f6ff" stroke="#0552b5" stroke-width="1.5"/>
+  <text x="150" y="179" font-size="14" fill="#0552b5" text-anchor="middle">&#x1F527;</text>
+</svg>

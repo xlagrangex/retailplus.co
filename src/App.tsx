@@ -1,17 +1,18 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { DataProvider } from './context/DataContext'
-import { initMockData, resetMockData } from './data/mock'
+import { isSupabaseConfigured } from './lib/supabase'
+import { initMockData } from './data/mock'
 import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
 import BrandDashboard, { BrandMapPage, BrandFarmaciePage } from './pages/BrandDashboard'
 import AdminDashboard, { AdminFarmaciePage, AdminMerchandiserPage, AdminMapPage } from './pages/AdminDashboard'
 import MerchandiserPage from './pages/MerchandiserPage'
 
-// Force reset mock data when structure changes
-const DATA_VERSION = 'v3-corporate-ui'
-resetMockData()
-localStorage.setItem('logplus_data_version', DATA_VERSION)
+// Initialize mock data only if Supabase is not configured
+if (!isSupabaseConfigured) {
+  initMockData()
+}
 
 function getRoutesForRole(ruolo: string) {
   switch (ruolo) {

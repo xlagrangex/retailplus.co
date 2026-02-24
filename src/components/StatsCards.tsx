@@ -1,5 +1,5 @@
 import { Farmacia, Rilievo, getStatoFarmacia } from '../types'
-import { Store, CheckCircle2, Clock, AlertCircle, TrendingUp } from 'lucide-react'
+import { Store, CheckCircle2, Clock, AlertCircle, TrendingUp, Pause } from 'lucide-react'
 
 interface Props {
   farmacie: Farmacia[]
@@ -11,6 +11,7 @@ export default function StatsCards({ farmacie, rilievi }: Props) {
   const completate = farmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
   const inCorso = farmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_corso').length
   const daFare = farmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'da_fare').length
+  const inAttesa = farmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa').length
   const percentuale = totale > 0 ? Math.round((completate / totale) * 100) : 0
 
   const cards = [
@@ -18,11 +19,12 @@ export default function StatsCards({ farmacie, rilievi }: Props) {
     { label: 'Completate', value: completate, icon: CheckCircle2, color: 'text-success-600', bg: 'bg-success-50', border: 'border-success-100' },
     { label: 'In corso', value: inCorso, icon: Clock, color: 'text-warning-500', bg: 'bg-warning-50', border: 'border-warning-100' },
     { label: 'Da fare', value: daFare, icon: AlertCircle, color: 'text-danger-500', bg: 'bg-danger-50', border: 'border-danger-100' },
+    ...(inAttesa > 0 ? [{ label: 'In attesa materiale', value: inAttesa, icon: Pause, color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-100' }] : []),
   ]
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className={`grid grid-cols-2 ${cards.length > 4 ? 'lg:grid-cols-5' : 'lg:grid-cols-4'} gap-3`}>
         {cards.map(c => {
           const Icon = c.icon
           return (
@@ -56,7 +58,7 @@ export default function StatsCards({ farmacie, rilievi }: Props) {
         </div>
         <div className="flex items-center justify-between mt-2">
           <p className="text-xs text-brand-400">{completate} di {totale} farmacie</p>
-          <p className="text-xs text-brand-400">{daFare} rimanenti</p>
+          <p className="text-xs text-brand-400">{daFare + inAttesa} rimanenti</p>
         </div>
       </div>
     </div>

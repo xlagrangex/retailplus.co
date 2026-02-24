@@ -14,19 +14,26 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [showPw, setShowPw] = useState(false)
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
-    if (!login(email, password)) {
+    setLoading(true)
+    const ok = await login(email, password)
+    if (!ok) {
       setError('Credenziali non valide. Verifica email e password.')
     }
+    setLoading(false)
   }
 
-  function quickLogin(demoEmail: string) {
-    if (!login(demoEmail, 'demo')) {
+  async function quickLogin(demoEmail: string) {
+    setLoading(true)
+    const ok = await login(demoEmail, 'demo')
+    if (!ok) {
       setError('Errore di accesso')
     }
+    setLoading(false)
   }
 
   return (
@@ -39,15 +46,15 @@ export default function LoginPage() {
         <div className="relative">
           <div className="flex items-center gap-3 mb-16">
             <div className="w-10 h-10 bg-white/10 backdrop-blur rounded-lg flex items-center justify-center border border-white/20">
-              <span className="font-bold text-lg">L+</span>
+              <span className="font-bold text-lg">LF</span>
             </div>
-            <span className="font-semibold text-lg tracking-tight">LogPlus</span>
+            <span className="font-semibold text-lg tracking-tight">LogPlus Farma</span>
           </div>
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Piattaforma di gestione<br />allestimenti retail
+            Piattaforma di gestione<br />allestimenti cosmetici
           </h1>
           <p className="text-brand-300 text-base leading-relaxed max-w-sm">
-            Coordina il rollout di espositori su centinaia di punti vendita.
+            Coordina il rollout di espositori cosmetici su centinaia di farmacie.
             Traccia ogni fase, dalla rilevazione al completamento.
           </p>
         </div>
@@ -57,7 +64,7 @@ export default function LoginPage() {
               <span className="text-accent-200 font-semibold text-sm">500</span>
             </div>
             <div>
-              <p className="text-sm font-medium">Punti vendita</p>
+              <p className="text-sm font-medium">Farmacie</p>
               <p className="text-xs text-brand-400">Copertura nazionale</p>
             </div>
           </div>
@@ -88,9 +95,9 @@ export default function LoginPage() {
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2.5 mb-10">
             <div className="w-9 h-9 bg-brand-900 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">L+</span>
+              <span className="text-white font-bold text-sm">LF</span>
             </div>
-            <span className="font-semibold text-brand-900 tracking-tight">LogPlus</span>
+            <span className="font-semibold text-brand-900 tracking-tight">LogPlus Farma</span>
           </div>
 
           <div className="mb-8">
@@ -108,6 +115,7 @@ export default function LoginPage() {
                 className="input"
                 placeholder="nome@azienda.it"
                 required
+                disabled={loading}
               />
             </div>
             <div>
@@ -120,6 +128,7 @@ export default function LoginPage() {
                   className="input pr-10"
                   placeholder="Inserisci password"
                   required
+                  disabled={loading}
                 />
                 <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-400 hover:text-brand-600 transition">
                   {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -133,8 +142,8 @@ export default function LoginPage() {
               </div>
             )}
 
-            <button type="submit" className="btn-primary w-full">
-              Accedi <ArrowRight size={16} />
+            <button type="submit" className="btn-primary w-full" disabled={loading}>
+              {loading ? 'Accesso in corso...' : 'Accedi'} {!loading && <ArrowRight size={16} />}
             </button>
           </form>
 
@@ -153,7 +162,8 @@ export default function LoginPage() {
                     type="button"
                     key={acc.email}
                     onClick={() => quickLogin(acc.email)}
-                    className="w-full text-left px-4 py-3 rounded-md border border-brand-100 hover:border-accent-200 hover:bg-accent-50/50 transition-all duration-150 flex items-center gap-3 group"
+                    disabled={loading}
+                    className="w-full text-left px-4 py-3 rounded-md border border-brand-100 hover:border-accent-200 hover:bg-accent-50/50 transition-all duration-150 flex items-center gap-3 group disabled:opacity-50"
                   >
                     <div className="w-8 h-8 rounded bg-brand-50 group-hover:bg-accent-50 flex items-center justify-center transition-colors">
                       <Icon size={15} className="text-brand-500 group-hover:text-accent-600 transition-colors" />
@@ -170,7 +180,7 @@ export default function LoginPage() {
           </div>
 
           <p className="text-center text-xs text-brand-400 mt-8">
-            LogPlus v1.0 — Ambiente demo
+            LogPlus Farma v1.0 — Ambiente demo
           </p>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { useData } from '../context/DataContext'
 import StatsCards from '../components/StatsCards'
 import FarmaciaMap from '../components/FarmaciaMap'
-import { getStatoFarmacia, getColoreStato, getLabelStato } from '../types'
+import { getStatoFarmacia, getLabelStato, StatoFarmacia } from '../types'
 import { useState } from 'react'
 import { Search, MapPin, Filter } from 'lucide-react'
 
@@ -28,10 +28,11 @@ export default function BrandDashboard() {
 
 function Legend() {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 flex-wrap">
       <LegendItem color="#d64545" label="Da fare" />
       <LegendItem color="#de911d" label="In corso" />
       <LegendItem color="#3f9142" label="Completata" />
+      <LegendItem color="#6366f1" label="In attesa" />
     </div>
   )
 }
@@ -106,6 +107,7 @@ export function BrandFarmaciePage() {
             <option value="da_fare">Da fare</option>
             <option value="in_corso">In corso</option>
             <option value="completata">Completate</option>
+            <option value="in_attesa">In attesa materiale</option>
           </select>
         </div>
       </div>
@@ -170,17 +172,18 @@ export function BrandFarmaciePage() {
   )
 }
 
-function StatoBadge({ stato }: { stato: string }) {
+function StatoBadge({ stato }: { stato: StatoFarmacia }) {
   const config = {
     da_fare: { bg: 'bg-danger-50', text: 'text-danger-600', border: 'border-danger-100', dot: '#d64545' },
     in_corso: { bg: 'bg-warning-50', text: 'text-warning-600', border: 'border-warning-100', dot: '#de911d' },
     completata: { bg: 'bg-success-50', text: 'text-success-600', border: 'border-success-100', dot: '#3f9142' },
+    in_attesa: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', dot: '#6366f1' },
   }[stato] || { bg: 'bg-brand-50', text: 'text-brand-600', border: 'border-brand-100', dot: '#627d98' }
 
   return (
     <span className={`badge ${config.bg} ${config.text} border ${config.border}`}>
       <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: config.dot }} />
-      {getLabelStato(stato as any)}
+      {getLabelStato(stato)}
     </span>
   )
 }

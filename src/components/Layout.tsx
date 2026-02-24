@@ -51,9 +51,9 @@ export default function Layout({ children }: { children: ReactNode }) {
               </button>
               <Link to="/" className="flex items-center gap-2.5">
                 <div className="w-8 h-8 bg-brand-900 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xs tracking-tight">L+</span>
+                  <span className="text-white font-bold text-xs tracking-tight">LF</span>
                 </div>
-                <span className="font-semibold text-brand-900 tracking-tight hidden sm:block">LogPlus</span>
+                <span className="font-semibold text-brand-900 tracking-tight hidden sm:block">LogPlus Farma</span>
               </Link>
             </div>
 

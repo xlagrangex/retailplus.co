@@ -20,7 +20,9 @@ export interface Farmacia {
   lng: number
   telefono?: string
   referente?: string
+  email?: string
   note?: string
+  planogrammaUrl?: string
 }
 
 export interface Assegnazione {
@@ -44,6 +46,10 @@ export interface Rilievo {
   // Fase 2 - montaggio
   pezziRicevuti?: boolean
   montaggioCompleto?: boolean
+  kitRicevuto?: boolean
+  problemaKit?: boolean
+  descrizioneProblema?: string
+  fotoProblema?: string[]
   // Fase 3 - prodotti
   prodottiPosizionati?: boolean
   // Tutte le fasi
@@ -52,13 +58,16 @@ export interface Rilievo {
   completata: boolean
   dataCompletamento?: string
   oraCompletamento?: string
+  inAttesaMateriale?: boolean
 }
 
-export type StatoFarmacia = 'da_fare' | 'in_corso' | 'completata'
+export type StatoFarmacia = 'da_fare' | 'in_corso' | 'completata' | 'in_attesa'
 
 export function getStatoFarmacia(rilievi: Rilievo[], farmaciaId: string): StatoFarmacia {
-  const rilieviFarmacia = rilievi.filter(r => r.farmaciaId === farmaciaId && r.completata)
-  const fasiComplete = rilieviFarmacia.length
+  const rilieviFarmacia = rilievi.filter(r => r.farmaciaId === farmaciaId)
+  // Check if any rilievo has inAttesaMateriale flag
+  if (rilieviFarmacia.some(r => r.inAttesaMateriale)) return 'in_attesa'
+  const fasiComplete = rilieviFarmacia.filter(r => r.completata).length
   if (fasiComplete === 0) return 'da_fare'
   if (fasiComplete >= 3) return 'completata'
   return 'in_corso'
@@ -76,6 +85,7 @@ export function getColoreStato(stato: StatoFarmacia): string {
     case 'da_fare': return '#ef4444'      // rosso
     case 'in_corso': return '#eab308'     // giallo
     case 'completata': return '#22c55e'   // verde
+    case 'in_attesa': return '#6366f1'    // indigo
   }
 }
 
@@ -84,6 +94,7 @@ export function getLabelStato(stato: StatoFarmacia): string {
     case 'da_fare': return 'Da fare'
     case 'in_corso': return 'In corso'
     case 'completata': return 'Completata'
+    case 'in_attesa': return 'In attesa materiale'
   }
 }
 

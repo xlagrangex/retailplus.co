@@ -9,12 +9,12 @@ interface Props {
   height?: string
 }
 
-// Colori corporate per la mappa
 function getMapColor(stato: string): string {
   switch (stato) {
     case 'da_fare': return '#d64545'
     case 'in_corso': return '#de911d'
     case 'completata': return '#3f9142'
+    case 'in_attesa': return '#6366f1'
     default: return '#627d98'
   }
 }

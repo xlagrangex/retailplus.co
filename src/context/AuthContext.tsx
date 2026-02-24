@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
 import { User } from '../types'
+import { isSupabaseConfigured } from '../lib/supabase'
+import { findUserByEmail } from '../data/supabase'
 import { getUsers, resetMockData } from '../data/mock'
 
 interface AuthContextType {
   user: User | null
-  login: (email: string, password: string) => boolean
+  login: (email: string, password: string) => Promise<boolean>
   logout: () => void
 }
 
@@ -16,20 +18,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return saved ? JSON.parse(saved) : null
   })
 
-  const login = useCallback((email: string, _password: string) => {
-    let users = getUsers()
-    // Safety: if localStorage is empty/corrupt, re-init mock data
-    if (users.length === 0) {
-      resetMockData()
-      users = getUsers()
+  const login = useCallback(async (email: string, _password: string): Promise<boolean> => {
+    if (isSupabaseConfigured) {
+      const found = await findUserByEmail(email)
+      if (found) {
+        setUser(found)
+        localStorage.setItem('logplus_current_user', JSON.stringify(found))
+        return true
+      }
+      return false
+    } else {
+      let users = getUsers()
+      if (users.length === 0) {
+        resetMockData()
+        users = getUsers()
+      }
+      const found = users.find(u => u.email.toLowerCase() === email.toLowerCase())
+      if (found) {
+        setUser(found)
+        localStorage.setItem('logplus_current_user', JSON.stringify(found))
+        return true
+      }
+      return false
     }
-    const found = users.find(u => u.email.toLowerCase() === email.toLowerCase())
-    if (found) {
-      setUser(found)
-      localStorage.setItem('logplus_current_user', JSON.stringify(found))
-      return true
-    }
-    return false
   }, [])
 
   const logout = useCallback(() => {

@@ -54,6 +54,12 @@ export default {
           500: '#d64545',
           600: '#ba2525',
         },
+        indigo: {
+          50:  '#eef2ff',
+          100: '#e0e7ff',
+          200: '#c7d2fe',
+          600: '#4f46e5',
+        },
       },
       fontFamily: {
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
