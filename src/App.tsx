@@ -8,15 +8,10 @@ import BrandDashboard, { BrandMapPage, BrandFarmaciePage } from './pages/BrandDa
 import AdminDashboard, { AdminFarmaciePage, AdminMerchandiserPage, AdminMapPage } from './pages/AdminDashboard'
 import MerchandiserPage from './pages/MerchandiserPage'
 
-// Force reset mock data to new format (foto array, new fields)
-// Change this key when data structure changes to force a refresh
-const DATA_VERSION = 'v2-foto-array'
-if (localStorage.getItem('logplus_data_version') !== DATA_VERSION) {
-  resetMockData()
-  localStorage.setItem('logplus_data_version', DATA_VERSION)
-} else {
-  initMockData()
-}
+// Force reset mock data when structure changes
+const DATA_VERSION = 'v3-corporate-ui'
+resetMockData()
+localStorage.setItem('logplus_data_version', DATA_VERSION)
 
 function getRoutesForRole(ruolo: string) {
   switch (ruolo) {

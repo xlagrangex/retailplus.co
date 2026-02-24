@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
 import { User } from '../types'
-import { getUsers } from '../data/mock'
+import { getUsers, resetMockData } from '../data/mock'
 
 interface AuthContextType {
   user: User | null
@@ -17,8 +17,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   })
 
   const login = useCallback((email: string, _password: string) => {
-    // Mock: any password works, just check email exists
-    const users = getUsers()
+    let users = getUsers()
+    // Safety: if localStorage is empty/corrupt, re-init mock data
+    if (users.length === 0) {
+      resetMockData()
+      users = getUsers()
+    }
     const found = users.find(u => u.email.toLowerCase() === email.toLowerCase())
     if (found) {
       setUser(found)
