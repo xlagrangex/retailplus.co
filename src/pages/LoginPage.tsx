@@ -45,7 +45,7 @@ export default function LoginPage() {
         }} />
         <div className="relative">
           <div className="flex items-center gap-3 mb-16">
-            <div className="w-10 h-10 bg-white/10 backdrop-blur rounded-lg flex items-center justify-center border border-white/20">
+            <div className="w-10 h-10 bg-white/10 backdrop-blur rounded flex items-center justify-center border border-white/20">
               <span className="font-bold text-lg">LF</span>
             </div>
             <span className="font-semibold text-lg tracking-tight">LogPlus Farma</span>
@@ -94,7 +94,7 @@ export default function LoginPage() {
         <div className="w-full max-w-[400px]">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2.5 mb-10">
-            <div className="w-9 h-9 bg-brand-900 rounded-lg flex items-center justify-center">
+            <div className="w-9 h-9 bg-brand-900 rounded flex items-center justify-center">
               <span className="text-white font-bold text-sm">LF</span>
             </div>
             <span className="font-semibold text-brand-900 tracking-tight">LogPlus Farma</span>
@@ -137,7 +137,7 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-danger-50 border border-danger-100 rounded-md">
+              <div className="flex items-center gap-2 p-3 bg-danger-50 border border-danger-100 rounded-sm">
                 <p className="text-danger-600 text-sm">{error}</p>
               </div>
             )}
@@ -163,7 +163,7 @@ export default function LoginPage() {
                     key={acc.email}
                     onClick={() => quickLogin(acc.email)}
                     disabled={loading}
-                    className="w-full text-left px-4 py-3 rounded-md border border-brand-100 hover:border-accent-200 hover:bg-accent-50/50 transition-all duration-150 flex items-center gap-3 group disabled:opacity-50"
+                    className="w-full text-left px-4 py-3 rounded-sm border border-brand-100 hover:border-accent-200 hover:bg-accent-50/50 transition-all duration-150 flex items-center gap-3 group disabled:opacity-50"
                   >
                     <div className="w-8 h-8 rounded bg-brand-50 group-hover:bg-accent-50 flex items-center justify-center transition-colors">
                       <Icon size={15} className="text-brand-500 group-hover:text-accent-600 transition-colors" />

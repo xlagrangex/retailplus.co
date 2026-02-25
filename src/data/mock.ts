@@ -1,4 +1,4 @@
-import { User, Farmacia, Assegnazione, Rilievo } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, CampoConfigurazione } from '../types'
 
 export const mockUsers: User[] = [
   { id: 'admin-1', email: 'admin@logplus.it', nome: 'Giuseppe', cognome: 'Mandurino', ruolo: 'admin' },
@@ -168,4 +168,23 @@ export function getRilievi(): Rilievo[] {
 }
 export function saveRilievi(rilievi: Rilievo[]) {
   localStorage.setItem(STORAGE_KEYS.rilievi, JSON.stringify(rilievi))
+}
+
+// Default campo configurazione (Fase 1 measurement fields)
+export const defaultCampiConfigurazione: CampoConfigurazione[] = [
+  { id: 'campo-1', fase: 1, nome: 'profonditaScaffale', label: 'Profondita scaffale', descrizione: 'Struttura esterna dell\'espositore', tipo: 'number', unita: 'cm', obbligatorio: true, ordine: 1, attivo: true },
+  { id: 'campo-2', fase: 1, nome: 'profonditaMensola', label: 'Profondita mensola', descrizione: 'Ripiano interno, dove si appoggiano i prodotti', tipo: 'number', unita: 'cm', obbligatorio: true, ordine: 2, attivo: true },
+  { id: 'campo-3', fase: 1, nome: 'larghezza', label: 'Larghezza', tipo: 'number', unita: 'cm', obbligatorio: true, ordine: 3, attivo: true },
+  { id: 'campo-4', fase: 1, nome: 'altezza', label: 'Altezza', tipo: 'number', unita: 'cm', obbligatorio: true, ordine: 4, attivo: true },
+  { id: 'campo-5', fase: 1, nome: 'numScaffali', label: 'Numero scaffali', tipo: 'number', unita: 'pz', obbligatorio: true, ordine: 5, attivo: true },
+]
+
+export function getCampiConfigurazione(): CampoConfigurazione[] {
+  const stored = localStorage.getItem('campi_configurazione')
+  if (stored) return JSON.parse(stored)
+  return defaultCampiConfigurazione
+}
+
+export function saveCampiConfigurazione(campi: CampoConfigurazione[]) {
+  localStorage.setItem('campi_configurazione', JSON.stringify(campi))
 }

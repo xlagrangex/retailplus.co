@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import {
   LayoutDashboard, Map, Users, Store, ClipboardList,
-  LogOut, Menu, X, ChevronDown
+  LogOut, Menu, X, ChevronDown, Settings
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -13,6 +13,7 @@ const navItems = {
     { to: '/admin/farmacie', label: 'Farmacie', icon: Store },
     { to: '/admin/merchandiser', label: 'Merchandiser', icon: Users },
     { to: '/admin/mappa', label: 'Mappa', icon: Map },
+    { to: '/admin/configurazione', label: 'Configurazione', icon: Settings },
   ],
   brand: [
     { to: '/brand', label: 'Dashboard', icon: LayoutDashboard },
@@ -50,7 +51,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 {mobileOpen ? <X size={20} className="text-brand-600" /> : <Menu size={20} className="text-brand-600" />}
               </button>
               <Link to="/" className="flex items-center gap-2.5">
-                <div className="w-8 h-8 bg-brand-900 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-brand-900 rounded flex items-center justify-center">
                   <span className="text-white font-bold text-xs tracking-tight">LF</span>
                 </div>
                 <span className="font-semibold text-brand-900 tracking-tight hidden sm:block">LogPlus Farma</span>
@@ -66,7 +67,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors duration-150 ${
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-sm text-[13px] font-medium transition-colors duration-150 ${
                       active
                         ? 'bg-accent-50 text-accent-700'
                         : 'text-brand-500 hover:text-brand-700 hover:bg-brand-50'
@@ -85,14 +86,14 @@ export default function Layout({ children }: { children: ReactNode }) {
               <p className="text-[13px] font-medium text-brand-800">{user.nome} {user.cognome}</p>
               <p className="text-[11px] text-brand-400">{roleLabels[user.ruolo]}</p>
             </div>
-            <div className="w-8 h-8 rounded-md bg-brand-100 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-sm bg-brand-100 flex items-center justify-center">
               <span className="text-xs font-semibold text-brand-600">
                 {user.nome[0]}{user.cognome[0]}
               </span>
             </div>
             <button
               onClick={logout}
-              className="p-2 text-brand-400 hover:text-danger-500 hover:bg-danger-50 rounded-md transition-colors duration-150"
+              className="p-2 text-brand-400 hover:text-danger-500 hover:bg-danger-50 rounded-sm transition-colors duration-150"
               title="Esci"
             >
               <LogOut size={16} />
@@ -112,7 +113,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 key={item.to}
                 to={item.to}
                 onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors duration-150 ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-medium transition-colors duration-150 ${
                   active ? 'bg-accent-50 text-accent-700' : 'text-brand-600 hover:bg-brand-50'
                 }`}
               >

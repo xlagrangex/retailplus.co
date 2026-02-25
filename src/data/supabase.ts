@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import { User, Farmacia, Assegnazione, Rilievo, FaseNumero } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione } from '../types'
 
 // ── Mapping helpers (snake_case DB ↔ camelCase TS) ──
 
@@ -63,6 +63,7 @@ function rilievoFromDb(row: any): Rilievo {
     dataCompletamento: row.data_completamento || undefined,
     oraCompletamento: row.ora_completamento || undefined,
     inAttesaMateriale: row.in_attesa_materiale ?? undefined,
+    valoriDinamici: row.valori_dinamici || undefined,
   }
 }
 
@@ -90,6 +91,39 @@ function rilievoToDb(r: Rilievo): any {
     data_completamento: r.dataCompletamento || null,
     ora_completamento: r.oraCompletamento || null,
     in_attesa_materiale: r.inAttesaMateriale ?? false,
+    valori_dinamici: r.valoriDinamici || {},
+  }
+}
+
+function campoFromDb(row: any): CampoConfigurazione {
+  return {
+    id: row.id,
+    fase: row.fase as FaseNumero,
+    nome: row.nome,
+    label: row.label,
+    descrizione: row.descrizione || undefined,
+    tipo: row.tipo,
+    unita: row.unita || undefined,
+    obbligatorio: row.obbligatorio ?? true,
+    opzioni: row.opzioni || undefined,
+    ordine: row.ordine ?? 0,
+    attivo: row.attivo ?? true,
+  }
+}
+
+function campoToDb(c: CampoConfigurazione): any {
+  return {
+    id: c.id,
+    fase: c.fase,
+    nome: c.nome,
+    label: c.label,
+    descrizione: c.descrizione || null,
+    tipo: c.tipo,
+    unita: c.unita || null,
+    obbligatorio: c.obbligatorio,
+    opzioni: c.opzioni || null,
+    ordine: c.ordine,
+    attivo: c.attivo,
   }
 }
 
@@ -213,4 +247,30 @@ export async function findUserByEmail(email: string): Promise<User | null> {
     .single()
   if (data && !error) return userFromDb(data)
   return null
+}
+
+// ── Campo configurazione CRUD ──
+
+export async function fetchCampiConfigurazione(): Promise<CampoConfigurazione[]> {
+  const { data, error } = await supabase
+    .from('campo_configurazione')
+    .select('*')
+    .order('ordine', { ascending: true })
+  if (error) throw error
+  return (data || []).map(campoFromDb)
+}
+
+export async function upsertCampoConfigurazione(campo: CampoConfigurazione): Promise<void> {
+  const { error } = await supabase
+    .from('campo_configurazione')
+    .upsert(campoToDb(campo), { onConflict: 'id' })
+  if (error) throw error
+}
+
+export async function deleteCampoConfigurazione(id: string): Promise<void> {
+  const { error } = await supabase
+    .from('campo_configurazione')
+    .delete()
+    .eq('id', id)
+  if (error) throw error
 }

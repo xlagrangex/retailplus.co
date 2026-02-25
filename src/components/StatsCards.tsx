@@ -30,7 +30,7 @@ export default function StatsCards({ farmacie, rilievi }: Props) {
           return (
             <div key={c.label} className="card p-4">
               <div className="flex items-start justify-between mb-3">
-                <div className={`p-2 rounded-md ${c.bg} border ${c.border}`}>
+                <div className={`p-2 rounded-sm ${c.bg} border ${c.border}`}>
                   <Icon size={16} className={c.color} />
                 </div>
               </div>

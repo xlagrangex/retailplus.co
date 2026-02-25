@@ -56,7 +56,7 @@ export default function MerchandiserPage() {
   }
 
   return (
-    <div className="space-y-5 max-w-lg mx-auto">
+    <div className="space-y-5 max-w-2xl mx-auto">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="page-title">Ciao, {user.nome}</h1>
@@ -256,7 +256,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
   const faseIcons = { 1: Ruler, 2: Wrench, 3: Package }
 
   return (
-    <div className="space-y-4 max-w-lg mx-auto">
+    <div className="space-y-4 max-w-2xl mx-auto">
       <button onClick={onBack} className="btn-ghost -ml-3 text-brand-500">
         <ArrowLeft size={15} /> Torna alla lista
       </button>
@@ -300,7 +300,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
           <div className="mt-3 pt-3 border-t border-brand-50">
             <button
               onClick={toggleInAttesa}
-              className={`text-xs font-medium flex items-center gap-1.5 px-3 py-1.5 rounded-md border transition-colors ${
+              className={`text-xs font-medium flex items-center gap-1.5 px-3 py-1.5 rounded-sm border transition-colors ${
                 stato === 'in_attesa'
                   ? 'bg-indigo-50 text-indigo-600 border-indigo-200'
                   : 'bg-brand-50 text-brand-500 border-brand-100 hover:bg-brand-100'
@@ -334,7 +334,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
             const unlocked = isFaseUnlocked(fase)
             return (
               <div key={fase} className="flex-1 flex items-center">
-                <div className={`w-8 h-8 rounded-md flex items-center justify-center text-xs font-semibold transition-colors ${
+                <div className={`w-8 h-8 rounded-sm flex items-center justify-center text-xs font-semibold transition-colors ${
                   done ? 'bg-success-500 text-white' :
                   unlocked ? 'bg-accent-100 text-accent-700 ring-1 ring-accent-300' :
                   'bg-brand-50 text-brand-400'
@@ -377,7 +377,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
               }`}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className={`w-9 h-9 rounded-md flex items-center justify-center ${
+                    <div className={`w-9 h-9 rounded-sm flex items-center justify-center ${
                       done ? 'bg-success-500 text-white' :
                       unlocked ? 'bg-accent-600 text-white' :
                       'bg-brand-200 text-brand-400'
@@ -398,7 +398,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                 {/* Sbloccata ma non fatta */}
                 {!done && unlocked && (
                   <div className="space-y-3">
-                    <div className="bg-warning-50 border border-warning-100 rounded-md p-3">
+                    <div className="bg-warning-50 border border-warning-100 rounded-sm p-3">
                       <p className="text-[11px] font-semibold text-warning-600 uppercase tracking-wider flex items-center gap-1 mb-2">
                         <Info size={11} /> Istruzioni
                       </p>
@@ -453,13 +453,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                       <span>Completata il {rilievo.dataCompletamento}{rilievo.oraCompletamento ? ` alle ${rilievo.oraCompletamento}` : ''}</span>
                     </div>
                     {fase === 1 && (
-                      <div className="grid grid-cols-3 gap-2">
-                        <MisuraChip label="Prof. scaffale" value={rilievo.profonditaScaffale} unit="cm" />
-                        <MisuraChip label="Prof. mensola" value={rilievo.profonditaMensola} unit="cm" />
-                        <MisuraChip label="Larghezza" value={rilievo.larghezza} unit="cm" />
-                        <MisuraChip label="Altezza" value={rilievo.altezza} unit="cm" />
-                        <MisuraChip label="Scaffali" value={rilievo.numScaffali} />
-                      </div>
+                      <DynamicMisureDisplay rilievo={rilievo} />
                     )}
                     {fase === 2 && (
                       <div className="space-y-1">
@@ -467,7 +461,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                         <CheckItem checked={rilievo.pezziRicevuti} label="Pezzi ricevuti" />
                         <CheckItem checked={rilievo.montaggioCompleto} label="Montaggio completato" />
                         {rilievo.problemaKit && (
-                          <div className="bg-danger-50 border border-danger-100 rounded-md p-2 mt-1">
+                          <div className="bg-danger-50 border border-danger-100 rounded-sm p-2 mt-1">
                             <p className="text-[11px] font-medium text-danger-600 flex items-center gap-1">
                               <AlertTriangle size={11} /> Problema segnalato
                             </p>
@@ -487,7 +481,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                       </div>
                     )}
                     {rilievo.note && (
-                      <div className="bg-brand-50 rounded-md p-2.5">
+                      <div className="bg-brand-50 rounded-sm p-2.5">
                         <p className="text-[11px] text-brand-400 mb-0.5">Note</p>
                         <p className="text-xs text-brand-700">{rilievo.note}</p>
                       </div>
@@ -503,9 +497,39 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
   )
 }
 
+function DynamicMisureDisplay({ rilievo }: { rilievo: Rilievo }) {
+  const { campiConfigurazione } = useData()
+  const campiFase1 = campiConfigurazione.filter(c => c.fase === 1 && c.attivo).sort((a, b) => a.ordine - b.ordine)
+
+  if (campiFase1.length === 0) {
+    // Fallback to hardcoded display
+    return (
+      <div className="grid grid-cols-3 gap-2">
+        <MisuraChip label="Prof. scaffale" value={rilievo.profonditaScaffale} unit="cm" />
+        <MisuraChip label="Prof. mensola" value={rilievo.profonditaMensola} unit="cm" />
+        <MisuraChip label="Larghezza" value={rilievo.larghezza} unit="cm" />
+        <MisuraChip label="Altezza" value={rilievo.altezza} unit="cm" />
+        <MisuraChip label="Scaffali" value={rilievo.numScaffali} />
+      </div>
+    )
+  }
+
+  return (
+    <div className="grid grid-cols-3 gap-2">
+      {campiFase1.map(campo => {
+        const val = rilievo.valoriDinamici?.[campo.nome] ?? (rilievo as any)?.[campo.nome]
+        if (campo.tipo === 'checkbox') {
+          return <MisuraChip key={campo.id} label={campo.label} value={val ? 1 : 0} unit={val ? 'Si' : 'No'} />
+        }
+        return <MisuraChip key={campo.id} label={campo.label} value={typeof val === 'number' ? val : undefined} unit={campo.unita} />
+      })}
+    </div>
+  )
+}
+
 function MisuraChip({ label, value, unit }: { label: string; value?: number; unit?: string }) {
   return (
-    <div className="bg-brand-50 rounded-md px-2.5 py-2 border border-brand-100">
+    <div className="bg-brand-50 rounded-sm px-2.5 py-2 border border-brand-100">
       <p className="text-[10px] text-brand-400 uppercase tracking-wider">{label}</p>
       <p className="text-sm font-semibold text-brand-800">{value ?? '—'}{unit && value ? ` ${unit}` : ''}</p>
     </div>
@@ -534,6 +558,8 @@ function FaseForm({
   farmacia: Farmacia; fase: FaseNumero; existing?: Rilievo
   onBack: () => void; onSave: (r: Rilievo) => void; userId: string
 }) {
+  const { campiConfigurazione } = useData()
+  const campiFase = campiConfigurazione.filter(c => c.fase === fase && c.attivo).sort((a, b) => a.ordine - b.ordine)
   const [foto, setFoto] = useState<string[]>(existing?.foto || [])
   const [pezziRicevuti, setPezziRicevuti] = useState(existing?.pezziRicevuti || false)
   const [montaggioCompleto, setMontaggioCompleto] = useState(existing?.montaggioCompleto || false)
@@ -623,11 +649,24 @@ function FaseForm({
       note: fd.get('note') as string || '',
     }
     if (fase === 1) {
-      rilievo.profonditaScaffale = parseFloat(fd.get('profonditaScaffale') as string) || 0
-      rilievo.profonditaMensola = parseFloat(fd.get('profonditaMensola') as string) || 0
-      rilievo.larghezza = parseFloat(fd.get('larghezza') as string) || 0
-      rilievo.altezza = parseFloat(fd.get('altezza') as string) || 0
-      rilievo.numScaffali = parseInt(fd.get('numScaffali') as string) || 0
+      // Dynamic fields
+      const valoriDinamici: Record<string, string | number | boolean> = {}
+      campiFase.forEach(campo => {
+        if (campo.tipo === 'number') {
+          valoriDinamici[campo.nome] = parseFloat(fd.get(campo.nome) as string) || 0
+        } else if (campo.tipo === 'checkbox') {
+          valoriDinamici[campo.nome] = fd.get(campo.nome) === 'on'
+        } else {
+          valoriDinamici[campo.nome] = (fd.get(campo.nome) as string) || ''
+        }
+      })
+      rilievo.valoriDinamici = valoriDinamici
+      // Legacy fields for backward compatibility
+      rilievo.profonditaScaffale = valoriDinamici.profonditaScaffale as number ?? undefined
+      rilievo.profonditaMensola = valoriDinamici.profonditaMensola as number ?? undefined
+      rilievo.larghezza = valoriDinamici.larghezza as number ?? undefined
+      rilievo.altezza = valoriDinamici.altezza as number ?? undefined
+      rilievo.numScaffali = valoriDinamici.numScaffali as number ?? undefined
     }
     if (fase === 2) {
       rilievo.pezziRicevuti = pezziRicevuti
@@ -663,16 +702,16 @@ function FaseForm({
 
   if (showConfirm) {
     return (
-      <div className="max-w-lg mx-auto space-y-4">
+      <div className="max-w-2xl mx-auto space-y-4">
         <div className="card p-6 text-center">
-          <div className="w-14 h-14 rounded-xl bg-success-50 border border-success-100 flex items-center justify-center mx-auto mb-4">
+          <div className="w-14 h-14 rounded-sm bg-success-50 border border-success-100 flex items-center justify-center mx-auto mb-4">
             <CheckCircle2 size={28} className="text-success-500" />
           </div>
           <h2 className="text-lg font-semibold text-brand-900 mb-1">Conferma completamento</h2>
           <p className="text-sm text-brand-500 mb-5">
             Fase {fase} per <b>{farmacia.nome}</b>
           </p>
-          <div className="bg-brand-50 rounded-md p-3 mb-5 text-left text-xs text-brand-600 space-y-1 border border-brand-100">
+          <div className="bg-brand-50 rounded-sm p-3 mb-5 text-left text-xs text-brand-600 space-y-1 border border-brand-100">
             <p><b>Foto:</b> {foto.length} caricate</p>
             {fase === 1 && <p><b>Misure:</b> compilate</p>}
             {fase === 2 && (
@@ -696,7 +735,7 @@ function FaseForm({
   }
 
   return (
-    <div className="space-y-4 max-w-lg mx-auto">
+    <div className="space-y-4 max-w-2xl mx-auto">
       <button onClick={onBack} className="btn-ghost -ml-3 text-brand-500">
         <ArrowLeft size={15} /> Torna alla scheda
       </button>
@@ -704,7 +743,7 @@ function FaseForm({
       {/* Header */}
       <div className={`card p-4 ${faseColors.light} border`}>
         <div className="flex items-center gap-3">
-          <div className={`w-11 h-11 rounded-lg flex items-center justify-center ${faseColors.bg} text-white`}>
+          <div className={`w-11 h-11 rounded flex items-center justify-center ${faseColors.bg} text-white`}>
             <FaseIcon size={20} />
           </div>
           <div>
@@ -720,39 +759,69 @@ function FaseForm({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Left column: form fields */}
           <div className="md:order-1 space-y-4">
-            {/* FASE 1: MISURE */}
-            {fase === 1 && (
+            {/* FASE 1: MISURE (dynamic fields) */}
+            {fase === 1 && campiFase.length > 0 && (
               <div className="card p-4 space-y-4">
                 <div>
                   <h3 className="text-[13px] font-semibold text-brand-800 flex items-center gap-2">
                     <Ruler size={14} className="text-accent-500" /> Misure espositore
                   </h3>
-                  <p className="text-[11px] text-brand-400 mt-0.5">Rileva tutte le misure in centimetri</p>
+                  <p className="text-[11px] text-brand-400 mt-0.5">Rileva tutte le misure</p>
                 </div>
-                <div>
-                  <label className="label">Profondita scaffale (cm) *</label>
-                  <p className="text-[11px] text-brand-400 mb-1.5">Struttura esterna dell'espositore</p>
-                  <input name="profonditaScaffale" type="number" step="0.1" inputMode="decimal" required defaultValue={existing?.profonditaScaffale || ''} className="input" placeholder="35" />
-                </div>
-                <div>
-                  <label className="label">Profondita mensola (cm) *</label>
-                  <p className="text-[11px] text-brand-400 mb-1.5">Ripiano interno, dove si appoggiano i prodotti</p>
-                  <input name="profonditaMensola" type="number" step="0.1" inputMode="decimal" required defaultValue={existing?.profonditaMensola || ''} className="input" placeholder="30" />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="label">Larghezza (cm) *</label>
-                    <input name="larghezza" type="number" step="0.1" inputMode="decimal" required defaultValue={existing?.larghezza || ''} className="input" placeholder="80" />
-                  </div>
-                  <div>
-                    <label className="label">Altezza (cm) *</label>
-                    <input name="altezza" type="number" step="0.1" inputMode="decimal" required defaultValue={existing?.altezza || ''} className="input" placeholder="200" />
-                  </div>
-                </div>
-                <div>
-                  <label className="label">Numero scaffali *</label>
-                  <input name="numScaffali" type="number" inputMode="numeric" required min="1" max="20" defaultValue={existing?.numScaffali || ''} className="input" placeholder="5" />
-                </div>
+                {campiFase.map(campo => {
+                  const existingVal = existing?.valoriDinamici?.[campo.nome]
+                    ?? (existing as any)?.[campo.nome]
+                  return (
+                    <div key={campo.id}>
+                      <label className="label">
+                        {campo.label}{campo.unita ? ` (${campo.unita})` : ''}{campo.obbligatorio ? ' *' : ''}
+                      </label>
+                      {campo.descrizione && (
+                        <p className="text-[11px] text-brand-400 mb-1.5">{campo.descrizione}</p>
+                      )}
+                      {campo.tipo === 'number' && (
+                        <input
+                          name={campo.nome}
+                          type="number"
+                          step="0.1"
+                          inputMode="decimal"
+                          required={campo.obbligatorio}
+                          defaultValue={existingVal ?? ''}
+                          className="input"
+                        />
+                      )}
+                      {campo.tipo === 'text' && (
+                        <input
+                          name={campo.nome}
+                          type="text"
+                          required={campo.obbligatorio}
+                          defaultValue={existingVal ?? ''}
+                          className="input"
+                        />
+                      )}
+                      {campo.tipo === 'select' && (
+                        <select
+                          name={campo.nome}
+                          required={campo.obbligatorio}
+                          defaultValue={existingVal ?? ''}
+                          className="input"
+                        >
+                          <option value="">Seleziona...</option>
+                          {campo.opzioni?.map(o => (
+                            <option key={o} value={o}>{o}</option>
+                          ))}
+                        </select>
+                      )}
+                      {campo.tipo === 'checkbox' && (
+                        <label className="flex items-center gap-2 p-2 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
+                          <input type="checkbox" name={campo.nome} defaultChecked={!!existingVal}
+                            className="w-4 h-4 rounded border-brand-300 text-accent-600 focus:ring-accent-200" />
+                          <span className="text-xs text-brand-700">{campo.label}</span>
+                        </label>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             )}
 
@@ -764,7 +833,7 @@ function FaseForm({
                   <h3 className="text-[13px] font-semibold text-brand-800 flex items-center gap-2">
                     <Package size={14} className="text-accent-500" /> Ricezione kit
                   </h3>
-                  <label className="flex items-start gap-3 p-3 rounded-md border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
+                  <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
                     <input type="checkbox" checked={kitRicevuto} onChange={e => setKitRicevuto(e.target.checked)}
                       className="mt-0.5 w-4 h-4 rounded border-brand-300 text-accent-600 focus:ring-accent-200" />
                     <div>
@@ -772,7 +841,7 @@ function FaseForm({
                       <p className="text-[11px] text-brand-400">Conferma di aver ricevuto il kit con le elle di plexiglass</p>
                     </div>
                   </label>
-                  <label className="flex items-start gap-3 p-3 rounded-md border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
+                  <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
                     <input type="checkbox" checked={problemaKit} onChange={e => setProblemaKit(e.target.checked)}
                       className="mt-0.5 w-4 h-4 rounded border-brand-300 text-danger-500 focus:ring-danger-200" />
                     <div>
@@ -802,7 +871,7 @@ function FaseForm({
                           </div>
                         )}
                         <label className="block cursor-pointer">
-                          <div className="border border-dashed border-danger-200 rounded-md p-3 text-center hover:bg-danger-50 transition-colors">
+                          <div className="border border-dashed border-danger-200 rounded-sm p-3 text-center hover:bg-danger-50 transition-colors">
                             <Camera size={16} className="mx-auto text-danger-400 mb-1" />
                             <p className="text-[11px] text-danger-500">Scatta foto del problema</p>
                           </div>
@@ -818,7 +887,7 @@ function FaseForm({
                   <h3 className="text-[13px] font-semibold text-brand-800 flex items-center gap-2">
                     <Wrench size={14} className="text-brand-500" /> Checklist montaggio
                   </h3>
-                  <label className="flex items-start gap-3 p-3 rounded-md border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
+                  <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
                     <input type="checkbox" checked={pezziRicevuti} onChange={e => setPezziRicevuti(e.target.checked)}
                       className="mt-0.5 w-4 h-4 rounded border-brand-300 text-accent-600 focus:ring-accent-200" />
                     <div>
@@ -826,7 +895,7 @@ function FaseForm({
                       <p className="text-[11px] text-brand-400">Kit completo, elle corrispondenti ai prodotti</p>
                     </div>
                   </label>
-                  <label className="flex items-start gap-3 p-3 rounded-md border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
+                  <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
                     <input type="checkbox" checked={montaggioCompleto} onChange={e => setMontaggioCompleto(e.target.checked)}
                       className="mt-0.5 w-4 h-4 rounded border-brand-300 text-accent-600 focus:ring-accent-200" />
                     <div>
@@ -844,7 +913,7 @@ function FaseForm({
                 <h3 className="text-[13px] font-semibold text-brand-800 flex items-center gap-2">
                   <Package size={14} className="text-warning-500" /> Caricamento prodotti
                 </h3>
-                <label className="flex items-start gap-3 p-3 rounded-md border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
+                <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
                   <input type="checkbox" checked={prodottiPosizionati} onChange={e => setProdottiPosizionati(e.target.checked)}
                     className="mt-0.5 w-4 h-4 rounded border-brand-300 text-accent-600 focus:ring-accent-200" />
                   <div>
@@ -852,7 +921,7 @@ function FaseForm({
                     <p className="text-[11px] text-brand-400">Ogni prodotto sullo scaffale corrispondente alla propria elle</p>
                   </div>
                 </label>
-                <div className="flex items-start gap-2 p-3 bg-accent-50 border border-accent-100 rounded-md">
+                <div className="flex items-start gap-2 p-3 bg-accent-50 border border-accent-100 rounded-sm">
                   <Info size={14} className="text-accent-600 mt-0.5 shrink-0" />
                   <p className="text-[11px] text-accent-700">
                     Ultima fase. La foto deve mostrare l'espositore completo con tutti i prodotti. Sara visibile al cliente.
@@ -872,7 +941,7 @@ function FaseForm({
                 <img
                   src={farmacia.planogrammaUrl}
                   alt="Planogramma"
-                  className="w-full rounded-md border border-brand-100"
+                  className="w-full rounded-sm border border-brand-100"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none'
                     const fallback = (e.target as HTMLImageElement).nextElementSibling as HTMLElement
@@ -883,7 +952,7 @@ function FaseForm({
               <img
                 src={esempioImages[fase]}
                 alt={`Esempio fase ${fase}`}
-                className="w-full rounded-md border border-brand-100"
+                className="w-full rounded-sm border border-brand-100"
                 style={fase === 3 && farmacia.planogrammaUrl ? { display: 'none' } : undefined}
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none'
@@ -892,7 +961,7 @@ function FaseForm({
                 }}
               />
               {/* Fallback if image fails to load */}
-              <div className="hidden flex-col items-center justify-center py-8 text-center bg-brand-50 rounded-md border border-brand-100">
+              <div className="hidden flex-col items-center justify-center py-8 text-center bg-brand-50 rounded-sm border border-brand-100">
                 <FaseIcon size={32} className="text-brand-300 mb-2" />
                 <p className="text-xs text-brand-500">{esempioDescriptions[fase]}</p>
               </div>
@@ -912,7 +981,7 @@ function FaseForm({
             <div className="grid grid-cols-3 gap-2">
               {foto.map((f, i) => (
                 <div key={i} className="relative aspect-square">
-                  <img src={f} alt="" className="w-full h-full object-cover rounded-md border border-brand-100" />
+                  <img src={f} alt="" className="w-full h-full object-cover rounded-sm border border-brand-100" />
                   <button type="button" onClick={() => removePhoto(i)}
                     className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-danger-500 text-white rounded-full flex items-center justify-center shadow-sm">
                     <X size={10} />
@@ -922,7 +991,7 @@ function FaseForm({
             </div>
           )}
           <label className="block cursor-pointer">
-            <div className={`border-2 border-dashed rounded-md p-5 text-center transition-colors ${
+            <div className={`border-2 border-dashed rounded-sm p-5 text-center transition-colors ${
               foto.length === 0 ? 'border-accent-200 bg-accent-50/30 hover:bg-accent-50' : 'border-brand-200 hover:border-brand-300'
             }`}>
               {uploading ? (
@@ -1036,7 +1105,7 @@ function ReportView({
   }
 
   return (
-    <div className="space-y-4 max-w-lg mx-auto">
+    <div className="space-y-4 max-w-2xl mx-auto">
       <button onClick={onBack} className="btn-ghost -ml-3 text-brand-500">
         <ArrowLeft size={15} /> Torna alla lista
       </button>

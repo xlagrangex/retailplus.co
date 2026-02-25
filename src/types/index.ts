@@ -59,6 +59,23 @@ export interface Rilievo {
   dataCompletamento?: string
   oraCompletamento?: string
   inAttesaMateriale?: boolean
+  valoriDinamici?: Record<string, string | number | boolean>
+}
+
+export type CampoTipo = 'number' | 'text' | 'checkbox' | 'select'
+
+export interface CampoConfigurazione {
+  id: string
+  fase: FaseNumero
+  nome: string
+  label: string
+  descrizione?: string
+  tipo: CampoTipo
+  unita?: string
+  obbligatorio: boolean
+  opzioni?: string[]
+  ordine: number
+  attivo: boolean
 }
 
 export type StatoFarmacia = 'da_fare' | 'in_corso' | 'completata' | 'in_attesa'

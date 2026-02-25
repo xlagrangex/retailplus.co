@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
-import { Farmacia, Assegnazione, Rilievo, User } from '../types'
+import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import {
   fetchUsers, fetchFarmacie, fetchAssegnazioni, fetchRilievi,
@@ -8,12 +8,16 @@ import {
   insertUser as sbInsertUser, deleteUserDb,
   upsertAssegnazione, deleteAssegnazione,
   upsertRilievo,
+  fetchCampiConfigurazione,
+  upsertCampoConfigurazione as sbUpsertCampo,
+  deleteCampoConfigurazione as sbDeleteCampo,
 } from '../data/supabase'
 import {
   getFarmacie, saveFarmacie,
   getAssegnazioni, saveAssegnazioni,
   getRilievi, saveRilievi,
   getUsers, saveUsers,
+  getCampiConfigurazione, saveCampiConfigurazione, defaultCampiConfigurazione,
 } from '../data/mock'
 
 interface DataContextType {
@@ -32,6 +36,10 @@ interface DataContextType {
   assignFarmacia: (farmaciaId: string, merchandiserId: string) => void
   unassignFarmacia: (farmaciaId: string) => void
   saveRilievo: (r: Rilievo) => void
+  campiConfigurazione: CampoConfigurazione[]
+  addCampo: (c: CampoConfigurazione) => void
+  updateCampo: (c: CampoConfigurazione) => void
+  removeCampo: (id: string) => void
 }
 
 const DataContext = createContext<DataContextType | null>(null)
@@ -41,6 +49,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [assegnazioni, setAssegnazioni] = useState<Assegnazione[]>(() => isSupabaseConfigured ? [] : getAssegnazioni())
   const [rilievi, setRilievi] = useState<Rilievo[]>(() => isSupabaseConfigured ? [] : getRilievi())
   const [users, setUsers] = useState<User[]>(() => isSupabaseConfigured ? [] : getUsers())
+  const [campiConfigurazione, setCampiConfigurazione] = useState<CampoConfigurazione[]>(
+    () => isSupabaseConfigured ? defaultCampiConfigurazione : getCampiConfigurazione()
+  )
   const [isLoading, setIsLoading] = useState(isSupabaseConfigured)
 
   // Initial fetch from Supabase
@@ -52,11 +63,15 @@ export function DataProvider({ children }: { children: ReactNode }) {
         const [u, f, a, r] = await Promise.all([
           fetchUsers(), fetchFarmacie(), fetchAssegnazioni(), fetchRilievi()
         ])
+        // Fetch campi — may fail if table doesn't exist yet
+        let campi = defaultCampiConfigurazione
+        try { campi = await fetchCampiConfigurazione(); if (campi.length === 0) campi = defaultCampiConfigurazione } catch { /* fallback */ }
         if (!cancelled) {
           setUsers(u)
           setFarmacie(f)
           setAssegnazioni(a)
           setRilievi(r)
+          setCampiConfigurazione(campi)
           setIsLoading(false)
         }
       } catch (err) {
@@ -201,6 +216,43 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  const addCampo = useCallback((c: CampoConfigurazione) => {
+    if (isSupabaseConfigured) {
+      sbUpsertCampo(c).then(() => {
+        fetchCampiConfigurazione().then(setCampiConfigurazione).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const updated = [...getCampiConfigurazione(), c]
+      saveCampiConfigurazione(updated)
+      setCampiConfigurazione(updated)
+    }
+  }, [])
+
+  const updateCampo = useCallback((c: CampoConfigurazione) => {
+    if (isSupabaseConfigured) {
+      sbUpsertCampo(c).then(() => {
+        fetchCampiConfigurazione().then(setCampiConfigurazione).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const current = getCampiConfigurazione()
+      const updated = current.map(x => x.id === c.id ? c : x)
+      saveCampiConfigurazione(updated)
+      setCampiConfigurazione(updated)
+    }
+  }, [])
+
+  const removeCampo = useCallback((id: string) => {
+    if (isSupabaseConfigured) {
+      sbDeleteCampo(id).then(() => {
+        fetchCampiConfigurazione().then(setCampiConfigurazione).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const updated = getCampiConfigurazione().filter(c => c.id !== id)
+      saveCampiConfigurazione(updated)
+      setCampiConfigurazione(updated)
+    }
+  }, [])
+
   return (
     <DataContext.Provider value={{
       farmacie, assegnazioni, rilievi, users, isLoading, refresh,
@@ -208,6 +260,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       addUser, removeUser,
       assignFarmacia, unassignFarmacia,
       saveRilievo: saveRilievoFn,
+      campiConfigurazione, addCampo, updateCampo, removeCampo,
     }}>
       {children}
     </DataContext.Provider>
