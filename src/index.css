@@ -7,10 +7,15 @@
 @layer base {
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: #102a43;
+    color: #273E3A;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #f7f9fc;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', 'Inter', -apple-system, sans-serif;
+    font-weight: 700;
   }
 
   /* Refined form inputs */
@@ -21,8 +26,8 @@
   input[type="tel"],
   select,
   textarea {
-    border-color: #d9e2ec;
-    color: #102a43;
+    border-color: #dfe9e7;
+    color: #273E3A;
   }
 
   input[type="text"]::placeholder,
@@ -31,36 +36,36 @@
   input[type="number"]::placeholder,
   input[type="tel"]::placeholder,
   textarea::placeholder {
-    color: #9fb3c8;
+    color: #a0bfb9;
   }
 
   input:focus,
   select:focus,
   textarea:focus {
     --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) #bfdbfe;
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) #d4f2ee;
     box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    border-color: #60a5fa;
+    border-color: #329083;
   }
 }
 
 @layer components {
   .card {
     background-color: #fff;
-    border-radius: 0.25rem;
-    border: 1px solid #d9e2ec;
+    border-radius: 0.375rem;
+    border: 1px solid #dfe9e7;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.04), 0 1px 2px -1px rgba(0,0,0,0.03);
   }
   .card-hover {
     background-color: #fff;
-    border-radius: 0.25rem;
-    border: 1px solid #d9e2ec;
+    border-radius: 0.375rem;
+    border: 1px solid #dfe9e7;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.04), 0 1px 2px -1px rgba(0,0,0,0.03);
     transition: all 200ms;
   }
   .card-hover:hover {
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
-    border-color: #bcccdc;
+    border-color: #c2d8d4;
   }
   .btn-primary {
     display: inline-flex;
@@ -68,15 +73,15 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
-    background-color: #0552b5;
+    background-color: #329083;
     color: #fff;
-    border-radius: 0.1875rem;
+    border-radius: 0.375rem;
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
     transition: background-color 150ms;
   }
-  .btn-primary:hover { background-color: #03449e; }
-  .btn-primary:active { background-color: #01337d; }
+  .btn-primary:hover { background-color: #2b7268; }
+  .btn-primary:active { background-color: #235f55; }
 
   .btn-secondary {
     display: inline-flex;
@@ -85,15 +90,15 @@
     gap: 0.5rem;
     padding: 0.625rem 1rem;
     background-color: #fff;
-    color: #334e68;
-    border: 1px solid #bcccdc;
-    border-radius: 0.1875rem;
+    color: #3a5c56;
+    border: 1px solid #c2d8d4;
+    border-radius: 0.375rem;
     font-size: 0.875rem;
     font-weight: 500;
     transition: background-color 150ms;
   }
-  .btn-secondary:hover { background-color: #f0f4f8; }
-  .btn-secondary:active { background-color: #d9e2ec; }
+  .btn-secondary:hover { background-color: #f0f5f4; }
+  .btn-secondary:active { background-color: #dfe9e7; }
 
   .btn-ghost {
     display: inline-flex;
@@ -101,33 +106,33 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 0.5rem 0.75rem;
-    color: #486581;
-    border-radius: 0.1875rem;
+    color: #4a7069;
+    border-radius: 0.375rem;
     font-size: 0.875rem;
     font-weight: 500;
     transition: background-color 150ms;
   }
-  .btn-ghost:hover { background-color: #f0f4f8; }
+  .btn-ghost:hover { background-color: #f0f5f4; }
 
   .input {
     width: 100%;
     padding: 0.625rem 0.875rem;
-    border: 1px solid #bcccdc;
-    border-radius: 0.1875rem;
+    border: 1px solid #c2d8d4;
+    border-radius: 0.375rem;
     font-size: 0.875rem;
     outline: none;
     transition: all 150ms;
   }
   .input:focus {
-    box-shadow: 0 0 0 2px #7cc4fa;
-    border-color: #2186eb;
+    box-shadow: 0 0 0 2px #afe5de;
+    border-color: #329083;
   }
 
   .label {
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #334e68;
+    color: #3a5c56;
     margin-bottom: 0.375rem;
   }
 
@@ -136,26 +141,28 @@
     align-items: center;
     gap: 0.375rem;
     padding: 0.25rem 0.625rem;
-    border-radius: 0.1875rem;
+    border-radius: 0.375rem;
     font-size: 0.75rem;
     font-weight: 500;
   }
 
   .page-title {
+    font-family: 'Poppins', 'Inter', sans-serif;
     font-size: 1.25rem;
-    font-weight: 600;
-    color: #102a43;
+    font-weight: 700;
+    color: #273E3A;
     letter-spacing: -0.025em;
   }
   .page-subtitle {
     font-size: 0.875rem;
-    color: #627d98;
+    color: #5d8a82;
     margin-top: 0.125rem;
   }
   .section-title {
+    font-family: 'Poppins', 'Inter', sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #334e68;
+    color: #3a5c56;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -163,9 +170,9 @@
 
 /* Leaflet corporate styling */
 .leaflet-popup-content-wrapper {
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  border: 1px solid #d9e2ec;
+  border: 1px solid #dfe9e7;
 }
 
 .leaflet-popup-content {

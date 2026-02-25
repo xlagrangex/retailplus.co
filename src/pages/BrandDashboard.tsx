@@ -12,12 +12,12 @@ export default function BrandDashboard() {
     <div className="space-y-6">
       <div>
         <h1 className="page-title">Dashboard</h1>
-        <p className="page-subtitle">Panoramica avanzamento allestimenti</p>
+        <p className="page-subtitle">Panoramica avanzamento merchandising</p>
       </div>
       <StatsCards farmacie={farmacie} rilievi={rilievi} />
       <div className="card p-5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold text-brand-700">Mappa nazionale</h2>
+          <h2 className="text-sm font-heading font-bold text-brand-700">Mappa nazionale</h2>
           <Legend />
         </div>
         <FarmaciaMap farmacie={farmacie} rilievi={rilievi} height="450px" />
@@ -121,12 +121,14 @@ export function BrandFarmaciePage() {
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Farmacia</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden sm:table-cell">Localita</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Stato</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden lg:table-cell">Ultimo sopralluogo</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden md:table-cell">Fasi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-brand-50">
               {filtered.map(f => {
                 const stato = getStatoFarmacia(rilievi, f.id)
+                const ultimoRilievo = rilievi.filter(r => r.farmaciaId === f.id && r.completata).sort((a, b) => (b.dataCompletamento || '').localeCompare(a.dataCompletamento || ''))[0]
                 return (
                   <tr key={f.id} className="hover:bg-brand-50/50 transition-colors">
                     <td className="px-4 py-3.5">
@@ -140,6 +142,16 @@ export function BrandFarmaciePage() {
                     </td>
                     <td className="px-4 py-3.5">
                       <StatoBadge stato={stato} />
+                    </td>
+                    <td className="px-4 py-3.5 hidden lg:table-cell">
+                      {ultimoRilievo ? (
+                        <div>
+                          <p className="text-[13px] text-brand-700">{ultimoRilievo.dataCompletamento}</p>
+                          <p className="text-[11px] text-brand-400">{ultimoRilievo.oraCompletamento} — Fase {ultimoRilievo.fase}</p>
+                        </div>
+                      ) : (
+                        <span className="text-[13px] text-brand-300">—</span>
+                      )}
                     </td>
                     <td className="px-4 py-3.5 hidden md:table-cell">
                       <div className="flex gap-1">

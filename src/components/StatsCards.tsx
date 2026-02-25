@@ -15,7 +15,7 @@ export default function StatsCards({ farmacie, rilievi }: Props) {
   const percentuale = totale > 0 ? Math.round((completate / totale) * 100) : 0
 
   const cards = [
-    { label: 'Totale farmacie', value: totale, icon: Store, color: 'text-accent-600', bg: 'bg-accent-50', border: 'border-accent-100' },
+    { label: 'Totale farmacie', value: totale, icon: Store, color: 'text-accent-700', bg: 'bg-accent-50', border: 'border-accent-100' },
     { label: 'Completate', value: completate, icon: CheckCircle2, color: 'text-success-600', bg: 'bg-success-50', border: 'border-success-100' },
     { label: 'In corso', value: inCorso, icon: Clock, color: 'text-warning-500', bg: 'bg-warning-50', border: 'border-warning-100' },
     { label: 'Da fare', value: daFare, icon: AlertCircle, color: 'text-danger-500', bg: 'bg-danger-50', border: 'border-danger-100' },
@@ -34,7 +34,7 @@ export default function StatsCards({ farmacie, rilievi }: Props) {
                   <Icon size={16} className={c.color} />
                 </div>
               </div>
-              <p className="text-2xl font-semibold text-brand-900 tracking-tight">{c.value}</p>
+              <p className="text-2xl font-heading font-bold text-brand-900 tracking-tight">{c.value}</p>
               <p className="text-xs text-brand-500 mt-0.5">{c.label}</p>
             </div>
           )
@@ -46,9 +46,9 @@ export default function StatsCards({ farmacie, rilievi }: Props) {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <TrendingUp size={15} className="text-brand-500" />
-            <span className="text-sm font-medium text-brand-700">Avanzamento complessivo</span>
+            <span className="text-sm font-heading font-bold text-brand-700">Avanzamento complessivo</span>
           </div>
-          <span className="text-sm font-semibold text-brand-900">{percentuale}%</span>
+          <span className="text-sm font-heading font-bold text-brand-900">{percentuale}%</span>
         </div>
         <div className="w-full bg-brand-100 rounded-full h-2">
           <div

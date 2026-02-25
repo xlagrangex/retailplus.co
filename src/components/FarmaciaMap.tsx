@@ -67,15 +67,15 @@ export default function FarmaciaMap({ farmacie, rilievi, onFarmaciaClick, height
           >
             <Popup>
               <div className="text-[13px] min-w-[200px]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                <p className="font-semibold text-sm mb-0.5" style={{ color: '#102a43' }}>{f.nome}</p>
-                <p style={{ color: '#829ab1' }}>{f.indirizzo}, {f.citta}</p>
+                <p className="font-semibold text-sm mb-0.5" style={{ color: '#273E3A' }}>{f.nome}</p>
+                <p style={{ color: '#7da39c' }}>{f.indirizzo}, {f.citta}</p>
                 <div className="mt-2 flex items-center gap-2">
                   <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ backgroundColor: colore }} />
-                  <span className="font-medium" style={{ color: '#334e68' }}>{getLabelStato(stato)}</span>
-                  <span style={{ color: '#9fb3c8' }}>({fasiComplete}/3)</span>
+                  <span className="font-medium" style={{ color: '#3a5c56' }}>{getLabelStato(stato)}</span>
+                  <span style={{ color: '#a0bfb9' }}>({fasiComplete}/3)</span>
                 </div>
-                {f.referente && <p className="mt-1.5" style={{ color: '#829ab1' }}>Referente: {f.referente}</p>}
-                {f.telefono && <p style={{ color: '#829ab1' }}>Tel: {f.telefono}</p>}
+                {f.referente && <p className="mt-1.5" style={{ color: '#7da39c' }}>Referente: {f.referente}</p>}
+                {f.telefono && <p style={{ color: '#7da39c' }}>Tel: {f.telefono}</p>}
               </div>
             </Popup>
           </CircleMarker>
