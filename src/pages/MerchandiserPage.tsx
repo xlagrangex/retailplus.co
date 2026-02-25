@@ -196,7 +196,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
       saveRilievo({
         id: `wait-${Date.now()}`,
         farmaciaId: farmacia.id,
-        merchandiserId: user.id,
+        merchandiserId: user!.id,
         fase: 1,
         foto: [],
         completata: false,
