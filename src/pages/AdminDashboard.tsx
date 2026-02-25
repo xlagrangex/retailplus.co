@@ -29,11 +29,11 @@ export default function AdminDashboard() {
             <Users size={14} className="text-brand-500" />
             <p className="text-xs text-brand-500 font-medium">Merchandiser attive</p>
           </div>
-          <p className="text-2xl font-semibold text-brand-900">{merchandisers.length}</p>
+          <p className="text-2xl font-heading font-bold text-brand-900">{merchandisers.length}</p>
         </div>
         <div className="card p-4">
           <p className="text-xs text-brand-500 font-medium mb-1">Farmacie assegnate</p>
-          <p className="text-2xl font-semibold text-brand-900">
+          <p className="text-2xl font-heading font-bold text-brand-900">
             {assegnazioni.length} <span className="text-sm font-normal text-brand-400">/ {farmacie.length}</span>
           </p>
         </div>
@@ -42,11 +42,11 @@ export default function AdminDashboard() {
             <AlertTriangle size={14} className="text-warning-500" />
             <p className="text-xs text-brand-500 font-medium">Non assegnate</p>
           </div>
-          <p className="text-2xl font-semibold text-danger-500">{farmacie.length - assegnazioni.length}</p>
+          <p className="text-2xl font-heading font-bold text-danger-500">{farmacie.length - assegnazioni.length}</p>
         </div>
       </div>
       <div className="card p-5">
-        <h2 className="text-sm font-semibold text-brand-700 mb-3">Distribuzione nazionale</h2>
+        <h2 className="text-sm font-heading font-bold text-brand-700 mb-3">Distribuzione nazionale</h2>
         <FarmaciaMap farmacie={farmacie} rilievi={rilievi} height="350px" />
       </div>
     </div>
@@ -62,7 +62,7 @@ export function AdminFarmaciePage() {
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
 
   const filtered = farmacie.filter(f =>
-    (f.nome + f.citta + f.indirizzo + f.provincia).toLowerCase().includes(search.toLowerCase())
+    (f.nome + f.citta + f.indirizzo + f.provincia + (f.codiceCliente || '') + (f.regione || '')).toLowerCase().includes(search.toLowerCase())
   )
 
   function handleCSVImport(e: React.ChangeEvent<HTMLInputElement>) {
@@ -83,6 +83,9 @@ export function AdminFarmaciePage() {
           lng: parseFloat(row.lng || row.longitudine || '12.5') || 12.5,
           telefono: row.telefono || row.Telefono || '',
           referente: row.referente || row.Referente || '',
+          codiceCliente: row.codiceCliente || row.codice || row.code || '',
+          regione: row.regione || row.Regione || row.region || '',
+          rippianiCategory: parseInt(row.rippianiCategory || row.ripiani || row['NUMERO DI RIPIANI category'] || '0') || undefined,
         })).filter((f: Farmacia) => f.nome)
         importFarmacie(newFarmacie)
         alert(`Importate ${newFarmacie.length} farmacie`)
@@ -158,7 +161,7 @@ export function AdminFarmaciePage() {
       {showAdd && (
         <form onSubmit={handleAddManual} className="card p-5 grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="col-span-2 md:col-span-4 mb-1">
-            <h3 className="text-sm font-semibold text-brand-700">Nuova farmacia</h3>
+            <h3 className="text-sm font-heading font-bold text-brand-700">Nuova farmacia</h3>
           </div>
           <input name="nome" placeholder="Nome farmacia *" required className="col-span-2 input" />
           <input name="indirizzo" placeholder="Indirizzo *" required className="col-span-2 input" />
@@ -187,7 +190,9 @@ export function AdminFarmaciePage() {
             <thead>
               <tr className="border-b border-brand-100">
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Farmacia</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden md:table-cell">Codice</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden sm:table-cell">Localita</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden lg:table-cell">Ripiani</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Stato</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Merchandiser</th>
                 <th className="text-right px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider w-24"></th>
@@ -210,9 +215,11 @@ export function AdminFarmaciePage() {
                   <tr key={f.id} className="hover:bg-brand-50/50 transition-colors">
                     <td className="px-4 py-3.5">
                       <p className="font-medium text-brand-900 text-[13px]">{f.nome}</p>
-                      <p className="text-xs text-brand-400">{f.indirizzo}</p>
+                      <p className="text-xs text-brand-400">{f.indirizzo || f.regione || ''}</p>
                     </td>
-                    <td className="px-4 py-3.5 text-[13px] text-brand-600 hidden sm:table-cell">{f.citta}</td>
+                    <td className="px-4 py-3.5 text-[13px] text-brand-500 hidden md:table-cell font-mono">{f.codiceCliente || '—'}</td>
+                    <td className="px-4 py-3.5 text-[13px] text-brand-600 hidden sm:table-cell">{f.citta}{f.regione ? ` (${f.regione})` : ''}</td>
+                    <td className="px-4 py-3.5 text-[13px] text-brand-600 hidden lg:table-cell text-center">{f.rippianiCategory ?? '—'}</td>
                     <td className="px-4 py-3.5">
                       <span className={`badge ${sc.bg} ${sc.text} border ${sc.border}`}>
                         <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: sc.dot }} />
@@ -357,15 +364,15 @@ export function AdminMerchandiserPage() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3">
         <div className="card p-3 text-center">
-          <p className="text-xl font-semibold text-brand-900">{merchandisers.length}</p>
+          <p className="text-xl font-heading font-bold text-brand-900">{merchandisers.length}</p>
           <p className="text-[11px] text-brand-500">Merchandiser</p>
         </div>
         <div className="card p-3 text-center">
-          <p className="text-xl font-semibold text-success-600">{totalAssigned}</p>
+          <p className="text-xl font-heading font-bold text-success-600">{totalAssigned}</p>
           <p className="text-[11px] text-brand-500">Assegnate</p>
         </div>
         <div className="card p-3 text-center">
-          <p className="text-xl font-semibold text-danger-500">{totalUnassigned}</p>
+          <p className="text-xl font-heading font-bold text-danger-500">{totalUnassigned}</p>
           <p className="text-[11px] text-brand-500">Non assegnate</p>
         </div>
       </div>
@@ -374,7 +381,7 @@ export function AdminMerchandiserPage() {
       {showAdd && (
         <form onSubmit={handleAdd} className="card p-5 grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="col-span-2 md:col-span-4 mb-1">
-            <h3 className="text-sm font-semibold text-brand-700">Nuova merchandiser</h3>
+            <h3 className="text-sm font-heading font-bold text-brand-700">Nuova merchandiser</h3>
           </div>
           <input name="nome" placeholder="Nome *" required className="input" />
           <input name="cognome" placeholder="Cognome *" required className="input" />

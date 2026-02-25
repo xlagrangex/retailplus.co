@@ -23,6 +23,9 @@ export interface Farmacia {
   email?: string
   note?: string
   planogrammaUrl?: string
+  codiceCliente?: string
+  regione?: string
+  rippianiCategory?: number
 }
 
 export interface Assegnazione {

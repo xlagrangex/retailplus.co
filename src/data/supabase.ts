@@ -29,6 +29,9 @@ function farmaciaFromDb(row: any): Farmacia {
     email: row.email || undefined,
     note: row.note || undefined,
     planogrammaUrl: row.planogramma_url || undefined,
+    codiceCliente: row.codice_cliente || undefined,
+    regione: row.regione || undefined,
+    rippianiCategory: row.rippiani_category ?? undefined,
   }
 }
 
@@ -142,6 +145,9 @@ function farmaciaToDb(f: Farmacia): any {
     email: f.email || null,
     note: f.note || null,
     planogramma_url: f.planogrammaUrl || null,
+    codice_cliente: f.codiceCliente || null,
+    regione: f.regione || null,
+    rippiani_category: f.rippianiCategory ?? null,
   }
 }
 
@@ -191,6 +197,9 @@ export async function updateFarmaciaDb(id: string, updates: Partial<Farmacia>): 
   if (updates.telefono !== undefined) dbUpdates.telefono = updates.telefono
   if (updates.referente !== undefined) dbUpdates.referente = updates.referente
   if (updates.note !== undefined) dbUpdates.note = updates.note
+  if (updates.codiceCliente !== undefined) dbUpdates.codice_cliente = updates.codiceCliente
+  if (updates.regione !== undefined) dbUpdates.regione = updates.regione
+  if (updates.rippianiCategory !== undefined) dbUpdates.rippiani_category = updates.rippianiCategory
   const { error } = await supabase.from('farmacie').update(dbUpdates).eq('id', id)
   if (error) throw error
 }
