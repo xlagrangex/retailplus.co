@@ -5,6 +5,7 @@ import { isSupabaseConfigured } from './lib/supabase'
 import { initMockData } from './data/mock'
 import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 import BrandDashboard, { BrandMapPage, BrandFarmaciePage } from './pages/BrandDashboard'
 import AdminDashboard, { AdminFarmaciePage, AdminMerchandiserPage, AdminMapPage, AdminConfigurazionePage } from './pages/AdminDashboard'
 import MerchandiserPage from './pages/MerchandiserPage'
@@ -45,7 +46,14 @@ function getRoutesForRole(ruolo: string) {
 function AppRoutes() {
   const { user } = useAuth()
 
-  if (!user) return <LoginPage />
+  if (!user) {
+    return (
+      <Routes>
+        <Route path="/registrazione" element={<RegisterPage />} />
+        <Route path="*" element={<LoginPage />} />
+      </Routes>
+    )
+  }
 
   return (
     <Layout>

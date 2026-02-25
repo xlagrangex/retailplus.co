@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { ArrowRight, Eye, EyeOff, Shield, Users, BarChart3 } from 'lucide-react'
 
@@ -39,69 +40,72 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left panel - branding */}
-      <div className="hidden lg:flex lg:w-[480px] bg-brand-900 text-white flex-col justify-between p-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03]" style={{
+      <div className="hidden lg:flex lg:w-[480px] flex-col justify-between p-12 relative overflow-hidden" style={{ backgroundColor: '#273E3A' }}>
+        <div className="absolute inset-0 opacity-[0.04]" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }} />
         <div className="relative">
           <div className="flex items-center gap-3 mb-16">
-            <div className="w-10 h-10 bg-white/10 backdrop-blur rounded flex items-center justify-center border border-white/20">
-              <span className="font-bold text-lg">LF</span>
-            </div>
-            <span className="font-semibold text-lg tracking-tight">LogPlus Farma</span>
+            <span className="font-heading font-bold text-2xl text-white tracking-tight">Retail<span style={{ color: '#329083' }}>+</span></span>
           </div>
-          <h1 className="text-3xl font-bold leading-tight mb-4">
-            Piattaforma di gestione<br />allestimenti cosmetici
+          <h1 className="font-heading text-3xl font-bold text-white leading-tight mb-4">
+            Dashboard gestione<br />merchandising farmacie
           </h1>
-          <p className="text-brand-300 text-base leading-relaxed max-w-sm">
-            Coordina il rollout di espositori cosmetici su centinaia di farmacie.
+          <p className="text-base leading-relaxed max-w-sm" style={{ color: '#a0bfb9' }}>
+            Coordina il merchandising su centinaia di farmacie.
             Traccia ogni fase, dalla rilevazione al completamento.
           </p>
         </div>
         <div className="relative space-y-4">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center">
-              <span className="text-accent-200 font-semibold text-sm">500</span>
+            <div className="w-10 h-10 rounded-md bg-white/5 border border-white/10 flex items-center justify-center">
+              <span className="font-semibold text-sm" style={{ color: '#84d4c9' }}>500</span>
             </div>
             <div>
-              <p className="text-sm font-medium">Farmacie</p>
-              <p className="text-xs text-brand-400">Copertura nazionale</p>
+              <p className="text-sm font-medium text-white">Farmacie</p>
+              <p className="text-xs" style={{ color: '#7da39c' }}>Copertura nazionale</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center">
-              <span className="text-accent-200 font-semibold text-sm">3</span>
+            <div className="w-10 h-10 rounded-md bg-white/5 border border-white/10 flex items-center justify-center">
+              <span className="font-semibold text-sm" style={{ color: '#84d4c9' }}>3</span>
             </div>
             <div>
-              <p className="text-sm font-medium">Fasi operative</p>
-              <p className="text-xs text-brand-400">Rilievo, montaggio, completamento</p>
+              <p className="text-sm font-medium text-white">Fasi operative</p>
+              <p className="text-xs" style={{ color: '#7da39c' }}>Rilievo, scaricamento e montaggio, caricamento</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center">
-              <span className="text-success-400 font-semibold text-sm">RT</span>
+            <div className="w-10 h-10 rounded-md bg-white/5 border border-white/10 flex items-center justify-center">
+              <span className="font-semibold text-sm" style={{ color: '#5bbfb1' }}>RT</span>
             </div>
             <div>
-              <p className="text-sm font-medium">Monitoraggio in tempo reale</p>
-              <p className="text-xs text-brand-400">Dashboard e mappa interattiva</p>
+              <p className="text-sm font-medium text-white">Monitoraggio in tempo reale</p>
+              <p className="text-xs" style={{ color: '#7da39c' }}>Dashboard e mappa interattiva</p>
+            </div>
+          </div>
+          {/* Developed by - with logos */}
+          <div className="pt-6 mt-4 border-t border-white/10">
+            <p className="text-[11px] uppercase tracking-widest mb-3" style={{ color: '#7da39c' }}>Developed by</p>
+            <div className="flex items-center gap-5">
+              <img src="/logo-logplus.png" alt="LogPlus" className="h-7 brightness-0 invert opacity-90" />
+              <span className="text-white/20 text-lg">|</span>
+              <img src="/logo-euroteam3d.png" alt="Euroteam 3D" className="h-7 brightness-0 invert opacity-90" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Right panel - login form */}
-      <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
+      <div className="flex-1 flex items-center justify-center p-6 sm:p-12 bg-white">
         <div className="w-full max-w-[400px]">
           {/* Mobile logo */}
-          <div className="lg:hidden flex items-center gap-2.5 mb-10">
-            <div className="w-9 h-9 bg-brand-900 rounded flex items-center justify-center">
-              <span className="text-white font-bold text-sm">LF</span>
-            </div>
-            <span className="font-semibold text-brand-900 tracking-tight">LogPlus Farma</span>
+          <div className="lg:hidden flex items-center gap-2 mb-10">
+            <span className="font-heading font-bold text-xl tracking-tight" style={{ color: '#273E3A' }}>Retail<span style={{ color: '#329083' }}>+</span></span>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-brand-900">Accedi alla piattaforma</h2>
+            <h2 className="text-xl font-heading font-bold text-brand-900">Accedi alla piattaforma</h2>
             <p className="text-sm text-brand-500 mt-1">Inserisci le tue credenziali per continuare</p>
           </div>
 
@@ -137,7 +141,7 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-danger-50 border border-danger-100 rounded-sm">
+              <div className="flex items-center gap-2 p-3 bg-danger-50 border border-danger-100 rounded-md">
                 <p className="text-danger-600 text-sm">{error}</p>
               </div>
             )}
@@ -163,25 +167,44 @@ export default function LoginPage() {
                     key={acc.email}
                     onClick={() => quickLogin(acc.email)}
                     disabled={loading}
-                    className="w-full text-left px-4 py-3 rounded-sm border border-brand-100 hover:border-accent-200 hover:bg-accent-50/50 transition-all duration-150 flex items-center gap-3 group disabled:opacity-50"
+                    className="w-full text-left px-4 py-3 rounded-md border border-brand-100 hover:border-accent-400 hover:bg-accent-50/50 transition-all duration-150 flex items-center gap-3 group disabled:opacity-50"
                   >
-                    <div className="w-8 h-8 rounded bg-brand-50 group-hover:bg-accent-50 flex items-center justify-center transition-colors">
+                    <div className="w-8 h-8 rounded-md bg-brand-50 group-hover:bg-accent-50 flex items-center justify-center transition-colors">
                       <Icon size={15} className="text-brand-500 group-hover:text-accent-600 transition-colors" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-brand-800">{acc.label}</p>
                       <p className="text-xs text-brand-400">{acc.desc}</p>
                     </div>
-                    <ArrowRight size={14} className="text-brand-300 group-hover:text-accent-500 transition-colors" />
+                    <ArrowRight size={14} className="text-brand-300 group-hover:text-accent-600 transition-colors" />
                   </button>
                 )
               })}
             </div>
           </div>
 
-          <p className="text-center text-xs text-brand-400 mt-8">
-            LogPlus Farma v1.0 — Ambiente demo
-          </p>
+          {/* Registration link */}
+          <div className="mt-6 text-center">
+            <p className="text-sm text-brand-500">
+              Non hai un account?{' '}
+              <Link to="/registrazione" className="text-accent-600 hover:text-accent-700 font-medium">
+                Registrati come Merchandiser
+              </Link>
+            </p>
+          </div>
+
+          {/* Footer with branding */}
+          <div className="mt-8 space-y-3">
+            <p className="text-center text-xs text-brand-400">
+              Retail+ v1.0 — Ambiente demo
+            </p>
+            <div className="flex items-center justify-center gap-3">
+              <span className="text-[10px] text-brand-300">Developed by</span>
+              <img src="/logo-logplus.png" alt="LogPlus" className="h-4" />
+              <span className="text-brand-200">|</span>
+              <img src="/logo-euroteam3d.png" alt="Euroteam 3D" className="h-4" />
+            </div>
+          </div>
         </div>
       </div>
     </div>

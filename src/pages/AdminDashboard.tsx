@@ -8,7 +8,8 @@ import { uploadPlanogramma } from '../lib/supabase'
 import {
   Upload, Plus, Trash2, UserPlus, Link2, Unlink, Search, MapPin, Users,
   AlertTriangle, ImagePlus, ArrowRightLeft, X, LayoutList, Columns, Filter,
-  Settings, ChevronUp, ChevronDown, GripVertical,
+  Settings, ChevronUp, ChevronDown, GripVertical, CheckCircle, XCircle,
+  Clock, ChevronRight, Mail, Phone, FileText, MapPinIcon,
 } from 'lucide-react'
 import Papa from 'papaparse'
 
@@ -20,7 +21,7 @@ export default function AdminDashboard() {
     <div className="space-y-6">
       <div>
         <h1 className="page-title">Pannello di controllo</h1>
-        <p className="page-subtitle">Gestione completa farmacie, merchandiser e allestimenti</p>
+        <p className="page-subtitle">Gestione completa farmacie, merchandiser e merchandising</p>
       </div>
       <StatsCards farmacie={farmacie} rilievi={rilievi} />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
@@ -194,6 +195,7 @@ export function AdminFarmaciePage() {
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden sm:table-cell">Localita</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden lg:table-cell">Ripiani</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Stato</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden lg:table-cell">Ultimo sopralluogo</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Merchandiser</th>
                 <th className="text-right px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider w-24"></th>
               </tr>
@@ -201,6 +203,7 @@ export function AdminFarmaciePage() {
             <tbody className="divide-y divide-brand-50">
               {filtered.map(f => {
                 const stato = getStatoFarmacia(rilievi, f.id)
+                const ultimoRilievo = rilievi.filter(r => r.farmaciaId === f.id && r.completata).sort((a, b) => (b.dataCompletamento || '').localeCompare(a.dataCompletamento || ''))[0]
                 const assegnazione = assegnazioni.find(a => a.farmaciaId === f.id)
                 const merch = assegnazione ? users.find(u => u.id === assegnazione.merchandiserId) : null
                 const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
@@ -225,6 +228,16 @@ export function AdminFarmaciePage() {
                         <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: sc.dot }} />
                         {getLabelStato(stato)}
                       </span>
+                    </td>
+                    <td className="px-4 py-3.5 hidden lg:table-cell">
+                      {ultimoRilievo ? (
+                        <div>
+                          <p className="text-[13px] text-brand-700">{ultimoRilievo.dataCompletamento}</p>
+                          <p className="text-[11px] text-brand-400">{ultimoRilievo.oraCompletamento} — Fase {ultimoRilievo.fase}</p>
+                        </div>
+                      ) : (
+                        <span className="text-[13px] text-brand-300">—</span>
+                      )}
                     </td>
                     <td className="px-4 py-3.5">
                       {assigning === f.id ? (
@@ -298,10 +311,11 @@ const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: str
 }
 
 export function AdminMerchandiserPage() {
-  const { users, assegnazioni, farmacie, rilievi, addUser, removeUser, assignFarmacia, unassignFarmacia } = useData()
+  const { users, assegnazioni, farmacie, rilievi, addUser, removeUser, assignFarmacia, unassignFarmacia, registrazioniPending, approveRegistrazione, rejectRegistrazione } = useData()
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
   const [showAdd, setShowAdd] = useState(false)
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table')
+  const [expandedReg, setExpandedReg] = useState<string | null>(null)
 
   function handleAdd(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -376,6 +390,112 @@ export function AdminMerchandiserPage() {
           <p className="text-[11px] text-brand-500">Non assegnate</p>
         </div>
       </div>
+
+      {/* Richieste in attesa */}
+      {registrazioniPending.length > 0 && (
+        <div className="card overflow-hidden">
+          <div className="px-4 py-3 bg-warning-50 border-b border-warning-100 flex items-center gap-2">
+            <Clock size={15} className="text-warning-600" />
+            <h3 className="text-sm font-heading font-bold text-warning-700">
+              Richieste in attesa
+            </h3>
+            <span className="ml-1 bg-warning-200 text-warning-800 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+              {registrazioniPending.length}
+            </span>
+          </div>
+          <div className="divide-y divide-brand-50">
+            {registrazioniPending.map(reg => {
+              const isExpanded = expandedReg === reg.id
+              return (
+                <div key={reg.id} className="px-4 py-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-md bg-brand-100 flex items-center justify-center">
+                      <span className="text-[11px] font-semibold text-brand-600">{reg.nome[0]}{reg.cognome[0]}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[13px] font-medium text-brand-900">{reg.nome} {reg.cognome}</p>
+                      <p className="text-xs text-brand-400">{reg.email} — {reg.citta} ({reg.provincia})</p>
+                    </div>
+                    <p className="text-[11px] text-brand-400 hidden sm:block">
+                      {new Date(reg.dataRichiesta).toLocaleDateString('it-IT')}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setExpandedReg(isExpanded ? null : reg.id)}
+                      className="text-brand-400 hover:text-brand-600 transition-colors p-1"
+                    >
+                      <ChevronRight size={14} className={`transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { if (confirm(`Approvare la richiesta di ${reg.nome} ${reg.cognome}?`)) approveRegistrazione(reg.id) }}
+                      className="flex items-center gap-1 text-xs font-medium text-success-600 hover:text-success-700 bg-success-50 hover:bg-success-100 border border-success-200 px-2.5 py-1.5 rounded-md transition-colors"
+                    >
+                      <CheckCircle size={13} /> Approva
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { if (confirm(`Rifiutare la richiesta di ${reg.nome} ${reg.cognome}?`)) rejectRegistrazione(reg.id) }}
+                      className="flex items-center gap-1 text-xs font-medium text-danger-600 hover:text-danger-700 bg-danger-50 hover:bg-danger-100 border border-danger-200 px-2.5 py-1.5 rounded-md transition-colors"
+                    >
+                      <XCircle size={13} /> Rifiuta
+                    </button>
+                  </div>
+                  {isExpanded && (
+                    <div className="mt-3 ml-11 grid grid-cols-2 md:grid-cols-3 gap-3 p-3 bg-brand-50/50 rounded-md">
+                      <div className="flex items-center gap-2">
+                        <Phone size={12} className="text-brand-400" />
+                        <div>
+                          <p className="text-[10px] text-brand-400">Telefono</p>
+                          <p className="text-xs text-brand-700">{reg.telefono}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <FileText size={12} className="text-brand-400" />
+                        <div>
+                          <p className="text-[10px] text-brand-400">Codice Fiscale</p>
+                          <p className="text-xs text-brand-700 font-mono">{reg.codiceFiscale}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPinIcon size={12} className="text-brand-400" />
+                        <div>
+                          <p className="text-[10px] text-brand-400">Indirizzo</p>
+                          <p className="text-xs text-brand-700">{reg.indirizzo}, {reg.citta} ({reg.provincia})</p>
+                        </div>
+                      </div>
+                      {reg.partitaIva && (
+                        <div>
+                          <p className="text-[10px] text-brand-400">Partita IVA</p>
+                          <p className="text-xs text-brand-700 font-mono">{reg.partitaIva}</p>
+                        </div>
+                      )}
+                      {reg.iban && (
+                        <div>
+                          <p className="text-[10px] text-brand-400">IBAN</p>
+                          <p className="text-xs text-brand-700 font-mono">{reg.iban}</p>
+                        </div>
+                      )}
+                      {reg.note && (
+                        <div className="col-span-2 md:col-span-3">
+                          <p className="text-[10px] text-brand-400">Note</p>
+                          <p className="text-xs text-brand-600 italic">{reg.note}</p>
+                        </div>
+                      )}
+                      {reg.fotoDocumento && (
+                        <div className="col-span-2 md:col-span-3">
+                          <p className="text-[10px] text-brand-400 mb-1">Documento d'identita</p>
+                          <img src={reg.fotoDocumento} alt="Documento" className="max-h-40 rounded-md border border-brand-200" />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Add form */}
       {showAdd && (
@@ -500,6 +620,7 @@ function AssignmentTableView({
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Farmacia</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden sm:table-cell">Citta</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Stato</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden lg:table-cell">Ultimo sopralluogo</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Merchandiser</th>
                 <th className="text-right px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider w-20">Azioni</th>
               </tr>
@@ -507,6 +628,7 @@ function AssignmentTableView({
             <tbody className="divide-y divide-brand-50">
               {filtered.map(f => {
                 const stato = getStatoFarmacia(rilievi, f.id)
+                const ultimoRilievo = rilievi.filter((r: any) => r.farmaciaId === f.id && r.completata).sort((a: any, b: any) => (b.dataCompletamento || '').localeCompare(a.dataCompletamento || ''))[0]
                 const assegnazione = assegnazioni.find((a: any) => a.farmaciaId === f.id)
                 const merch = assegnazione ? users.find(u => u.id === assegnazione.merchandiserId) : null
                 const sc = statoColors[stato]
@@ -525,6 +647,16 @@ function AssignmentTableView({
                         <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: sc.dot }} />
                         {getLabelStato(stato)}
                       </span>
+                    </td>
+                    <td className="px-4 py-3 hidden lg:table-cell">
+                      {ultimoRilievo ? (
+                        <div>
+                          <p className="text-[13px] text-brand-700">{ultimoRilievo.dataCompletamento}</p>
+                          <p className="text-[11px] text-brand-400">{ultimoRilievo.oraCompletamento} — Fase {ultimoRilievo.fase}</p>
+                        </div>
+                      ) : (
+                        <span className="text-[13px] text-brand-300">—</span>
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       {assigning === f.id ? (
@@ -702,6 +834,7 @@ function AssignmentKanbanView({
               {col.farmacie.map(f => {
                 const stato = getStatoFarmacia(rilievi, f.id)
                 const sc = statoColors[stato]
+                const lastRil = rilievi.filter((r: any) => r.farmaciaId === f.id && r.completata).sort((a: any, b: any) => (b.dataCompletamento || '').localeCompare(a.dataCompletamento || ''))[0]
 
                 return (
                   <div key={f.id} className="card p-3 group">
@@ -712,7 +845,11 @@ function AssignmentKanbanView({
                         {getLabelStato(stato)}
                       </span>
                     </div>
-                    <p className="text-[11px] text-brand-400 mb-2">{f.citta} ({f.provincia})</p>
+                    <p className="text-[11px] text-brand-400">{f.citta} ({f.provincia})</p>
+                    {lastRil && (
+                      <p className="text-[10px] text-brand-400 mb-2">{lastRil.dataCompletamento} {lastRil.oraCompletamento} — F{lastRil.fase}</p>
+                    )}
+                    {!lastRil && <div className="mb-2" />}
                     <div className="flex items-center gap-1">
                       {/* Move to select */}
                       <select

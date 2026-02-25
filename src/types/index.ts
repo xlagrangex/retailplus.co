@@ -9,6 +9,26 @@ export interface User {
   telefono?: string
 }
 
+export type RegistrazioneStato = 'pending' | 'approved' | 'rejected'
+
+export interface RegistrazionePending {
+  id: string
+  email: string
+  nome: string
+  cognome: string
+  telefono: string
+  codiceFiscale: string
+  indirizzo: string
+  citta: string
+  provincia: string
+  partitaIva?: string
+  iban?: string
+  fotoDocumento?: string
+  note?: string
+  stato: RegistrazioneStato
+  dataRichiesta: string
+}
+
 export interface Farmacia {
   id: string
   nome: string
@@ -46,9 +66,10 @@ export interface Rilievo {
   larghezza?: number
   altezza?: number
   numScaffali?: number
-  // Fase 2 - montaggio
+  // Fase 2 - montaggio plexiglass
   pezziRicevuti?: boolean
-  montaggioCompleto?: boolean
+  scaricamentoCompleto?: boolean   // sottopunto 1: scaricamento/svuotamento scaffale
+  montaggioCompleto?: boolean      // sottopunto 2: montaggio materiale
   kitRicevuto?: boolean
   problemaKit?: boolean
   descrizioneProblema?: string
@@ -129,7 +150,7 @@ export function getLabelFase(fase: FaseNumero): string {
 export function getDescrizioneFase(fase: FaseNumero): string {
   switch (fase) {
     case 1: return 'Rileva le misure dell\'espositore dedicato e fotografa lo stato attuale'
-    case 2: return 'Monta le elle di plexiglass colorato con biadesivo sull\'espositore'
+    case 2: return 'Scarica il materiale dallo scaffale e monta il plexiglass'
     case 3: return 'Posiziona i prodotti sugli scaffali e fotografa il risultato finale'
   }
 }

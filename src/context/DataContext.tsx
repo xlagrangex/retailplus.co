@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
-import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione } from '../types'
+import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione, RegistrazionePending } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import {
   fetchUsers, fetchFarmacie, fetchAssegnazioni, fetchRilievi,
@@ -11,6 +11,9 @@ import {
   fetchCampiConfigurazione,
   upsertCampoConfigurazione as sbUpsertCampo,
   deleteCampoConfigurazione as sbDeleteCampo,
+  fetchRegistrazioniPending,
+  insertRegistrazione as sbInsertRegistrazione,
+  updateRegistrazioneStato as sbUpdateRegistrazioneStato,
 } from '../data/supabase'
 import {
   getFarmacie, saveFarmacie,
@@ -18,6 +21,7 @@ import {
   getRilievi, saveRilievi,
   getUsers, saveUsers,
   getCampiConfigurazione, saveCampiConfigurazione, defaultCampiConfigurazione,
+  getRegistrazioni, saveRegistrazioni,
 } from '../data/mock'
 
 interface DataContextType {
@@ -40,6 +44,10 @@ interface DataContextType {
   addCampo: (c: CampoConfigurazione) => void
   updateCampo: (c: CampoConfigurazione) => void
   removeCampo: (id: string) => void
+  registrazioniPending: RegistrazionePending[]
+  submitRegistrazione: (r: RegistrazionePending) => void
+  approveRegistrazione: (id: string) => void
+  rejectRegistrazione: (id: string) => void
 }
 
 const DataContext = createContext<DataContextType | null>(null)
@@ -51,6 +59,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [users, setUsers] = useState<User[]>(() => isSupabaseConfigured ? [] : getUsers())
   const [campiConfigurazione, setCampiConfigurazione] = useState<CampoConfigurazione[]>(
     () => isSupabaseConfigured ? defaultCampiConfigurazione : getCampiConfigurazione()
+  )
+  const [registrazioniPending, setRegistrazioniPending] = useState<RegistrazionePending[]>(
+    () => isSupabaseConfigured ? [] : getRegistrazioni().filter(r => r.stato === 'pending')
   )
   const [isLoading, setIsLoading] = useState(isSupabaseConfigured)
 
@@ -66,12 +77,15 @@ export function DataProvider({ children }: { children: ReactNode }) {
         // Fetch campi — may fail if table doesn't exist yet
         let campi = defaultCampiConfigurazione
         try { campi = await fetchCampiConfigurazione(); if (campi.length === 0) campi = defaultCampiConfigurazione } catch { /* fallback */ }
+        let regs: RegistrazionePending[] = []
+        try { regs = await fetchRegistrazioniPending() } catch { /* table may not exist yet */ }
         if (!cancelled) {
           setUsers(u)
           setFarmacie(f)
           setAssegnazioni(a)
           setRilievi(r)
           setCampiConfigurazione(campi)
+          setRegistrazioniPending(regs)
           setIsLoading(false)
         }
       } catch (err) {
@@ -253,6 +267,65 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  const submitRegistrazione = useCallback((r: RegistrazionePending) => {
+    if (isSupabaseConfigured) {
+      sbInsertRegistrazione(r).then(() => {
+        fetchRegistrazioniPending().then(setRegistrazioniPending).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const all = getRegistrazioni()
+      saveRegistrazioni([...all, r])
+      setRegistrazioniPending(prev => [...prev, r])
+    }
+  }, [])
+
+  const approveRegistrazione = useCallback((id: string) => {
+    const reg = registrazioniPending.find(r => r.id === id)
+    if (!reg) return
+
+    const newUser: User = {
+      id: `merch-${Date.now()}`,
+      email: reg.email,
+      nome: reg.nome,
+      cognome: reg.cognome,
+      ruolo: 'merchandiser',
+      telefono: reg.telefono,
+    }
+
+    if (isSupabaseConfigured) {
+      sbInsertUser(newUser).then(() => {
+        sbUpdateRegistrazioneStato(id, 'approved').then(() => {
+          fetchUsers().then(setUsers).catch(console.error)
+          fetchRegistrazioniPending().then(setRegistrazioniPending).catch(console.error)
+        }).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const updatedUsers = [...getUsers(), newUser]
+      saveUsers(updatedUsers)
+      setUsers(updatedUsers)
+      const allRegs = getRegistrazioni().map(r => r.id === id ? { ...r, stato: 'approved' as const } : r)
+      saveRegistrazioni(allRegs)
+      setRegistrazioniPending(prev => prev.filter(r => r.id !== id))
+    }
+
+    // Send welcome email (async, non-blocking)
+    import('../lib/brevo').then(({ sendWelcomeEmail }) => {
+      sendWelcomeEmail({ email: reg.email, nome: reg.nome }).catch(console.error)
+    }).catch(console.error)
+  }, [registrazioniPending])
+
+  const rejectRegistrazione = useCallback((id: string) => {
+    if (isSupabaseConfigured) {
+      sbUpdateRegistrazioneStato(id, 'rejected').then(() => {
+        fetchRegistrazioniPending().then(setRegistrazioniPending).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const allRegs = getRegistrazioni().map(r => r.id === id ? { ...r, stato: 'rejected' as const } : r)
+      saveRegistrazioni(allRegs)
+      setRegistrazioniPending(prev => prev.filter(r => r.id !== id))
+    }
+  }, [])
+
   return (
     <DataContext.Provider value={{
       farmacie, assegnazioni, rilievi, users, isLoading, refresh,
@@ -261,6 +334,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       assignFarmacia, unassignFarmacia,
       saveRilievo: saveRilievoFn,
       campiConfigurazione, addCampo, updateCampo, removeCampo,
+      registrazioniPending, submitRegistrazione, approveRegistrazione, rejectRegistrazione,
     }}>
       {children}
     </DataContext.Provider>

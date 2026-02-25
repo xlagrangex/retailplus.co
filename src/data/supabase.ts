@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione, RegistrazionePending, RegistrazioneStato } from '../types'
 
 // ── Mapping helpers (snake_case DB ↔ camelCase TS) ──
 
@@ -280,6 +280,73 @@ export async function deleteCampoConfigurazione(id: string): Promise<void> {
   const { error } = await supabase
     .from('campo_configurazione')
     .delete()
+    .eq('id', id)
+  if (error) throw error
+}
+
+// ── Registrazioni pending CRUD ──
+
+function registrazioneFromDb(row: any): RegistrazionePending {
+  return {
+    id: row.id,
+    email: row.email,
+    nome: row.nome,
+    cognome: row.cognome,
+    telefono: row.telefono,
+    codiceFiscale: row.codice_fiscale,
+    indirizzo: row.indirizzo,
+    citta: row.citta,
+    provincia: row.provincia,
+    partitaIva: row.partita_iva || undefined,
+    iban: row.iban || undefined,
+    fotoDocumento: row.foto_documento || undefined,
+    note: row.note || undefined,
+    stato: row.stato as RegistrazioneStato,
+    dataRichiesta: row.data_richiesta,
+  }
+}
+
+function registrazioneToDb(r: RegistrazionePending): any {
+  return {
+    id: r.id,
+    email: r.email,
+    nome: r.nome,
+    cognome: r.cognome,
+    telefono: r.telefono,
+    codice_fiscale: r.codiceFiscale,
+    indirizzo: r.indirizzo,
+    citta: r.citta,
+    provincia: r.provincia,
+    partita_iva: r.partitaIva || null,
+    iban: r.iban || null,
+    foto_documento: r.fotoDocumento || null,
+    note: r.note || null,
+    stato: r.stato,
+    data_richiesta: r.dataRichiesta,
+  }
+}
+
+export async function fetchRegistrazioniPending(): Promise<RegistrazionePending[]> {
+  const { data, error } = await supabase
+    .from('registrazioni_pending')
+    .select('*')
+    .eq('stato', 'pending')
+    .order('data_richiesta', { ascending: false })
+  if (error) throw error
+  return (data || []).map(registrazioneFromDb)
+}
+
+export async function insertRegistrazione(r: RegistrazionePending): Promise<void> {
+  const { error } = await supabase
+    .from('registrazioni_pending')
+    .insert(registrazioneToDb(r))
+  if (error) throw error
+}
+
+export async function updateRegistrazioneStato(id: string, stato: RegistrazioneStato): Promise<void> {
+  const { error } = await supabase
+    .from('registrazioni_pending')
+    .update({ stato })
     .eq('id', id)
   if (error) throw error
 }
