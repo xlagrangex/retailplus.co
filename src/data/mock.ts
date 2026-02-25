@@ -25,7 +25,7 @@ const STORAGE_KEYS = {
 }
 
 // Bump this version when mock data changes to force localStorage reset
-const MOCK_DATA_VERSION = '3'
+const MOCK_DATA_VERSION = '4'
 const VERSION_KEY = 'logplus_mock_version'
 
 export function initMockData() {
