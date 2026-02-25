@@ -25,19 +25,16 @@ const STORAGE_KEYS = {
 }
 
 // Bump this version when mock data changes to force localStorage reset
-const MOCK_DATA_VERSION = '2'
+const MOCK_DATA_VERSION = '3'
 const VERSION_KEY = 'logplus_mock_version'
 
 export function initMockData() {
   const storedVersion = localStorage.getItem(VERSION_KEY)
   if (storedVersion !== MOCK_DATA_VERSION) {
-    // Data changed — force reset
+    // Data version changed — clear ALL old data and replace with new
+    Object.values(STORAGE_KEYS).forEach(key => localStorage.removeItem(key))
+    localStorage.removeItem('logplus_current_user')
     localStorage.setItem(VERSION_KEY, MOCK_DATA_VERSION)
-    localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(mockUsers))
-    localStorage.setItem(STORAGE_KEYS.farmacie, JSON.stringify(mockFarmacie))
-    localStorage.setItem(STORAGE_KEYS.assegnazioni, JSON.stringify(mockAssegnazioni))
-    localStorage.setItem(STORAGE_KEYS.rilievi, JSON.stringify(mockRilievi))
-    return
   }
   if (!localStorage.getItem(STORAGE_KEYS.users)) {
     localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(mockUsers))
