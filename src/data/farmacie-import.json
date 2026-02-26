@@ -3685,15 +3685,15 @@
     "id": "xl-101617",
     "nome": "BICOCCA FCIA SNC DR CARRERA G. & C.",
     "codiceCliente": "101617",
-    "indirizzo": "",
+    "indirizzo": "Via XXIII Marzo 1849, 216, 28100 Novara NO",
     "citta": "Novara",
     "provincia": "Novara",
     "regione": "PIEMONTE",
-    "cap": "",
-    "lat": 0,
-    "lng": 0,
+    "cap": "28100",
+    "lat": 45.4330886,
+    "lng": 8.6345662,
     "rippianiCategory": 8,
-    "note": "Da verificare manualmente - non trovata su Google Places"
+    "note": "Dati inseriti manualmente"
   },
   {
     "id": "xl-107071",
@@ -5127,15 +5127,15 @@
     "id": "xl-704690",
     "nome": "FCIE ASS. BOLOGNESI ( GRANAROLO)",
     "codiceCliente": "704690",
-    "indirizzo": "",
-    "citta": "Bologna",
+    "indirizzo": "Via S. Donato, 15, 40057 Granarolo dell'Emilia BO",
+    "citta": "Granarolo dell'Emilia",
     "provincia": "Bologna",
     "regione": "EMILIA-ROMAGNA",
-    "cap": "",
-    "lat": 0,
-    "lng": 0,
+    "cap": "40057",
+    "lat": 44.5296837,
+    "lng": 11.4206851,
     "rippianiCategory": null,
-    "note": "Da verificare manualmente - non trovata su Google Places"
+    "note": "Dati inseriti manualmente"
   },
   {
     "id": "xl-117771",
