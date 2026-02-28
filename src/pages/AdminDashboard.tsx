@@ -2,14 +2,15 @@ import { useState } from 'react'
 import { useData } from '../context/DataContext'
 import StatsCards from '../components/StatsCards'
 import FarmaciaMap from '../components/FarmaciaMap'
-import { getStatoFarmacia, getLabelStato, getColoreStato, getLabelFase, User, Farmacia, StatoFarmacia, CampoConfigurazione, FaseNumero } from '../types'
+import { getStatoFarmacia, getLabelStato, getColoreStato, getLabelFase, getDescrizioneFase, getFaseCorrente, User, Farmacia, Rilievo, Assegnazione, StatoFarmacia, CampoConfigurazione, FaseNumero } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPlanogramma } from '../lib/supabase'
 import {
   Upload, Plus, Trash2, UserPlus, Link2, Unlink, Search, MapPin, Users,
   AlertTriangle, ImagePlus, ArrowRightLeft, X, LayoutList, Columns, Filter,
   Settings, ChevronUp, ChevronDown, GripVertical, CheckCircle, XCircle,
-  Clock, ChevronRight, Mail, Phone, FileText, MapPinIcon,
+  Clock, ChevronRight, Mail, Phone, FileText, MapPinIcon, ArrowLeft,
+  Building2, Calendar,
 } from 'lucide-react'
 import Papa from 'papaparse'
 
@@ -60,7 +61,9 @@ export function AdminFarmaciePage() {
   const [showAdd, setShowAdd] = useState(false)
   const [assigning, setAssigning] = useState<string | null>(null)
   const [uploadingPlanogramma, setUploadingPlanogramma] = useState<string | null>(null)
+  const [selectedFarmaciaId, setSelectedFarmaciaId] = useState<string | null>(null)
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
+  const selectedFarmacia = selectedFarmaciaId ? farmacie.find(f => f.id === selectedFarmaciaId) || null : null
 
   const filtered = farmacie.filter(f =>
     (f.nome + f.citta + f.indirizzo + f.provincia + (f.codiceCliente || '') + (f.regione || '')).toLowerCase().includes(search.toLowerCase())
@@ -215,7 +218,7 @@ export function AdminFarmaciePage() {
                 const sc = statoColors[stato]
 
                 return (
-                  <tr key={f.id} className="hover:bg-brand-50/50 transition-colors">
+                  <tr key={f.id} className="hover:bg-brand-50/50 transition-colors cursor-pointer" onClick={() => setSelectedFarmaciaId(f.id)}>
                     <td className="px-4 py-3.5">
                       <p className="font-medium text-brand-900 text-[13px]">{f.nome}</p>
                       <p className="text-xs text-brand-400">{f.indirizzo || f.regione || ''}</p>
@@ -239,7 +242,7 @@ export function AdminFarmaciePage() {
                         <span className="text-[13px] text-brand-300">—</span>
                       )}
                     </td>
-                    <td className="px-4 py-3.5">
+                    <td className="px-4 py-3.5" onClick={e => e.stopPropagation()}>
                       {assigning === f.id ? (
                         <select
                           className="input py-1.5 text-xs"
@@ -269,7 +272,7 @@ export function AdminFarmaciePage() {
                         </button>
                       )}
                     </td>
-                    <td className="px-4 py-3.5 text-right">
+                    <td className="px-4 py-3.5 text-right" onClick={e => e.stopPropagation()}>
                       <div className="flex items-center gap-1 justify-end">
                         {/* Task 8: Planogramma upload */}
                         <label className="text-brand-300 hover:text-accent-500 transition-colors cursor-pointer p-1" title="Carica planogramma">
@@ -295,6 +298,210 @@ export function AdminFarmaciePage() {
           </table>
         </div>
       </div>
+
+      {/* Farmacia Detail Slide-over */}
+      {selectedFarmacia && (
+        <FarmaciaDetailPanel
+          farmacia={selectedFarmacia}
+          rilievi={rilievi}
+          assegnazioni={assegnazioni}
+          users={users}
+          merchandisers={merchandisers}
+          onClose={() => setSelectedFarmaciaId(null)}
+        />
+      )}
+    </div>
+  )
+}
+
+// ============================================================
+// FARMACIA DETAIL PANEL
+// ============================================================
+
+function FarmaciaDetailPanel({
+  farmacia, rilievi, assegnazioni, users, merchandisers, onClose,
+}: {
+  farmacia: Farmacia
+  rilievi: Rilievo[]
+  assegnazioni: Assegnazione[]
+  users: User[]
+  merchandisers: User[]
+  onClose: () => void
+}) {
+  const stato = getStatoFarmacia(rilievi, farmacia.id)
+  const assegnazione = assegnazioni.find(a => a.farmaciaId === farmacia.id)
+  const merch = assegnazione ? users.find(u => u.id === assegnazione.merchandiserId) : null
+  const rilieviFarmacia = rilievi.filter(r => r.farmaciaId === farmacia.id)
+
+  const statoColorsLocal: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
+    da_fare: { bg: 'bg-danger-50', text: 'text-danger-600', border: 'border-danger-100', dot: '#d64545' },
+    in_corso: { bg: 'bg-warning-50', text: 'text-warning-600', border: 'border-warning-100', dot: '#de911d' },
+    completata: { bg: 'bg-success-50', text: 'text-success-600', border: 'border-success-100', dot: '#3f9142' },
+    in_attesa: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', dot: '#6366f1' },
+  }
+  const sc = statoColorsLocal[stato]
+
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end">
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" onClick={onClose} />
+      <div className="relative w-full max-w-md bg-white shadow-2xl overflow-y-auto" onClick={e => e.stopPropagation()}>
+        {/* Header */}
+        <div className="sticky top-0 bg-white border-b border-brand-100 px-5 py-4 z-10">
+          <div className="flex items-center gap-3">
+            <button type="button" onClick={onClose} className="text-brand-400 hover:text-brand-700 transition-colors p-1 -ml-1">
+              <ArrowLeft size={18} />
+            </button>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-base font-heading font-bold text-brand-900 truncate">{farmacia.nome}</h2>
+              {farmacia.codiceCliente && (
+                <p className="text-[11px] text-brand-400 font-mono">#{farmacia.codiceCliente}</p>
+              )}
+            </div>
+            <span className={`badge ${sc.bg} ${sc.text} border ${sc.border}`}>
+              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: sc.dot }} />
+              {getLabelStato(stato)}
+            </span>
+          </div>
+        </div>
+
+        <div className="p-5 space-y-5">
+          {/* Info */}
+          <div className="space-y-3">
+            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Informazioni</h3>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="flex items-start gap-2">
+                <MapPin size={13} className="text-brand-400 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-[10px] text-brand-400">Indirizzo</p>
+                  <p className="text-xs text-brand-700">{farmacia.indirizzo}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <Building2 size={13} className="text-brand-400 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-[10px] text-brand-400">Localita</p>
+                  <p className="text-xs text-brand-700">{farmacia.citta} ({farmacia.provincia})</p>
+                  {farmacia.cap && <p className="text-[10px] text-brand-400">CAP {farmacia.cap}</p>}
+                </div>
+              </div>
+              {farmacia.regione && (
+                <div>
+                  <p className="text-[10px] text-brand-400">Regione</p>
+                  <p className="text-xs text-brand-700">{farmacia.regione}</p>
+                </div>
+              )}
+              {farmacia.telefono && (
+                <div className="flex items-start gap-2">
+                  <Phone size={13} className="text-brand-400 mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-[10px] text-brand-400">Telefono</p>
+                    <p className="text-xs text-brand-700">{farmacia.telefono}</p>
+                  </div>
+                </div>
+              )}
+              {farmacia.referente && (
+                <div>
+                  <p className="text-[10px] text-brand-400">Referente</p>
+                  <p className="text-xs text-brand-700">{farmacia.referente}</p>
+                </div>
+              )}
+              {farmacia.rippianiCategory && (
+                <div>
+                  <p className="text-[10px] text-brand-400">Ripiani category</p>
+                  <p className="text-xs text-brand-700 font-mono">{farmacia.rippianiCategory}</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Merchandiser assegnata */}
+          <div className="space-y-2">
+            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Merchandiser</h3>
+            {merch ? (
+              <div className="flex items-center gap-3 bg-brand-50 rounded-md p-3">
+                <div className="w-9 h-9 rounded-md bg-brand-200 flex items-center justify-center">
+                  <span className="text-xs font-bold text-brand-700">{merch.nome[0]}{merch.cognome[0]}</span>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-brand-900">{merch.nome} {merch.cognome}</p>
+                  <p className="text-[11px] text-brand-400">{merch.email}</p>
+                </div>
+              </div>
+            ) : (
+              <p className="text-xs text-brand-400 italic">Nessuna merchandiser assegnata</p>
+            )}
+          </div>
+
+          {/* Rilievi per fase */}
+          <div className="space-y-3">
+            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Rilievi per fase</h3>
+            {([1, 2, 3] as FaseNumero[]).map(fase => {
+              const rilievo = rilieviFarmacia.find(r => r.fase === fase && r.completata)
+              const inCorso = rilieviFarmacia.find(r => r.fase === fase && !r.completata)
+              const isCompleted = !!rilievo
+              const isInProgress = !!inCorso && !isCompleted
+
+              return (
+                <div key={fase} className={`rounded-md border p-3 ${
+                  isCompleted ? 'border-success-200 bg-success-50/50' :
+                  isInProgress ? 'border-warning-200 bg-warning-50/50' :
+                  'border-brand-100 bg-brand-50/30'
+                }`}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                      isCompleted ? 'bg-success-500 text-white' :
+                      isInProgress ? 'bg-warning-500 text-white' :
+                      'bg-brand-200 text-brand-500'
+                    }`}>
+                      {isCompleted ? '✓' : fase}
+                    </div>
+                    <p className="text-xs font-medium text-brand-800">Fase {fase} — {getLabelFase(fase)}</p>
+                  </div>
+                  <p className="text-[11px] text-brand-400 ml-7 mb-1">{getDescrizioneFase(fase)}</p>
+                  {rilievo && (
+                    <div className="ml-7 mt-2 space-y-2">
+                      <p className="text-[11px] text-success-700 flex items-center gap-1">
+                        <Calendar size={10} /> {rilievo.dataCompletamento} {rilievo.oraCompletamento}
+                      </p>
+                      {rilievo.note && (
+                        <p className="text-[11px] text-brand-500 italic">{rilievo.note}</p>
+                      )}
+                      {rilievo.foto && rilievo.foto.length > 0 && (
+                        <div className="flex gap-1.5 flex-wrap">
+                          {rilievo.foto.map((foto, i) => (
+                            <img key={i} src={foto} alt={`Foto ${i + 1}`} className="w-16 h-16 object-cover rounded border border-brand-200" />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {inCorso && !isCompleted && inCorso.inAttesaMateriale && (
+                    <p className="text-[11px] text-indigo-600 ml-7 mt-1 flex items-center gap-1">
+                      <Clock size={10} /> In attesa materiale
+                    </p>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Planogramma */}
+          {farmacia.planogrammaUrl && (
+            <div className="space-y-2">
+              <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Planogramma</h3>
+              <img src={farmacia.planogrammaUrl} alt="Planogramma" className="w-full rounded-md border border-brand-200" />
+            </div>
+          )}
+
+          {/* Note */}
+          {farmacia.note && (
+            <div className="space-y-2">
+              <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Note</h3>
+              <p className="text-xs text-brand-600">{farmacia.note}</p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
@@ -314,8 +521,9 @@ export function AdminMerchandiserPage() {
   const { users, assegnazioni, farmacie, rilievi, addUser, removeUser, assignFarmacia, unassignFarmacia, registrazioniPending, approveRegistrazione, rejectRegistrazione } = useData()
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
   const [showAdd, setShowAdd] = useState(false)
-  const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table')
   const [expandedReg, setExpandedReg] = useState<string | null>(null)
+  const [selectedMerchId, setSelectedMerchId] = useState<string | null>(null)
+  const selectedMerch = selectedMerchId ? merchandisers.find(m => m.id === selectedMerchId) || null : null
 
   function handleAdd(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -343,36 +551,9 @@ export function AdminMerchandiserPage() {
           <h1 className="page-title">Merchandiser e assegnazioni</h1>
           <p className="page-subtitle">{merchandisers.length} operatrici — {farmacie.length} farmacie</p>
         </div>
-        <div className="flex items-center gap-2">
-          {/* View toggle */}
-          <div className="flex rounded-sm border border-brand-200 overflow-hidden">
-            <button
-              type="button"
-              onClick={() => setViewMode('table')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${
-                viewMode === 'table'
-                  ? 'bg-brand-900 text-white'
-                  : 'bg-white text-brand-500 hover:bg-brand-50'
-              }`}
-            >
-              <LayoutList size={13} /> Tabella
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode('kanban')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${
-                viewMode === 'kanban'
-                  ? 'bg-brand-900 text-white'
-                  : 'bg-white text-brand-500 hover:bg-brand-50'
-              }`}
-            >
-              <Columns size={13} /> Kanban
-            </button>
-          </div>
-          <button type="button" onClick={() => setShowAdd(!showAdd)} className="btn-primary">
-            <UserPlus size={15} /> Aggiungi
-          </button>
-        </div>
+        <button type="button" onClick={() => setShowAdd(!showAdd)} className="btn-primary">
+          <UserPlus size={15} /> Aggiungi
+        </button>
       </div>
 
       {/* Stats */}
@@ -514,26 +695,97 @@ export function AdminMerchandiserPage() {
         </form>
       )}
 
-      {/* View content */}
-      {viewMode === 'table' ? (
-        <AssignmentTableView
-          farmacie={farmacie}
-          rilievi={rilievi}
-          assegnazioni={assegnazioni}
-          merchandisers={merchandisers}
-          users={users}
-          assignFarmacia={assignFarmacia}
-          unassignFarmacia={unassignFarmacia}
-          removeUser={removeUser}
-        />
+      {/* Merchandiser cards */}
+      {merchandisers.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {merchandisers.map(m => {
+            const assigned = assegnazioni.filter(a => a.merchandiserId === m.id)
+            const assignedFarmacie = farmacie.filter(f => assigned.some(a => a.farmaciaId === f.id))
+            const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
+            const inCorso = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_corso').length
+            const daFare = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'da_fare').length
+            const pct = assignedFarmacie.length > 0 ? Math.round((completate / assignedFarmacie.length) * 100) : 0
+
+            return (
+              <div
+                key={m.id}
+                onClick={() => setSelectedMerchId(m.id)}
+                className="card p-4 cursor-pointer hover:shadow-md hover:border-brand-200 transition-all group"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center">
+                    <span className="text-sm font-bold text-brand-600">{m.nome[0]}{m.cognome[0]}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-heading font-bold text-brand-900 truncate">{m.nome} {m.cognome}</p>
+                    <p className="text-[11px] text-brand-400 truncate">{m.email}</p>
+                  </div>
+                  <ChevronRight size={14} className="text-brand-300 group-hover:text-brand-500 transition-colors shrink-0" />
+                </div>
+
+                {m.telefono && (
+                  <p className="text-[11px] text-brand-400 mb-3 flex items-center gap-1.5">
+                    <Phone size={11} /> {m.telefono}
+                  </p>
+                )}
+
+                <div className="flex items-center gap-4 mb-3">
+                  <div className="text-center">
+                    <p className="text-lg font-heading font-bold text-brand-900">{assignedFarmacie.length}</p>
+                    <p className="text-[10px] text-brand-400">Farmacie</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-heading font-bold text-success-600">{completate}</p>
+                    <p className="text-[10px] text-brand-400">Completate</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-heading font-bold text-warning-600">{inCorso}</p>
+                    <p className="text-[10px] text-brand-400">In corso</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-heading font-bold text-danger-500">{daFare}</p>
+                    <p className="text-[10px] text-brand-400">Da fare</p>
+                  </div>
+                </div>
+
+                {assignedFarmacie.length > 0 && (
+                  <div>
+                    <div className="w-full bg-brand-100 rounded-full h-1.5">
+                      <div className="h-1.5 rounded-full bg-success-500 transition-all" style={{ width: `${pct}%` }} />
+                    </div>
+                    <p className="text-[10px] text-brand-400 mt-1 text-right">{pct}% completato</p>
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
       ) : (
-        <AssignmentKanbanView
+        <div className="card p-8 text-center">
+          <Users size={28} className="mx-auto text-brand-300 mb-2" />
+          <p className="text-sm text-brand-500 font-medium">Nessuna merchandiser registrata</p>
+          <p className="text-xs text-brand-400 mt-1">Aggiungi una merchandiser o aspetta le richieste di registrazione</p>
+        </div>
+      )}
+
+      {/* Farmacie non assegnate info */}
+      {farmacie.length - new Set(assegnazioni.map(a => a.farmaciaId)).size > 0 && (
+        <div className="card p-3 bg-warning-50 border-warning-100">
+          <p className="text-xs text-warning-700 flex items-center gap-2">
+            <AlertTriangle size={13} />
+            <strong>{farmacie.length - new Set(assegnazioni.map(a => a.farmaciaId)).size}</strong> farmacie non ancora assegnate a nessuna merchandiser
+          </p>
+        </div>
+      )}
+
+      {/* Merchandiser Detail Slide-over */}
+      {selectedMerch && (
+        <MerchandiserDetailPanel
+          merchandiser={selectedMerch}
           farmacie={farmacie}
           rilievi={rilievi}
           assegnazioni={assegnazioni}
-          merchandisers={merchandisers}
-          assignFarmacia={assignFarmacia}
-          unassignFarmacia={unassignFarmacia}
+          onClose={() => setSelectedMerchId(null)}
           removeUser={removeUser}
         />
       )}
@@ -542,10 +794,160 @@ export function AdminMerchandiserPage() {
 }
 
 // ============================================================
-// TABLE VIEW
+// MERCHANDISER DETAIL PANEL
 // ============================================================
 
-function AssignmentTableView({
+function MerchandiserDetailPanel({
+  merchandiser, farmacie, rilievi, assegnazioni, onClose, removeUser,
+}: {
+  merchandiser: User
+  farmacie: Farmacia[]
+  rilievi: Rilievo[]
+  assegnazioni: Assegnazione[]
+  onClose: () => void
+  removeUser: (id: string) => void
+}) {
+  const assigned = assegnazioni.filter(a => a.merchandiserId === merchandiser.id)
+  const assignedFarmacie = farmacie.filter(f => assigned.some(a => a.farmaciaId === f.id))
+  const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
+  const pct = assignedFarmacie.length > 0 ? Math.round((completate / assignedFarmacie.length) * 100) : 0
+
+  const statoColorsLocal: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
+    da_fare: { bg: 'bg-danger-50', text: 'text-danger-600', border: 'border-danger-100', dot: '#d64545' },
+    in_corso: { bg: 'bg-warning-50', text: 'text-warning-600', border: 'border-warning-100', dot: '#de911d' },
+    completata: { bg: 'bg-success-50', text: 'text-success-600', border: 'border-success-100', dot: '#3f9142' },
+    in_attesa: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', dot: '#6366f1' },
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end">
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" onClick={onClose} />
+      <div className="relative w-full max-w-md bg-white shadow-2xl overflow-y-auto" onClick={e => e.stopPropagation()}>
+        {/* Header */}
+        <div className="sticky top-0 bg-white border-b border-brand-100 px-5 py-4 z-10">
+          <div className="flex items-center gap-3">
+            <button type="button" onClick={onClose} className="text-brand-400 hover:text-brand-700 transition-colors p-1 -ml-1">
+              <ArrowLeft size={18} />
+            </button>
+            <div className="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center">
+              <span className="text-sm font-bold text-brand-600">{merchandiser.nome[0]}{merchandiser.cognome[0]}</span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-base font-heading font-bold text-brand-900 truncate">{merchandiser.nome} {merchandiser.cognome}</h2>
+              <p className="text-[11px] text-brand-400">{merchandiser.email}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-5 space-y-5">
+          {/* Contact info */}
+          <div className="space-y-3">
+            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Contatti</h3>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="flex items-center gap-2">
+                <Mail size={13} className="text-brand-400" />
+                <div>
+                  <p className="text-[10px] text-brand-400">Email</p>
+                  <p className="text-xs text-brand-700">{merchandiser.email}</p>
+                </div>
+              </div>
+              {merchandiser.telefono && (
+                <div className="flex items-center gap-2">
+                  <Phone size={13} className="text-brand-400" />
+                  <div>
+                    <p className="text-[10px] text-brand-400">Telefono</p>
+                    <p className="text-xs text-brand-700">{merchandiser.telefono}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div className="space-y-3">
+            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Statistiche</h3>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="card p-3 text-center">
+                <p className="text-xl font-heading font-bold text-brand-900">{assignedFarmacie.length}</p>
+                <p className="text-[10px] text-brand-400">Farmacie</p>
+              </div>
+              <div className="card p-3 text-center">
+                <p className="text-xl font-heading font-bold text-success-600">{completate}</p>
+                <p className="text-[10px] text-brand-400">Completate</p>
+              </div>
+              <div className="card p-3 text-center">
+                <p className="text-xl font-heading font-bold text-brand-900">{pct}%</p>
+                <p className="text-[10px] text-brand-400">Progresso</p>
+              </div>
+            </div>
+            {assignedFarmacie.length > 0 && (
+              <div className="w-full bg-brand-100 rounded-full h-2">
+                <div className="h-2 rounded-full bg-success-500 transition-all" style={{ width: `${pct}%` }} />
+              </div>
+            )}
+          </div>
+
+          {/* Farmacie assegnate */}
+          <div className="space-y-3">
+            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">
+              Farmacie assegnate ({assignedFarmacie.length})
+            </h3>
+            {assignedFarmacie.length > 0 ? (
+              <div className="space-y-2">
+                {assignedFarmacie.map(f => {
+                  const stato = getStatoFarmacia(rilievi, f.id)
+                  const sc = statoColorsLocal[stato]
+                  const lastRil = rilievi.filter(r => r.farmaciaId === f.id && r.completata).sort((a, b) => (b.dataCompletamento || '').localeCompare(a.dataCompletamento || ''))[0]
+                  const faseCorrente = getFaseCorrente(rilievi, f.id)
+
+                  return (
+                    <div key={f.id} className="rounded-md border border-brand-100 p-3 hover:bg-brand-50/50 transition-colors">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-xs font-medium text-brand-900 flex-1">{f.nome}</p>
+                        <span className={`badge text-[10px] py-0 px-1.5 ${sc.bg} ${sc.text} border ${sc.border}`}>
+                          <span className="w-1 h-1 rounded-full" style={{ backgroundColor: sc.dot }} />
+                          {getLabelStato(stato)}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-brand-400">{f.citta} ({f.provincia})</p>
+                      <div className="flex items-center gap-3 mt-1.5">
+                        <p className="text-[10px] text-brand-400">
+                          Fase corrente: <span className="font-medium text-brand-600">{faseCorrente}/3</span>
+                        </p>
+                        {lastRil && (
+                          <p className="text-[10px] text-brand-400">
+                            Ultimo: {lastRil.dataCompletamento}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-4">
+                <p className="text-xs text-brand-400 italic">Nessuna farmacia assegnata</p>
+              </div>
+            )}
+          </div>
+
+          {/* Actions */}
+          <div className="pt-3 border-t border-brand-100">
+            <button
+              type="button"
+              onClick={() => { if (confirm(`Eliminare ${merchandiser.nome} ${merchandiser.cognome}?`)) { removeUser(merchandiser.id); onClose() } }}
+              className="flex items-center gap-1.5 text-xs font-medium text-danger-600 hover:text-danger-700 transition-colors"
+            >
+              <Trash2 size={13} /> Elimina merchandiser
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function _AssignmentTableView({
   farmacie, rilievi, assegnazioni, merchandisers, users,
   assignFarmacia, unassignFarmacia, removeUser,
 }: {
@@ -755,7 +1157,7 @@ function AssignmentTableView({
 // KANBAN VIEW
 // ============================================================
 
-function AssignmentKanbanView({
+function _AssignmentKanbanView({
   farmacie, rilievi, assegnazioni, merchandisers,
   assignFarmacia, unassignFarmacia, removeUser,
 }: {
