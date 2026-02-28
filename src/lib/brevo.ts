@@ -1,5 +1,5 @@
 const BREVO_API_KEY = import.meta.env.VITE_BREVO_API_KEY
-const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'admin@logplusfarma.it'
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'visevis.web@gmail.com'
 
 export async function sendNewRegistrationNotification(candidato: {
   nome: string
@@ -22,7 +22,7 @@ export async function sendNewRegistrationNotification(candidato: {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      sender: { name: 'LogPlus Farma', email: 'noreply@logplusfarma.it' },
+      sender: { name: 'Retail+ Farma', email: 'visevis.web@gmail.com' },
       to: [{ email: ADMIN_EMAIL, name: 'Admin' }],
       subject: `Nuova registrazione merchandiser: ${candidato.nome} ${candidato.cognome}`,
       htmlContent: `
@@ -67,7 +67,7 @@ export async function sendWelcomeEmail(to: { email: string; nome: string }) {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      sender: { name: 'LogPlus Farma', email: 'noreply@logplusfarma.it' },
+      sender: { name: 'Retail+ Farma', email: 'visevis.web@gmail.com' },
       to: [{ email: to.email, name: to.nome }],
       subject: 'Benvenuto in LogPlus Farma — Account attivato',
       htmlContent: `
