@@ -1,9 +1,10 @@
-import { ReactNode } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { ReactNode, useRef, useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { resetOnboarding } from './OnboardingModal'
 import {
   LayoutDashboard, Map, Users, Store, ClipboardList,
-  LogOut, Menu, X, ChevronDown, Settings, Columns
+  LogOut, Menu, X, ChevronDown, Settings, Columns, HelpCircle
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -32,14 +33,48 @@ const roleLabels = {
   merchandiser: 'Merchandiser',
 }
 
+const roleHome = {
+  admin: '/admin',
+  brand: '/brand',
+  merchandiser: '/merchandiser',
+}
+
 export default function Layout({ children }: { children: ReactNode }) {
   const { user, logout } = useAuth()
   const location = useLocation()
+  const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  // Close user menu on outside click
+  useEffect(() => {
+    if (!userMenuOpen) return
+    function handleClick(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [userMenuOpen])
 
   if (!user) return null
 
   const items = navItems[user.ruolo] || []
+
+  function handleRivediTour() {
+    setUserMenuOpen(false)
+    resetOnboarding(user!.id)
+    // Navigate to home to trigger the onboarding
+    const home = roleHome[user!.ruolo] || '/'
+    if (location.pathname !== home) {
+      navigate(home)
+    } else {
+      // Force re-render by reloading the page state
+      window.location.reload()
+    }
+  }
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f7f9fc' }}>
@@ -84,18 +119,39 @@ export default function Layout({ children }: { children: ReactNode }) {
               <p className="text-[13px] font-medium text-brand-800">{user.nome} {user.cognome}</p>
               <p className="text-[11px] text-brand-400">{roleLabels[user.ruolo]}</p>
             </div>
-            <div className="w-8 h-8 rounded-md flex items-center justify-center" style={{ backgroundColor: '#edf9f7' }}>
-              <span className="text-xs font-semibold" style={{ color: '#329083' }}>
-                {user.nome[0]}{user.cognome[0]}
-              </span>
+
+            {/* User menu */}
+            <div className="relative" ref={menuRef}>
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="w-8 h-8 rounded-md flex items-center justify-center hover:ring-2 hover:ring-accent-200 transition-all"
+                style={{ backgroundColor: '#edf9f7' }}
+              >
+                <span className="text-xs font-semibold" style={{ color: '#329083' }}>
+                  {user.nome[0]}{user.cognome[0]}
+                </span>
+              </button>
+
+              {userMenuOpen && (
+                <div className="absolute right-0 top-full mt-1 w-48 bg-white rounded-lg shadow-elevated border border-brand-100 py-1 z-50">
+                  <button
+                    onClick={handleRivediTour}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-brand-600 hover:bg-brand-50 transition-colors text-left"
+                  >
+                    <HelpCircle size={14} className="text-brand-400" />
+                    Rivedi tour
+                  </button>
+                  <div className="h-px bg-brand-100 mx-2 my-1" />
+                  <button
+                    onClick={() => { setUserMenuOpen(false); logout() }}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-brand-600 hover:bg-brand-50 transition-colors text-left"
+                  >
+                    <LogOut size={14} className="text-brand-400" />
+                    Esci
+                  </button>
+                </div>
+              )}
             </div>
-            <button
-              onClick={logout}
-              className="p-2 text-brand-400 hover:text-brand-700 hover:bg-brand-50 rounded-md transition-colors duration-150"
-              title="Esci"
-            >
-              <LogOut size={16} />
-            </button>
           </div>
         </div>
       </header>
@@ -120,6 +176,14 @@ export default function Layout({ children }: { children: ReactNode }) {
               </Link>
             )
           })}
+          <div className="h-px bg-brand-100 mx-1 my-1" />
+          <button
+            onClick={() => { setMobileOpen(false); handleRivediTour() }}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-brand-600 hover:bg-brand-50 transition-colors w-full text-left"
+          >
+            <HelpCircle size={16} />
+            Rivedi tour
+          </button>
         </div>
       )}
 

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { DataProvider } from './context/DataContext'
+import { ToastProvider } from './components/Toast'
 import { isSupabaseConfigured } from './lib/supabase'
 import { initMockData } from './data/mock'
 import Layout from './components/Layout'
@@ -70,7 +71,9 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <DataProvider>
-          <AppRoutes />
+          <ToastProvider>
+            <AppRoutes />
+          </ToastProvider>
         </DataProvider>
       </AuthProvider>
     </BrowserRouter>

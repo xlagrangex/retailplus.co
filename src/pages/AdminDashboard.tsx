@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import { useAuth } from '../context/AuthContext'
 import { useData } from '../context/DataContext'
+import { useToast } from '../components/Toast'
 import StatsCards from '../components/StatsCards'
 import FarmaciaMap from '../components/FarmaciaMap'
+import OnboardingModal, { shouldShowOnboarding } from '../components/OnboardingModal'
 import { getStatoFarmacia, getLabelStato, getColoreStato, getLabelFase, getDescrizioneFase, getFaseCorrente, User, Farmacia, Rilievo, Assegnazione, StatoFarmacia, CampoConfigurazione, FaseNumero } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPlanogramma } from '../lib/supabase'
@@ -16,11 +19,16 @@ import Papa from 'papaparse'
 import KanbanBoard from '../components/KanbanBoard'
 
 export default function AdminDashboard() {
+  const { user } = useAuth()
   const { farmacie, rilievi, users, assegnazioni } = useData()
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
+  const [showOnboarding, setShowOnboarding] = useState(() => user ? shouldShowOnboarding(user.id) : false)
 
   return (
     <div className="space-y-6">
+      {showOnboarding && user && (
+        <OnboardingModal userId={user.id} ruolo="admin" onClose={() => setShowOnboarding(false)} />
+      )}
       <div>
         <h1 className="page-title">Pannello di controllo</h1>
         <p className="page-subtitle">Gestione completa farmacie, merchandiser e merchandising</p>
@@ -301,6 +309,8 @@ export function AdminFarmaciePage() {
           users={users}
           merchandisers={merchandisers}
           onClose={() => setSelectedFarmaciaId(null)}
+          assignFarmacia={assignFarmacia}
+          unassignFarmacia={unassignFarmacia}
         />
       )}
     </div>
@@ -313,6 +323,7 @@ export function AdminFarmaciePage() {
 
 function FarmaciaDetailPanel({
   farmacia, rilievi, assegnazioni, users, merchandisers, onClose,
+  assignFarmacia, unassignFarmacia,
 }: {
   farmacia: Farmacia
   rilievi: Rilievo[]
@@ -320,7 +331,11 @@ function FarmaciaDetailPanel({
   users: User[]
   merchandisers: User[]
   onClose: () => void
+  assignFarmacia: (farmaciaId: string, merchandiserId: string) => void
+  unassignFarmacia: (farmaciaId: string) => void
 }) {
+  const { showToast } = useToast()
+  const [showAssignDropdown, setShowAssignDropdown] = useState(false)
   const stato = getStatoFarmacia(rilievi, farmacia.id)
   const assegnazione = assegnazioni.find(a => a.farmaciaId === farmacia.id)
   const merch = assegnazione ? users.find(u => u.id === assegnazione.merchandiserId) : null
@@ -409,19 +424,68 @@ function FarmaciaDetailPanel({
 
           {/* Merchandiser assegnata */}
           <div className="space-y-2">
-            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Merchandiser</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Merchandiser</h3>
+              <button
+                type="button"
+                onClick={() => setShowAssignDropdown(!showAssignDropdown)}
+                className="text-[11px] font-medium text-accent-600 hover:text-accent-700 transition-colors"
+              >
+                {merch ? 'Cambia' : 'Assegna'}
+              </button>
+            </div>
             {merch ? (
               <div className="flex items-center gap-3 bg-brand-50 rounded-md p-3">
                 <div className="w-9 h-9 rounded-md bg-brand-200 flex items-center justify-center">
                   <span className="text-xs font-bold text-brand-700">{merch.nome[0]}{merch.cognome[0]}</span>
                 </div>
-                <div>
+                <div className="flex-1">
                   <p className="text-sm font-medium text-brand-900">{merch.nome} {merch.cognome}</p>
                   <p className="text-[11px] text-brand-400">{merch.email}</p>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    unassignFarmacia(farmacia.id)
+                    showToast(`Assegnazione rimossa da ${farmacia.nome}`)
+                  }}
+                  className="text-brand-300 hover:text-brand-600 transition-colors p-1"
+                  title="Rimuovi assegnazione"
+                >
+                  <Unlink size={14} />
+                </button>
               </div>
             ) : (
               <p className="text-xs text-brand-400 italic">Nessuna merchandiser assegnata</p>
+            )}
+            {showAssignDropdown && (
+              <div className="border border-brand-200 rounded-md overflow-hidden">
+                {merchandisers.map(m => (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => {
+                      assignFarmacia(farmacia.id, m.id)
+                      setShowAssignDropdown(false)
+                      showToast(`${farmacia.nome} assegnata a ${m.nome} ${m.cognome}`)
+                    }}
+                    className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-left hover:bg-brand-50 transition-colors ${
+                      assegnazione?.merchandiserId === m.id ? 'bg-accent-50' : ''
+                    }`}
+                  >
+                    <div className="w-7 h-7 rounded bg-brand-100 flex items-center justify-center">
+                      <span className="text-[10px] font-semibold text-brand-600">{m.nome[0]}{m.cognome[0]}</span>
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium text-brand-800">{m.nome} {m.cognome}</p>
+                      <p className="text-[10px] text-brand-400">{m.email}</p>
+                    </div>
+                    {assegnazione?.merchandiserId === m.id && (
+                      <CheckCircle size={14} className="ml-auto text-accent-500" />
+                    )}
+                  </button>
+                ))}
+              </div>
             )}
           </div>
 
@@ -780,6 +844,8 @@ export function AdminMerchandiserPage() {
           assegnazioni={assegnazioni}
           onClose={() => setSelectedMerchId(null)}
           removeUser={removeUser}
+          assignFarmacia={assignFarmacia}
+          unassignFarmacia={unassignFarmacia}
         />
       )}
     </div>
@@ -792,6 +858,7 @@ export function AdminMerchandiserPage() {
 
 function MerchandiserDetailPanel({
   merchandiser, farmacie, rilievi, assegnazioni, onClose, removeUser,
+  assignFarmacia, unassignFarmacia,
 }: {
   merchandiser: User
   farmacie: Farmacia[]
@@ -799,11 +866,23 @@ function MerchandiserDetailPanel({
   assegnazioni: Assegnazione[]
   onClose: () => void
   removeUser: (id: string) => void
+  assignFarmacia: (farmaciaId: string, merchandiserId: string) => void
+  unassignFarmacia: (farmaciaId: string) => void
 }) {
+  const { showToast } = useToast()
+  const [showAddFarmacie, setShowAddFarmacie] = useState(false)
+  const [farmaciaSearch, setFarmaciaSearch] = useState('')
   const assigned = assegnazioni.filter(a => a.merchandiserId === merchandiser.id)
   const assignedFarmacie = farmacie.filter(f => assigned.some(a => a.farmaciaId === f.id))
   const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
   const pct = assignedFarmacie.length > 0 ? Math.round((completate / assignedFarmacie.length) * 100) : 0
+
+  // Farmacie non assegnate (available)
+  const assignedIds = new Set(assegnazioni.map(a => a.farmaciaId))
+  const unassignedFarmacie = farmacie.filter(f => !assignedIds.has(f.id))
+  const filteredUnassigned = unassignedFarmacie.filter(f =>
+    (f.nome + f.citta + f.provincia).toLowerCase().includes(farmaciaSearch.toLowerCase())
+  )
 
   const statoColorsLocal: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
     da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
@@ -882,9 +961,61 @@ function MerchandiserDetailPanel({
 
           {/* Farmacie assegnate */}
           <div className="space-y-3">
-            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">
-              Farmacie assegnate ({assignedFarmacie.length})
-            </h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">
+                Farmacie assegnate ({assignedFarmacie.length})
+              </h3>
+              <button
+                type="button"
+                onClick={() => setShowAddFarmacie(!showAddFarmacie)}
+                className="flex items-center gap-1 text-[11px] font-medium text-accent-600 hover:text-accent-700 transition-colors"
+              >
+                <Plus size={13} /> Assegna farmacie
+              </button>
+            </div>
+
+            {/* Add farmacie dropdown */}
+            {showAddFarmacie && (
+              <div className="border border-brand-200 rounded-md overflow-hidden">
+                <div className="p-2 border-b border-brand-100">
+                  <div className="relative">
+                    <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-brand-400" />
+                    <input
+                      type="text"
+                      placeholder="Cerca farmacia non assegnata..."
+                      value={farmaciaSearch}
+                      onChange={e => setFarmaciaSearch(e.target.value)}
+                      className="input pl-8 py-1.5 text-xs"
+                      autoFocus
+                    />
+                  </div>
+                </div>
+                <div className="max-h-48 overflow-y-auto">
+                  {filteredUnassigned.length > 0 ? (
+                    filteredUnassigned.slice(0, 20).map(f => (
+                      <button
+                        key={f.id}
+                        type="button"
+                        onClick={() => {
+                          assignFarmacia(f.id, merchandiser.id)
+                          showToast(`${f.nome} assegnata a ${merchandiser.nome} ${merchandiser.cognome}`)
+                        }}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-brand-50 transition-colors"
+                      >
+                        <MapPin size={12} className="text-brand-400 shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-xs font-medium text-brand-800 truncate">{f.nome}</p>
+                          <p className="text-[10px] text-brand-400">{f.citta} ({f.provincia})</p>
+                        </div>
+                      </button>
+                    ))
+                  ) : (
+                    <p className="text-xs text-brand-400 italic text-center py-3">Nessuna farmacia disponibile</p>
+                  )}
+                </div>
+              </div>
+            )}
+
             {assignedFarmacie.length > 0 ? (
               <div className="space-y-2">
                 {assignedFarmacie.map(f => {
@@ -901,6 +1032,17 @@ function MerchandiserDetailPanel({
                           <span className="w-1 h-1 rounded-full" style={{ backgroundColor: sc.dot }} />
                           {getLabelStato(stato)}
                         </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            unassignFarmacia(f.id)
+                            showToast(`Assegnazione rimossa: ${f.nome}`)
+                          }}
+                          className="text-brand-300 hover:text-brand-600 transition-colors p-0.5"
+                          title="Rimuovi assegnazione"
+                        >
+                          <X size={13} />
+                        </button>
                       </div>
                       <p className="text-[11px] text-brand-400">{f.citta} ({f.provincia})</p>
                       <div className="flex items-center gap-3 mt-1.5">

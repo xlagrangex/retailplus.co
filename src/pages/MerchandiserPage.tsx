@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useData } from '../context/DataContext'
+import OnboardingModal, { shouldShowOnboarding } from '../components/OnboardingModal'
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPhoto } from '../lib/supabase'
 import {
@@ -28,6 +29,7 @@ export default function MerchandiserPage() {
   const [selectedFarmacia, setSelectedFarmacia] = useState<Farmacia | null>(null)
   const [showReport, setShowReport] = useState(false)
   const [viewMode, setViewMode] = useState<'list' | 'kanban'>('list')
+  const [showOnboarding, setShowOnboarding] = useState(() => user ? shouldShowOnboarding(user.id) : false)
 
   if (!user) return null
 
@@ -59,6 +61,9 @@ export default function MerchandiserPage() {
 
   return (
     <div className={`space-y-5 mx-auto ${viewMode === 'kanban' ? 'max-w-6xl' : 'max-w-2xl'}`}>
+      {showOnboarding && (
+        <OnboardingModal userId={user.id} ruolo="merchandiser" onClose={() => setShowOnboarding(false)} />
+      )}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="page-title">Ciao, {user.nome}</h1>
