@@ -44,7 +44,7 @@ export async function sendNewRegistrationNotification(candidato: {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      sender: { name: 'Retail+ Pharma', email: 'noreply@retailplus.co' },
+      sender: { name: 'Retail+ Pharma', email: 'no-reply@retailplus.co' },
       to: ADMIN_EMAILS,
       subject: `Nuova registrazione merchandiser: ${candidato.nome} ${candidato.cognome}`,
       htmlContent: `
@@ -87,7 +87,7 @@ export async function sendWelcomeEmail(to: { email: string; nome: string }) {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      sender: { name: 'Retail+ Pharma', email: 'noreply@retailplus.co' },
+      sender: { name: 'Retail+ Pharma', email: 'no-reply@retailplus.co' },
       to: [{ email: to.email, name: to.nome }],
       subject: 'Benvenuto in Retail+ Pharma — Account attivato',
       htmlContent: `
