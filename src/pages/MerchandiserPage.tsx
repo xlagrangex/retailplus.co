@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useData } from '../context/DataContext'
-import OnboardingModal, { shouldShowOnboarding } from '../components/OnboardingModal'
+import OnboardingModal, { useOnboardingTrigger } from '../components/OnboardingModal'
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPhoto } from '../lib/supabase'
 import {
@@ -29,7 +29,7 @@ export default function MerchandiserPage() {
   const [selectedFarmacia, setSelectedFarmacia] = useState<Farmacia | null>(null)
   const [showReport, setShowReport] = useState(false)
   const [viewMode, setViewMode] = useState<'list' | 'kanban'>('list')
-  const [showOnboarding, setShowOnboarding] = useState(() => user ? shouldShowOnboarding(user.id) : false)
+  const [showOnboarding, setShowOnboarding] = useOnboardingTrigger(user?.id)
 
   if (!user) return null
 

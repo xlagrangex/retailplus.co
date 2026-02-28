@@ -65,15 +65,12 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   function handleRivediTour() {
     setUserMenuOpen(false)
-    resetOnboarding(user!.id)
-    // Navigate to home to trigger the onboarding
     const home = roleHome[user!.ruolo] || '/'
     if (location.pathname !== home) {
       navigate(home)
-    } else {
-      // Force re-render by reloading the page state
-      window.location.reload()
     }
+    // resetOnboarding dispatches a custom event that pages listen to
+    resetOnboarding(user!.id)
   }
 
   return (

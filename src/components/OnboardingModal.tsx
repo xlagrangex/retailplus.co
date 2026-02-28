@@ -60,6 +60,19 @@ export function shouldShowOnboarding(userId: string): boolean {
 
 export function resetOnboarding(userId: string) {
   localStorage.removeItem(getStorageKey(userId))
+  window.dispatchEvent(new CustomEvent('retail-onboarding-reset'))
+}
+
+export function useOnboardingTrigger(userId: string | undefined) {
+  const [show, setShow] = useState(() => userId ? shouldShowOnboarding(userId) : false)
+
+  useEffect(() => {
+    function handler() { setShow(true) }
+    window.addEventListener('retail-onboarding-reset', handler)
+    return () => window.removeEventListener('retail-onboarding-reset', handler)
+  }, [])
+
+  return [show, setShow] as const
 }
 
 function markOnboardingSeen(userId: string) {

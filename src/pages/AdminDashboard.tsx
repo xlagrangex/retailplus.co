@@ -4,7 +4,7 @@ import { useData } from '../context/DataContext'
 import { useToast } from '../components/Toast'
 import StatsCards from '../components/StatsCards'
 import FarmaciaMap from '../components/FarmaciaMap'
-import OnboardingModal, { shouldShowOnboarding } from '../components/OnboardingModal'
+import OnboardingModal, { useOnboardingTrigger } from '../components/OnboardingModal'
 import { getStatoFarmacia, getLabelStato, getColoreStato, getLabelFase, getDescrizioneFase, getFaseCorrente, User, Farmacia, Rilievo, Assegnazione, StatoFarmacia, CampoConfigurazione, FaseNumero } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPlanogramma } from '../lib/supabase'
@@ -22,7 +22,7 @@ export default function AdminDashboard() {
   const { user } = useAuth()
   const { farmacie, rilievi, users, assegnazioni } = useData()
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
-  const [showOnboarding, setShowOnboarding] = useState(() => user ? shouldShowOnboarding(user.id) : false)
+  const [showOnboarding, setShowOnboarding] = useOnboardingTrigger(user?.id)
 
   return (
     <div className="space-y-6">
