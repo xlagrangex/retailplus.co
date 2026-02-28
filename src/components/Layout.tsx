@@ -52,7 +52,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 {mobileOpen ? <X size={20} className="text-brand-600" /> : <Menu size={20} className="text-brand-600" />}
               </button>
               <Link to="/" className="flex items-center gap-2">
-                <span className="font-heading font-bold text-lg tracking-tight" style={{ color: '#273E3A' }}>Retail<span style={{ color: '#329083' }}>+</span></span>
+                <img src="/Retaillogo.png" alt="Retail+" className="h-8" />
               </Link>
             </div>
 

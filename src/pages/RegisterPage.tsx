@@ -77,13 +77,13 @@ export default function RegisterPage() {
         }} />
         <div className="relative">
           <div className="flex items-center gap-3 mb-16">
-            <span className="font-heading font-bold text-2xl text-white tracking-tight">Retail<span style={{ color: '#329083' }}>+</span></span>
+            <img src="/Retaillogo.png" alt="Retail+" className="h-12 brightness-0 invert" />
           </div>
           <h1 className="font-heading text-3xl font-bold text-white leading-tight mb-4">
             Diventa Merchandiser
           </h1>
           <p className="text-base leading-relaxed max-w-sm" style={{ color: '#a0bfb9' }}>
-            Registrati per entrare nel team di merchandiser LogPlus Farma.
+            Registrati per entrare nel team di merchandiser Retail+.
             Compila il form e attendi l'approvazione dell'amministratore.
           </p>
         </div>
@@ -110,7 +110,7 @@ export default function RegisterPage() {
         <div className="w-full max-w-[520px] mx-auto">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-8">
-            <span className="font-heading font-bold text-xl tracking-tight" style={{ color: '#273E3A' }}>Retail<span style={{ color: '#329083' }}>+</span></span>
+            <img src="/Retaillogo.png" alt="Retail+" className="h-10" />
           </div>
 
           <div className="mb-6">
