@@ -77,7 +77,7 @@ export default function RegisterPage() {
         }} />
         <div className="relative">
           <div className="flex items-center gap-3 mb-16">
-            <img src="/Retaillogo.png" alt="Retail+" className="h-20" />
+            <img src="/Retaillogobianco.png" alt="Retail+" className="h-20" />
           </div>
           <h1 className="font-heading text-3xl font-bold text-white leading-tight mb-4">
             Diventa Merchandiser
