@@ -41,10 +41,10 @@ export default function AdminDashboard() {
         </div>
         <div className="card p-4">
           <div className="flex items-center gap-2 mb-1">
-            <AlertTriangle size={14} className="text-warning-500" />
+            <AlertTriangle size={14} className="text-status-todo-600" />
             <p className="text-xs text-brand-500 font-medium">Non assegnate</p>
           </div>
-          <p className="text-2xl font-heading font-bold text-danger-500">{farmacie.length - assegnazioni.length}</p>
+          <p className="text-2xl font-heading font-bold text-status-todo-600">{farmacie.length - assegnazioni.length}</p>
         </div>
       </div>
       <div className="card p-5">
@@ -211,10 +211,10 @@ export function AdminFarmaciePage() {
                 const assegnazione = assegnazioni.find(a => a.farmaciaId === f.id)
                 const merch = assegnazione ? users.find(u => u.id === assegnazione.merchandiserId) : null
                 const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
-                  da_fare: { bg: 'bg-danger-50', text: 'text-danger-600', border: 'border-danger-100', dot: '#d64545' },
-                  in_corso: { bg: 'bg-warning-50', text: 'text-warning-600', border: 'border-warning-100', dot: '#de911d' },
-                  completata: { bg: 'bg-success-50', text: 'text-success-600', border: 'border-success-100', dot: '#3f9142' },
-                  in_attesa: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', dot: '#6366f1' },
+                  da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
+                  in_corso: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#5d8a82' },
+                  completata: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
+                  in_attesa: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
                 }
                 const sc = statoColors[stato]
 
@@ -255,7 +255,7 @@ export function AdminFarmaciePage() {
                             <span className="text-[10px] font-semibold text-brand-600">{merch.nome[0]}{merch.cognome[0]}</span>
                           </div>
                           <span className="text-[13px] text-brand-700">{merch.nome} {merch.cognome}</span>
-                          <button onClick={() => unassignFarmacia(f.id)} className="text-brand-300 hover:text-danger-500 transition-colors" title="Rimuovi assegnazione">
+                          <button onClick={() => unassignFarmacia(f.id)} className="text-brand-300 hover:text-brand-700 transition-colors" title="Rimuovi assegnazione">
                             <Unlink size={13} />
                           </button>
                         </div>
@@ -277,7 +277,7 @@ export function AdminFarmaciePage() {
                         </label>
                         <button
                           onClick={() => { if (confirm('Eliminare questa farmacia?')) removeFarmacia(f.id) }}
-                          className="text-brand-300 hover:text-danger-500 transition-colors p-1"
+                          className="text-brand-300 hover:text-brand-700 transition-colors p-1"
                         >
                           <Trash2 size={15} />
                         </button>
@@ -326,10 +326,10 @@ function FarmaciaDetailPanel({
   const rilieviFarmacia = rilievi.filter(r => r.farmaciaId === farmacia.id)
 
   const statoColorsLocal: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
-    da_fare: { bg: 'bg-danger-50', text: 'text-danger-600', border: 'border-danger-100', dot: '#d64545' },
-    in_corso: { bg: 'bg-warning-50', text: 'text-warning-600', border: 'border-warning-100', dot: '#de911d' },
-    completata: { bg: 'bg-success-50', text: 'text-success-600', border: 'border-success-100', dot: '#3f9142' },
-    in_attesa: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', dot: '#6366f1' },
+    da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
+    in_corso: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#5d8a82' },
+    completata: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
+    in_attesa: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
   }
   const sc = statoColorsLocal[stato]
 
@@ -435,14 +435,14 @@ function FarmaciaDetailPanel({
 
               return (
                 <div key={fase} className={`rounded-md border p-3 ${
-                  isCompleted ? 'border-success-200 bg-success-50/50' :
-                  isInProgress ? 'border-warning-200 bg-warning-50/50' :
+                  isCompleted ? 'border-status-done-100 bg-status-done-50/50' :
+                  isInProgress ? 'border-status-progress-100 bg-status-progress-50/50' :
                   'border-brand-100 bg-brand-50/30'
                 }`}>
                   <div className="flex items-center gap-2 mb-1">
                     <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                      isCompleted ? 'bg-success-500 text-white' :
-                      isInProgress ? 'bg-warning-500 text-white' :
+                      isCompleted ? 'bg-status-done-500 text-white' :
+                      isInProgress ? 'bg-status-progress-500 text-white' :
                       'bg-brand-200 text-brand-500'
                     }`}>
                       {isCompleted ? '✓' : fase}
@@ -452,7 +452,7 @@ function FarmaciaDetailPanel({
                   <p className="text-[11px] text-brand-400 ml-7 mb-1">{getDescrizioneFase(fase)}</p>
                   {rilievo && (
                     <div className="ml-7 mt-2 space-y-2">
-                      <p className="text-[11px] text-success-700 flex items-center gap-1">
+                      <p className="text-[11px] text-status-done-700 flex items-center gap-1">
                         <Calendar size={10} /> {rilievo.dataCompletamento} {rilievo.oraCompletamento}
                       </p>
                       {rilievo.note && (
@@ -468,7 +468,7 @@ function FarmaciaDetailPanel({
                     </div>
                   )}
                   {inCorso && !isCompleted && inCorso.inAttesaMateriale && (
-                    <p className="text-[11px] text-indigo-600 ml-7 mt-1 flex items-center gap-1">
+                    <p className="text-[11px] text-status-waiting-600 ml-7 mt-1 flex items-center gap-1">
                       <Clock size={10} /> In attesa materiale
                     </p>
                   )}
@@ -503,10 +503,10 @@ function FarmaciaDetailPanel({
 // ============================================================
 
 const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
-  da_fare: { bg: 'bg-danger-50', text: 'text-danger-600', border: 'border-danger-100', dot: '#d64545' },
-  in_corso: { bg: 'bg-warning-50', text: 'text-warning-600', border: 'border-warning-100', dot: '#de911d' },
-  completata: { bg: 'bg-success-50', text: 'text-success-600', border: 'border-success-100', dot: '#3f9142' },
-  in_attesa: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', dot: '#6366f1' },
+  da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
+  in_corso: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#5d8a82' },
+  completata: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
+  in_attesa: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
 }
 
 export function AdminMerchandiserPage() {
@@ -555,11 +555,11 @@ export function AdminMerchandiserPage() {
           <p className="text-[11px] text-brand-500">Merchandiser</p>
         </div>
         <div className="card p-3 text-center">
-          <p className="text-xl font-heading font-bold text-success-600">{totalAssigned}</p>
+          <p className="text-xl font-heading font-bold text-status-done-500">{totalAssigned}</p>
           <p className="text-[11px] text-brand-500">Assegnate</p>
         </div>
         <div className="card p-3 text-center">
-          <p className="text-xl font-heading font-bold text-danger-500">{totalUnassigned}</p>
+          <p className="text-xl font-heading font-bold text-status-todo-600">{totalUnassigned}</p>
           <p className="text-[11px] text-brand-500">Non assegnate</p>
         </div>
       </div>
@@ -567,12 +567,12 @@ export function AdminMerchandiserPage() {
       {/* Richieste in attesa */}
       {registrazioniPending.length > 0 && (
         <div className="card overflow-hidden">
-          <div className="px-4 py-3 bg-warning-50 border-b border-warning-100 flex items-center gap-2">
-            <Clock size={15} className="text-warning-600" />
-            <h3 className="text-sm font-heading font-bold text-warning-700">
+          <div className="px-4 py-3 bg-status-waiting-50 border-b border-status-waiting-100 flex items-center gap-2">
+            <Clock size={15} className="text-status-waiting-600" />
+            <h3 className="text-sm font-heading font-bold text-status-waiting-700">
               Richieste in attesa
             </h3>
-            <span className="ml-1 bg-warning-200 text-warning-800 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+            <span className="ml-1 bg-status-waiting-100 text-status-waiting-700 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
               {registrazioniPending.length}
             </span>
           </div>
@@ -602,14 +602,14 @@ export function AdminMerchandiserPage() {
                     <button
                       type="button"
                       onClick={() => { if (confirm(`Approvare la richiesta di ${reg.nome} ${reg.cognome}?`)) approveRegistrazione(reg.id) }}
-                      className="flex items-center gap-1 text-xs font-medium text-success-600 hover:text-success-700 bg-success-50 hover:bg-success-100 border border-success-200 px-2.5 py-1.5 rounded-md transition-colors"
+                      className="flex items-center gap-1 text-xs font-medium text-status-done-500 hover:text-status-done-700 bg-status-done-50 hover:bg-status-done-100 border border-status-done-100 px-2.5 py-1.5 rounded-md transition-colors"
                     >
                       <CheckCircle size={13} /> Approva
                     </button>
                     <button
                       type="button"
                       onClick={() => { if (confirm(`Rifiutare la richiesta di ${reg.nome} ${reg.cognome}?`)) rejectRegistrazione(reg.id) }}
-                      className="flex items-center gap-1 text-xs font-medium text-danger-600 hover:text-danger-700 bg-danger-50 hover:bg-danger-100 border border-danger-200 px-2.5 py-1.5 rounded-md transition-colors"
+                      className="flex items-center gap-1 text-xs font-medium text-brand-500 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-2.5 py-1.5 rounded-md transition-colors"
                     >
                       <XCircle size={13} /> Rifiuta
                     </button>
@@ -727,15 +727,15 @@ export function AdminMerchandiserPage() {
                     <p className="text-[10px] text-brand-400">Farmacie</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-heading font-bold text-success-600">{completate}</p>
+                    <p className="text-lg font-heading font-bold text-status-done-500">{completate}</p>
                     <p className="text-[10px] text-brand-400">Completate</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-heading font-bold text-warning-600">{inCorso}</p>
+                    <p className="text-lg font-heading font-bold text-status-progress-500">{inCorso}</p>
                     <p className="text-[10px] text-brand-400">In corso</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-heading font-bold text-danger-500">{daFare}</p>
+                    <p className="text-lg font-heading font-bold text-status-todo-600">{daFare}</p>
                     <p className="text-[10px] text-brand-400">Da fare</p>
                   </div>
                 </div>
@@ -743,7 +743,7 @@ export function AdminMerchandiserPage() {
                 {assignedFarmacie.length > 0 && (
                   <div>
                     <div className="w-full bg-brand-100 rounded-full h-1.5">
-                      <div className="h-1.5 rounded-full bg-success-500 transition-all" style={{ width: `${pct}%` }} />
+                      <div className="h-1.5 rounded-full bg-accent-500 transition-all" style={{ width: `${pct}%` }} />
                     </div>
                     <p className="text-[10px] text-brand-400 mt-1 text-right">{pct}% completato</p>
                   </div>
@@ -762,8 +762,8 @@ export function AdminMerchandiserPage() {
 
       {/* Farmacie non assegnate info */}
       {farmacie.length - new Set(assegnazioni.map(a => a.farmaciaId)).size > 0 && (
-        <div className="card p-3 bg-warning-50 border-warning-100">
-          <p className="text-xs text-warning-700 flex items-center gap-2">
+        <div className="card p-3 bg-status-waiting-50 border-status-waiting-100">
+          <p className="text-xs text-status-waiting-700 flex items-center gap-2">
             <AlertTriangle size={13} />
             <strong>{farmacie.length - new Set(assegnazioni.map(a => a.farmaciaId)).size}</strong> farmacie non ancora assegnate a nessuna merchandiser
           </p>
@@ -805,10 +805,10 @@ function MerchandiserDetailPanel({
   const pct = assignedFarmacie.length > 0 ? Math.round((completate / assignedFarmacie.length) * 100) : 0
 
   const statoColorsLocal: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
-    da_fare: { bg: 'bg-danger-50', text: 'text-danger-600', border: 'border-danger-100', dot: '#d64545' },
-    in_corso: { bg: 'bg-warning-50', text: 'text-warning-600', border: 'border-warning-100', dot: '#de911d' },
-    completata: { bg: 'bg-success-50', text: 'text-success-600', border: 'border-success-100', dot: '#3f9142' },
-    in_attesa: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', dot: '#6366f1' },
+    da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
+    in_corso: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#5d8a82' },
+    completata: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
+    in_attesa: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
   }
 
   return (
@@ -864,7 +864,7 @@ function MerchandiserDetailPanel({
                 <p className="text-[10px] text-brand-400">Farmacie</p>
               </div>
               <div className="card p-3 text-center">
-                <p className="text-xl font-heading font-bold text-success-600">{completate}</p>
+                <p className="text-xl font-heading font-bold text-status-done-500">{completate}</p>
                 <p className="text-[10px] text-brand-400">Completate</p>
               </div>
               <div className="card p-3 text-center">
@@ -874,7 +874,7 @@ function MerchandiserDetailPanel({
             </div>
             {assignedFarmacie.length > 0 && (
               <div className="w-full bg-brand-100 rounded-full h-2">
-                <div className="h-2 rounded-full bg-success-500 transition-all" style={{ width: `${pct}%` }} />
+                <div className="h-2 rounded-full bg-accent-500 transition-all" style={{ width: `${pct}%` }} />
               </div>
             )}
           </div>
@@ -928,7 +928,7 @@ function MerchandiserDetailPanel({
             <button
               type="button"
               onClick={() => { if (confirm(`Eliminare ${merchandiser.nome} ${merchandiser.cognome}?`)) { removeUser(merchandiser.id); onClose() } }}
-              className="flex items-center gap-1.5 text-xs font-medium text-danger-600 hover:text-danger-700 transition-colors"
+              className="flex items-center gap-1.5 text-xs font-medium text-brand-500 hover:text-brand-700 transition-colors"
             >
               <Trash2 size={13} /> Elimina merchandiser
             </button>
@@ -1095,7 +1095,7 @@ function _AssignmentTableView({
                           <button
                             type="button"
                             onClick={() => unassignFarmacia(f.id)}
-                            className="text-brand-300 hover:text-danger-500 transition-colors p-1"
+                            className="text-brand-300 hover:text-brand-700 transition-colors p-1"
                             title="Rimuovi assegnazione"
                           >
                             <Unlink size={13} />
@@ -1132,7 +1132,7 @@ function _AssignmentTableView({
                 <button
                   type="button"
                   onClick={() => { if (confirm(`Eliminare ${m.nome} ${m.cognome}?`)) removeUser(m.id) }}
-                  className="text-brand-300 hover:text-danger-500 transition-colors opacity-0 group-hover:opacity-100"
+                  className="text-brand-300 hover:text-brand-700 transition-colors opacity-0 group-hover:opacity-100"
                 >
                   <Trash2 size={11} />
                 </button>
@@ -1207,7 +1207,7 @@ function _AssignmentKanbanView({
                   <button
                     type="button"
                     onClick={() => { if (confirm(`Eliminare ${col.title}?`)) removeUser(col.id) }}
-                    className="text-brand-300 hover:text-danger-500 transition-colors p-0.5"
+                    className="text-brand-300 hover:text-brand-700 transition-colors p-0.5"
                   >
                     <Trash2 size={12} />
                   </button>
@@ -1216,7 +1216,7 @@ function _AssignmentKanbanView({
               {col.isMerch && col.farmacie.length > 0 && (
                 <div className="mt-2">
                   <div className="w-full bg-brand-100 rounded-full h-1">
-                    <div className="h-1 rounded-full bg-success-500 transition-all" style={{ width: `${pct}%` }} />
+                    <div className="h-1 rounded-full bg-accent-500 transition-all" style={{ width: `${pct}%` }} />
                   </div>
                   <p className="text-[10px] text-brand-400 mt-1">{pct}% completamento</p>
                 </div>
@@ -1431,7 +1431,7 @@ export function AdminConfigurazionePage() {
                       <span className="text-[10px] text-brand-400">{campo.unita}</span>
                     )}
                     {campo.obbligatorio && (
-                      <span className="text-[10px] text-danger-500 font-medium">*</span>
+                      <span className="text-[10px] text-brand-700 font-medium">*</span>
                     )}
                     {!campo.attivo && (
                       <span className="badge bg-brand-50 text-brand-400 border border-brand-100 text-[10px]">Disattivato</span>
@@ -1453,7 +1453,7 @@ export function AdminConfigurazionePage() {
                   <button
                     type="button"
                     onClick={() => { if (confirm('Eliminare questo campo?')) removeCampo(campo.id) }}
-                    className="text-brand-300 hover:text-danger-500 transition-colors p-1"
+                    className="text-brand-300 hover:text-brand-700 transition-colors p-1"
                   >
                     <Trash2 size={13} />
                   </button>

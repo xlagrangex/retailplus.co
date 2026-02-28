@@ -122,6 +122,8 @@ function extractAddressInfo(place) {
 
 function buildQuery(farmacia) {
   const nome = farmacia.nome || ''
+  const indirizzo = farmacia.indirizzo || ''
+  const citta = farmacia.citta || ''
   const provincia = farmacia.provincia || ''
 
   // Clean up the name for better search results
@@ -138,13 +140,14 @@ function buildQuery(farmacia) {
     .replace(/\s{2,}/g, ' ')
     .trim()
 
-  // If provincia is valid (not #N/A), use it
-  const location = provincia && provincia !== '#N/A' ? provincia : ''
+  // Build query using all available fields for best geocoding accuracy
+  const parts = [cleanName, 'farmacia']
+  if (indirizzo) parts.push(indirizzo)
+  if (citta) parts.push(citta)
+  if (provincia && provincia !== '#N/A') parts.push(provincia)
+  if (!citta && !indirizzo) parts.push('Italia')
 
-  if (location) {
-    return `${cleanName} farmacia ${location}`
-  }
-  return `${cleanName} farmacia Italia`
+  return parts.join(' ')
 }
 
 // ─── Sleep utility ───────────────────────────────────────────────────────
@@ -162,8 +165,9 @@ async function enrichFarmacie() {
   const farmacie = JSON.parse(readFileSync(DATA_PATH, 'utf-8'))
   console.log(`Farmacie totali: ${farmacie.length}`)
 
-  // Skip already enriched (have lat/lng != 0 and indirizzo not empty)
-  const toEnrich = farmacie.filter(f => f.lat === 0 && f.lng === 0 && !f.indirizzo)
+  // Skip already enriched — new farmacie have default coords (41.9, 12.5)
+  const isDefaultCoords = (f) => (f.lat === 0 && f.lng === 0) || (Math.abs(f.lat - 41.9) < 0.01 && Math.abs(f.lng - 12.5) < 0.01)
+  const toEnrich = farmacie.filter(f => isDefaultCoords(f))
   const alreadyEnriched = farmacie.length - toEnrich.length
 
   if (alreadyEnriched > 0) {
@@ -223,17 +227,16 @@ async function enrichFarmacie() {
     }
 
     if (info) {
-      // Update farmacia data
-      farmacia.indirizzo = info.indirizzo
-      farmacia.cap = info.cap
+      // Only update lat/lng — keep indirizzo/cap/citta from Excel import
       farmacia.lat = info.lat
       farmacia.lng = info.lng
-      if (info.citta) {
-        farmacia.citta = info.citta
-      }
-      farmacia.note = 'Dati arricchiti da Google Places API'
+      // Fill indirizzo/cap/citta only if empty (not from Excel)
+      if (!farmacia.indirizzo) farmacia.indirizzo = info.indirizzo
+      if (!farmacia.cap) farmacia.cap = info.cap
+      if (!farmacia.citta && info.citta) farmacia.citta = info.citta
+      farmacia.note = 'Coordinate da Google Places API'
 
-      detail.indirizzo = info.indirizzo
+      detail.indirizzo = farmacia.indirizzo
       detail.lat = info.lat
       detail.lng = info.lng
       report.trovate++

@@ -141,8 +141,8 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-danger-50 border border-danger-100 rounded-md">
-                <p className="text-danger-600 text-sm">{error}</p>
+              <div className="flex items-center gap-2 p-3 bg-brand-50 border border-brand-200 rounded-md">
+                <p className="text-brand-700 text-sm">{error}</p>
               </div>
             )}
 

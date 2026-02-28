@@ -123,10 +123,10 @@ export function getFaseCorrente(rilievi: Rilievo[], farmaciaId: string): FaseNum
 
 export function getColoreStato(stato: StatoFarmacia): string {
   switch (stato) {
-    case 'da_fare': return '#ef4444'      // rosso
-    case 'in_corso': return '#eab308'     // giallo
-    case 'completata': return '#22c55e'   // verde
-    case 'in_attesa': return '#6366f1'    // indigo
+    case 'da_fare': return '#8da4b8'
+    case 'in_corso': return '#5d8a82'
+    case 'completata': return '#2b7268'
+    case 'in_attesa': return '#4a6fa5'
   }
 }
 

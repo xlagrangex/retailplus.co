@@ -52,8 +52,8 @@ export default function RegisterPage() {
     return (
       <div className="min-h-screen flex items-center justify-center p-6" style={{ backgroundColor: '#f7f9fc' }}>
         <div className="w-full max-w-md text-center">
-          <div className="w-16 h-16 rounded-full bg-success-50 flex items-center justify-center mx-auto mb-6">
-            <CheckCircle size={32} className="text-success-600" />
+          <div className="w-16 h-16 rounded-full bg-status-done-50 flex items-center justify-center mx-auto mb-6">
+            <CheckCircle size={32} className="text-status-done-600" />
           </div>
           <h2 className="text-xl font-heading font-bold text-brand-900 mb-3">Richiesta inviata!</h2>
           <p className="text-sm text-brand-500 mb-6 leading-relaxed">

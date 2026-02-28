@@ -7,9 +7,10 @@
     "citta": "NISCEMI",
     "provincia": "CL",
     "cap": "93015",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0933-954047"
+    "lat": 37.1469672,
+    "lng": 14.3865695,
+    "telefono": "0933-954047",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100042",
@@ -19,9 +20,10 @@
     "citta": "FIRENZE",
     "provincia": "FI",
     "cap": "50121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "055-2478069"
+    "lat": 43.7737702,
+    "lng": 11.263679,
+    "telefono": "055-2478069",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100109",
@@ -31,9 +33,10 @@
     "citta": "ALBANO LAZIALE",
     "provincia": "RM",
     "cap": "00041",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-9341522"
+    "lat": 41.7105622,
+    "lng": 12.620063199999999,
+    "telefono": "06-9341522",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100166",
@@ -43,9 +46,10 @@
     "citta": "FELINO",
     "provincia": "PR",
     "cap": "43035",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0521-831708"
+    "lat": 44.7038221,
+    "lng": 10.2381082,
+    "telefono": "0521-831708",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100351",
@@ -55,9 +59,10 @@
     "citta": "BARI",
     "provincia": "BA",
     "cap": "70124",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-5016725"
+    "lat": 41.0927832,
+    "lng": 16.8600631,
+    "telefono": "080-5016725",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100366",
@@ -67,9 +72,10 @@
     "citta": "ERCOLANO",
     "provincia": "NA",
     "cap": "80056",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-7390021"
+    "lat": 40.8071038,
+    "lng": 14.351797900000001,
+    "telefono": "081-7390021",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100399",
@@ -79,9 +85,10 @@
     "citta": "MANTOVA",
     "provincia": "MN",
     "cap": "46100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0376-324330"
+    "lat": 45.1595047,
+    "lng": 10.7926536,
+    "telefono": "0376-324330",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100432",
@@ -91,9 +98,10 @@
     "citta": "CERVETERI",
     "provincia": "RM",
     "cap": "00052",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-99206361"
+    "lat": 41.950236,
+    "lng": 12.1581269,
+    "telefono": "06-99206361",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100483",
@@ -103,9 +111,10 @@
     "citta": "SALERNO",
     "provincia": "SA",
     "cap": "84134",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "089-226669"
+    "lat": 40.6818306,
+    "lng": 14.774643600000001,
+    "telefono": "089-226669",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100492",
@@ -115,9 +124,10 @@
     "citta": "SELLIA MARINA",
     "provincia": "CZ",
     "cap": "88050",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0961-964046"
+    "lat": 38.9057439,
+    "lng": 16.7434728,
+    "telefono": "0961-964046",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100535",
@@ -127,9 +137,10 @@
     "citta": "TERAMO",
     "provincia": "TE",
     "cap": "64100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0861-244272"
+    "lat": 42.6599275,
+    "lng": 13.7013833,
+    "telefono": "0861-244272",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100552",
@@ -139,9 +150,10 @@
     "citta": "AVELLINO",
     "provincia": "AV",
     "cap": "83100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0825-35907"
+    "lat": 40.914283,
+    "lng": 14.791495000000001,
+    "telefono": "0825-35907",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100618",
@@ -151,9 +163,10 @@
     "citta": "ANZIO",
     "provincia": "RM",
     "cap": "00042",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-9820747"
+    "lat": 41.4998721,
+    "lng": 12.5883076,
+    "telefono": "06-9820747",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100636",
@@ -163,9 +176,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00132",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-20760354"
+    "lat": 41.8622271,
+    "lng": 12.6850635,
+    "telefono": "06-20760354",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100721",
@@ -175,9 +189,10 @@
     "citta": "MARENO DI PIAVE",
     "provincia": "TV",
     "cap": "31010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0438-492494"
+    "lat": 45.84102600000001,
+    "lng": 12.351223,
+    "telefono": "0438-492494",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100745",
@@ -187,9 +202,10 @@
     "citta": "TERRACINA",
     "provincia": "LT",
     "cap": "04019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0773-700264"
+    "lat": 41.2870735,
+    "lng": 13.2530567,
+    "telefono": "0773-700264",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100788",
@@ -199,9 +215,10 @@
     "citta": "RANDAZZO",
     "provincia": "CT",
     "cap": "95036",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095-921005"
+    "lat": 37.878471000000005,
+    "lng": 14.948094000000001,
+    "telefono": "095-921005",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-100968",
@@ -211,9 +228,10 @@
     "citta": "NEMBRO",
     "provincia": "BG",
     "cap": "24027",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "035 520842"
+    "lat": 45.7432532,
+    "lng": 9.757007,
+    "telefono": "035 520842",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101004",
@@ -223,9 +241,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00128",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06/45492682"
+    "lat": 41.7884203,
+    "lng": 12.4461657,
+    "telefono": "06/45492682",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101024",
@@ -235,9 +254,10 @@
     "citta": "MOLFETTA",
     "provincia": "BA",
     "cap": "70056",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-3345831"
+    "lat": 41.198978499999996,
+    "lng": 16.5972304,
+    "telefono": "080-3345831",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101051",
@@ -247,9 +267,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00172",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-23230104"
+    "lat": 41.881281200000004,
+    "lng": 12.565918,
+    "telefono": "06-23230104",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101070",
@@ -259,9 +280,10 @@
     "citta": "ARONA",
     "provincia": "NO",
     "cap": "28041",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0322-242456"
+    "lat": 45.7577511,
+    "lng": 8.5600268,
+    "telefono": "0322-242456",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101081",
@@ -271,9 +293,10 @@
     "citta": "SIRACUSA",
     "provincia": "SR",
     "cap": "96100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0931-754588"
+    "lat": 37.0947909,
+    "lng": 15.2690144,
+    "telefono": "0931-754588",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101121",
@@ -283,9 +306,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00152",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5810129"
+    "lat": 41.8809876,
+    "lng": 12.460951699999999,
+    "telefono": "06-5810129",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101449",
@@ -295,9 +319,10 @@
     "citta": "SAN REMO",
     "provincia": "IM",
     "cap": "18038",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0184-533029"
+    "lat": 43.816296099999995,
+    "lng": 7.7766973,
+    "telefono": "0184-533029",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101585",
@@ -307,9 +332,10 @@
     "citta": "POMEZIA",
     "provincia": "RM",
     "cap": "00040",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-9112100"
+    "lat": 41.6736638,
+    "lng": 12.4998893,
+    "telefono": "06-9112100",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101600",
@@ -319,9 +345,10 @@
     "citta": "BOLOGNA",
     "provincia": "BO",
     "cap": "40139",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "051-545774"
+    "lat": 44.481486499999995,
+    "lng": 11.390169,
+    "telefono": "051-545774",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101615",
@@ -331,9 +358,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-36307409"
+    "lat": 41.9417907,
+    "lng": 12.461211299999999,
+    "telefono": "06-36307409",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101617",
@@ -345,7 +373,8 @@
     "cap": "28100",
     "lat": 41.9,
     "lng": 12.5,
-    "telefono": "0321-402151"
+    "telefono": "0321-402151",
+    "note": "Da verificare manualmente - non trovata su Google Places"
   },
   {
     "id": "xl-101618",
@@ -355,9 +384,10 @@
     "citta": "VERCELLI",
     "provincia": "VC",
     "cap": "13100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0161-257725"
+    "lat": 45.3248056,
+    "lng": 8.4216186,
+    "telefono": "0161-257725",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101624",
@@ -367,9 +397,10 @@
     "citta": "SERMONETA",
     "provincia": "LT",
     "cap": "04013",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-9601047"
+    "lat": 41.573939200000005,
+    "lng": 12.927193,
+    "telefono": "06-9601047",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101691",
@@ -379,9 +410,10 @@
     "citta": "CAMPAGNA",
     "provincia": "SA",
     "cap": "84020",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0828-48064"
+    "lat": 40.6152312,
+    "lng": 15.0580663,
+    "telefono": "0828-48064",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101695",
@@ -391,9 +423,10 @@
     "citta": "FORTE DEI MARMI",
     "provincia": "LU",
     "cap": "55042",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0584-89025"
+    "lat": 43.958469199999996,
+    "lng": 10.170227299999999,
+    "telefono": "0584-89025",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101719",
@@ -403,9 +436,10 @@
     "citta": "CASERTA",
     "provincia": "CE",
     "cap": "81100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "823304970"
+    "lat": 41.0815044,
+    "lng": 14.335418099999998,
+    "telefono": "823304970",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101724",
@@ -415,9 +449,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00179",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 7856335"
+    "lat": 41.869443499999996,
+    "lng": 12.528391899999999,
+    "telefono": "06 7856335",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101726",
@@ -427,9 +462,10 @@
     "citta": "VERONA",
     "provincia": "VR",
     "cap": "37122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "045 8000016"
+    "lat": 45.439088,
+    "lng": 10.9867654,
+    "telefono": "045 8000016",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101854",
@@ -439,9 +475,10 @@
     "citta": "ALBANO LAZIALE",
     "provincia": "RM",
     "cap": "00041",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-9320202"
+    "lat": 41.7282862,
+    "lng": 12.6589765,
+    "telefono": "06-9320202",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101874",
@@ -451,9 +488,10 @@
     "citta": "PONTREMOLI",
     "provincia": "MS",
     "cap": "54027",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0187-830178"
+    "lat": 44.375052,
+    "lng": 9.8787652,
+    "telefono": "0187-830178",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101973",
@@ -463,9 +501,10 @@
     "citta": "CASERTA",
     "provincia": "CE",
     "cap": "81100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0823-325337"
+    "lat": 41.0814417,
+    "lng": 14.342545399999999,
+    "telefono": "0823-325337",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-101996",
@@ -475,9 +514,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-30891162"
+    "lat": 42.0127762,
+    "lng": 12.3777599,
+    "telefono": "06-30891162",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102021",
@@ -487,9 +527,10 @@
     "citta": "PESCARA",
     "provincia": "PE",
     "cap": "65122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "085-4212177"
+    "lat": 42.469178,
+    "lng": 14.209919,
+    "telefono": "085-4212177",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102022",
@@ -499,9 +540,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80138",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-204458"
+    "lat": 40.8463486,
+    "lng": 14.2591544,
+    "telefono": "081-204458",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102025",
@@ -511,9 +553,10 @@
     "citta": "TORINO",
     "provincia": "TO",
     "cap": "10123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "011-5069696"
+    "lat": 45.0682182,
+    "lng": 7.683621,
+    "telefono": "011-5069696",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102066",
@@ -523,9 +566,10 @@
     "citta": "COLLECCHIO",
     "provincia": "PR",
     "cap": "43044",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0521-805830"
+    "lat": 44.755005,
+    "lng": 10.2286644,
+    "telefono": "0521-805830",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102122",
@@ -535,9 +579,10 @@
     "citta": "PALERMO",
     "provincia": "PA",
     "cap": "90123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "091 471600"
+    "lat": 38.1036962,
+    "lng": 13.3852561,
+    "telefono": "091 471600",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102216",
@@ -547,9 +592,10 @@
     "citta": "SCORDIA",
     "provincia": "CT",
     "cap": "95048",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0956-57374"
+    "lat": 37.2965126,
+    "lng": 14.8405276,
+    "telefono": "0956-57374",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102223",
@@ -559,9 +605,10 @@
     "citta": "VIGONOVO",
     "provincia": "VE",
     "cap": "30030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "049-9830046"
+    "lat": 45.3855194,
+    "lng": 12.008283599999999,
+    "telefono": "049-9830046",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102235",
@@ -571,9 +618,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80128",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-5569733"
+    "lat": 40.850941,
+    "lng": 14.2313446,
+    "telefono": "081-5569733",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102242",
@@ -583,9 +631,10 @@
     "citta": "MAGNAGO",
     "provincia": "MI",
     "cap": "20020",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0331-657400"
+    "lat": 45.5773671,
+    "lng": 8.8180733,
+    "telefono": "0331-657400",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102246",
@@ -595,9 +644,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00187",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-4885895"
+    "lat": 41.909320199999996,
+    "lng": 12.4941754,
+    "telefono": "06-4885895",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102269",
@@ -607,9 +657,10 @@
     "citta": "GRAVINA DI CATANIA",
     "provincia": "CT",
     "cap": "95030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095-7500061"
+    "lat": 37.5387191,
+    "lng": 15.0705059,
+    "telefono": "095-7500061",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102323",
@@ -619,9 +670,10 @@
     "citta": "MOLFETTA",
     "provincia": "BA",
     "cap": "70056",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-3971837"
+    "lat": 41.200336,
+    "lng": 16.598938999999998,
+    "telefono": "080-3971837",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102354",
@@ -631,9 +683,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80129",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-19483720"
+    "lat": 40.844613599999995,
+    "lng": 14.2279246,
+    "telefono": "081-19483720",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102355",
@@ -643,9 +696,10 @@
     "citta": "BASSANO DEL GRAPPA",
     "provincia": "VI",
     "cap": "36061",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0424-526330"
+    "lat": 45.7508918,
+    "lng": 11.7389536,
+    "telefono": "0424-526330",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102391",
@@ -655,9 +709,10 @@
     "citta": "BARLETTA",
     "provincia": "BT",
     "cap": "76121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0883-531325"
+    "lat": 41.316995999999996,
+    "lng": 16.283356899999998,
+    "telefono": "0883-531325",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102402",
@@ -667,9 +722,10 @@
     "citta": "L'AQUILA",
     "provincia": "AQ",
     "cap": "67100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0862-411861"
+    "lat": 42.362857299999995,
+    "lng": 13.414523299999999,
+    "telefono": "0862-411861",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102413",
@@ -679,9 +735,10 @@
     "citta": "TERNI",
     "provincia": "TR",
     "cap": "05100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0744-285911"
+    "lat": 42.557065,
+    "lng": 12.649439,
+    "telefono": "0744-285911",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102421",
@@ -691,9 +748,10 @@
     "citta": "MIRANO",
     "provincia": "VE",
     "cap": "30035",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "041-430153"
+    "lat": 45.4929573,
+    "lng": 12.1090898,
+    "telefono": "041-430153",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102465",
@@ -703,9 +761,10 @@
     "citta": "PRAMAGGIORE",
     "provincia": "VE",
     "cap": "30020",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0421-799098"
+    "lat": 45.8094342,
+    "lng": 12.730756699999999,
+    "telefono": "0421-799098",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102479",
@@ -715,9 +774,10 @@
     "citta": "BRUGHERIO",
     "provincia": "MB",
     "cap": "20861",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.551213,
+    "lng": 9.300939,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102548",
@@ -727,9 +787,10 @@
     "citta": "SAN MARCELLINO",
     "provincia": "CE",
     "cap": "81030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-8900922"
+    "lat": 40.986683899999996,
+    "lng": 14.1757365,
+    "telefono": "081-8900922",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102603",
@@ -739,9 +800,10 @@
     "citta": "TARANTO",
     "provincia": "TA",
     "cap": "74121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "099-335160"
+    "lat": 40.4578254,
+    "lng": 17.261813999999998,
+    "telefono": "099-335160",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102620",
@@ -751,9 +813,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00166",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-66180089"
+    "lat": 41.881912799999995,
+    "lng": 12.3556204,
+    "telefono": "06-66180089",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102621",
@@ -763,9 +826,10 @@
     "citta": "CAVA DE' TIRRENI",
     "provincia": "SA",
     "cap": "84013",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "089-464224"
+    "lat": 40.7045841,
+    "lng": 14.7049937,
+    "telefono": "089-464224",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102626",
@@ -775,9 +839,10 @@
     "citta": "UBOLDO",
     "provincia": "VA",
     "cap": "21040",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02 96781176"
+    "lat": 45.6145794,
+    "lng": 9.0046029,
+    "telefono": "02 96781176",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102713",
@@ -787,9 +852,10 @@
     "citta": "SERIATE",
     "provincia": "BG",
     "cap": "24068",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "035-290690"
+    "lat": 45.684570099999995,
+    "lng": 9.7268472,
+    "telefono": "035-290690",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102718",
@@ -799,9 +865,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00144",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5298025"
+    "lat": 41.815151199999995,
+    "lng": 12.4404147,
+    "telefono": "06-5298025",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102735",
@@ -811,9 +878,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00183",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-7016971"
+    "lat": 41.8792721,
+    "lng": 12.5176285,
+    "telefono": "06-7016971",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102737",
@@ -823,9 +891,10 @@
     "citta": "NOTO",
     "provincia": "SR",
     "cap": "96017",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0931 894055"
+    "lat": 36.8934825,
+    "lng": 15.0709851,
+    "telefono": "0931 894055",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102776",
@@ -835,9 +904,10 @@
     "citta": "NOVATE MILANESE",
     "provincia": "MI",
     "cap": "20026",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.537960999999996,
+    "lng": 9.1317564,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102785",
@@ -847,9 +917,10 @@
     "citta": "CAVAION VERONESE",
     "provincia": "VR",
     "cap": "37010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "045-5869120"
+    "lat": 45.539253599999995,
+    "lng": 10.7732741,
+    "telefono": "045-5869120",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102794",
@@ -859,9 +930,10 @@
     "citta": "MARSALA",
     "provincia": "TP",
     "cap": "91025",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0923-969359"
+    "lat": 37.7559591,
+    "lng": 12.4767764,
+    "telefono": "0923-969359",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102825",
@@ -871,9 +943,10 @@
     "citta": "PORTO SAN GIORGIO",
     "provincia": "FM",
     "cap": "63822",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0734 675617"
+    "lat": 43.1870885,
+    "lng": 13.791906099999999,
+    "telefono": "0734 675617",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102875",
@@ -883,9 +956,10 @@
     "citta": "MARINA DI CARRARA",
     "provincia": "MS",
     "cap": "54033",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0585-632263"
+    "lat": 44.0378307,
+    "lng": 10.0446792,
+    "telefono": "0585-632263",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102884",
@@ -895,9 +969,10 @@
     "citta": "GENOVA",
     "provincia": "GE",
     "cap": "16156",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "010-6981077"
+    "lat": 44.4258816,
+    "lng": 8.816641299999999,
+    "telefono": "010-6981077",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102920",
@@ -907,9 +982,10 @@
     "citta": "PARMA",
     "provincia": "PR",
     "cap": "43125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0521-984720"
+    "lat": 44.791703999999996,
+    "lng": 10.304632999999999,
+    "telefono": "0521-984720",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-102922",
@@ -919,9 +995,10 @@
     "citta": "MARSALA",
     "provincia": "TP",
     "cap": "91025",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0923-951498"
+    "lat": 37.8017135,
+    "lng": 12.438108999999999,
+    "telefono": "0923-951498",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103028",
@@ -931,9 +1008,10 @@
     "citta": "CIAMPINO",
     "provincia": "RM",
     "cap": "00043",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.7913551,
+    "lng": 12.6146388,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103073",
@@ -943,9 +1021,10 @@
     "citta": "MONTEFIASCONE",
     "provincia": "VT",
     "cap": "01027",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0761-826025"
+    "lat": 42.547075799999995,
+    "lng": 12.034355099999999,
+    "telefono": "0761-826025",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103083",
@@ -955,9 +1034,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00146",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5562439"
+    "lat": 41.863406399999995,
+    "lng": 12.4677581,
+    "telefono": "06-5562439",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103096",
@@ -967,9 +1047,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00151",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-65744257"
+    "lat": 41.8626034,
+    "lng": 12.443751299999999,
+    "telefono": "06-65744257",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103147",
@@ -979,9 +1060,10 @@
     "citta": "ARANOVA",
     "provincia": "RM",
     "cap": "00050",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-65024450"
+    "lat": 41.9174444,
+    "lng": 12.2411994,
+    "telefono": "06-65024450",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103179",
@@ -991,9 +1073,10 @@
     "citta": "MAZARA DEL VALLO",
     "provincia": "TP",
     "cap": "91026",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0923-941710"
+    "lat": 37.653197,
+    "lng": 12.593512299999999,
+    "telefono": "0923-941710",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103207",
@@ -1003,9 +1086,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00174",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-71544944"
+    "lat": 41.8537153,
+    "lng": 12.5629934,
+    "telefono": "06-71544944",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103258",
@@ -1015,9 +1099,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80126",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-7283024"
+    "lat": 40.836607199999996,
+    "lng": 14.1893506,
+    "telefono": "081-7283024",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103289",
@@ -1027,9 +1112,10 @@
     "citta": "BISCEGLIE",
     "provincia": "BT",
     "cap": "76011",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-3955788"
+    "lat": 41.2427498,
+    "lng": 16.490934499999998,
+    "telefono": "080-3955788",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103374",
@@ -1039,9 +1125,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00155",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-40800586"
+    "lat": 41.9145018,
+    "lng": 12.569358999999999,
+    "telefono": "06-40800586",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103383",
@@ -1051,9 +1138,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00181",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "067886304"
+    "lat": 41.871121900000006,
+    "lng": 12.5267939,
+    "telefono": "067886304",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103394",
@@ -1063,9 +1151,10 @@
     "citta": "FELTRE",
     "provincia": "BL",
     "cap": "32032",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0439-2005"
+    "lat": 46.0137536,
+    "lng": 11.9114556,
+    "telefono": "0439-2005",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103430",
@@ -1075,9 +1164,10 @@
     "citta": "RAGUSA",
     "provincia": "RG",
     "cap": "97100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0932-621471"
+    "lat": 36.917550899999995,
+    "lng": 14.729733199999998,
+    "telefono": "0932-621471",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103471",
@@ -1087,9 +1177,10 @@
     "citta": "NOVARA",
     "provincia": "NO",
     "cap": "28100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0321-626080"
+    "lat": 45.434732800000006,
+    "lng": 8.617542199999999,
+    "telefono": "0321-626080",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103492",
@@ -1099,9 +1190,10 @@
     "citta": "FORMELLO",
     "provincia": "RM",
     "cap": "00060",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-9087158"
+    "lat": 42.063565499999996,
+    "lng": 12.3735609,
+    "telefono": "06-9087158",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103585",
@@ -1111,9 +1203,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5621247"
+    "lat": 41.729639,
+    "lng": 12.2800099,
+    "telefono": "06-5621247",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103595",
@@ -1123,9 +1216,10 @@
     "citta": "VERONA",
     "provincia": "VR",
     "cap": "37138",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "045-912867"
+    "lat": 45.4494019,
+    "lng": 10.979834499999999,
+    "telefono": "045-912867",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103600",
@@ -1135,9 +1229,10 @@
     "citta": "VERONA",
     "provincia": "VR",
     "cap": "37135",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "045-500378"
+    "lat": 45.411284699999996,
+    "lng": 10.9880126,
+    "telefono": "045-500378",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103613",
@@ -1147,9 +1242,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00168",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-3016491"
+    "lat": 41.928956199999995,
+    "lng": 12.427296400000001,
+    "telefono": "06-3016491",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103623",
@@ -1159,9 +1255,10 @@
     "citta": "QUATTRO CASTELLA",
     "provincia": "RE",
     "cap": "42020",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0522-887123"
+    "lat": 44.6363206,
+    "lng": 10.470949899999999,
+    "telefono": "0522-887123",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103656",
@@ -1171,9 +1268,10 @@
     "citta": "NICOSIA",
     "provincia": "EN",
     "cap": "94014",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0935-646800"
+    "lat": 37.7480226,
+    "lng": 14.398585099999998,
+    "telefono": "0935-646800",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103685",
@@ -1183,9 +1281,10 @@
     "citta": "CESENATICO",
     "provincia": "FC",
     "cap": "47042",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0547-80037"
+    "lat": 44.199135999999996,
+    "lng": 12.395806,
+    "telefono": "0547-80037",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103801",
@@ -1195,9 +1294,10 @@
     "citta": "CATANIA",
     "provincia": "CT",
     "cap": "95126",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095-493737"
+    "lat": 37.534128800000005,
+    "lng": 15.1183921,
+    "telefono": "095-493737",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103805",
@@ -1207,9 +1307,10 @@
     "citta": "PORTO MANTOVANO",
     "provincia": "MN",
     "cap": "46047",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0376-396105"
+    "lat": 45.2017702,
+    "lng": 10.7923747,
+    "telefono": "0376-396105",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103810",
@@ -1219,9 +1320,10 @@
     "citta": "CATANIA",
     "provincia": "CT",
     "cap": "95123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "95359644"
+    "lat": 37.5097946,
+    "lng": 15.064207099999999,
+    "telefono": "95359644",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103811",
@@ -1231,9 +1333,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00175",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 71582509"
+    "lat": 41.8580313,
+    "lng": 12.5632786,
+    "telefono": "06 71582509",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103893",
@@ -1243,9 +1346,10 @@
     "citta": "PALERMO",
     "provincia": "PA",
     "cap": "90138",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "091-214137"
+    "lat": 38.1188472,
+    "lng": 13.3421478,
+    "telefono": "091-214137",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103898",
@@ -1255,9 +1359,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20129",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02-55194867"
+    "lat": 45.461763,
+    "lng": 9.2071785,
+    "telefono": "02-55194867",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103921",
@@ -1267,9 +1372,10 @@
     "citta": "MARIGLIANO",
     "provincia": "NA",
     "cap": "80034",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-8851320"
+    "lat": 40.9263087,
+    "lng": 14.453442699999998,
+    "telefono": "081-8851320",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103938",
@@ -1279,9 +1385,10 @@
     "citta": "CATANIA",
     "provincia": "CT",
     "cap": "95125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095-439107"
+    "lat": 37.5172058,
+    "lng": 15.0842545,
+    "telefono": "095-439107",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103953",
@@ -1291,9 +1398,10 @@
     "citta": "PALERMO",
     "provincia": "PA",
     "cap": "90144",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "091 6813038"
+    "lat": 38.133571499999995,
+    "lng": 13.3390552,
+    "telefono": "091 6813038",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103977",
@@ -1303,9 +1411,10 @@
     "citta": "PESCHIERA DEL GARDA",
     "provincia": "VR",
     "cap": "37019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "045 6400075"
+    "lat": 45.4401667,
+    "lng": 10.6861566,
+    "telefono": "045 6400075",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-103996",
@@ -1315,9 +1424,10 @@
     "citta": "CANICATTI'",
     "provincia": "AG",
     "cap": "92024",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0922 853865"
+    "lat": 37.3622716,
+    "lng": 13.855184399999999,
+    "telefono": "0922 853865",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104150",
@@ -1327,9 +1437,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00118",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-79845392"
+    "lat": 41.8145294,
+    "lng": 12.6013332,
+    "telefono": "06-79845392",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104170",
@@ -1339,9 +1450,10 @@
     "citta": "MAGLIE",
     "provincia": "LE",
     "cap": "73024",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "836484056"
+    "lat": 40.1259192,
+    "lng": 18.297965899999998,
+    "telefono": "836484056",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104271",
@@ -1351,9 +1463,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02-76001031"
+    "lat": 45.4633689,
+    "lng": 9.198722199999999,
+    "telefono": "02-76001031",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104297",
@@ -1363,9 +1476,10 @@
     "citta": "LIMONE PIEMONTE",
     "provincia": "CN",
     "cap": "12015",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0171-92336"
+    "lat": 44.202052599999995,
+    "lng": 7.577949500000001,
+    "telefono": "0171-92336",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104305",
@@ -1375,9 +1489,10 @@
     "citta": "UDINE",
     "provincia": "UD",
     "cap": "33100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0432-501786"
+    "lat": 46.058445999999996,
+    "lng": 13.244178999999999,
+    "telefono": "0432-501786",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104329",
@@ -1387,9 +1502,10 @@
     "citta": "CAPO D'ORLANDO",
     "provincia": "ME",
     "cap": "98071",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0941-901252"
+    "lat": 38.1592388,
+    "lng": 14.743267399999999,
+    "telefono": "0941-901252",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104337",
@@ -1399,9 +1515,10 @@
     "citta": "BUSTO ARSIZIO",
     "provincia": "VA",
     "cap": "21052",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0331-622476"
+    "lat": 45.607844799999995,
+    "lng": 8.826924499999999,
+    "telefono": "0331-622476",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104345",
@@ -1411,9 +1528,10 @@
     "citta": "BISCEGLIE",
     "provincia": "BT",
     "cap": "76011",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-3921641"
+    "lat": 41.2369187,
+    "lng": 16.5033156,
+    "telefono": "080-3921641",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104360",
@@ -1423,9 +1541,10 @@
     "citta": "IMOLA",
     "provincia": "BO",
     "cap": "40026",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0542-34757"
+    "lat": 44.353729900000005,
+    "lng": 11.7289169,
+    "telefono": "0542-34757",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104415",
@@ -1435,9 +1554,10 @@
     "citta": "PADOVA",
     "provincia": "PD",
     "cap": "35122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.4074113,
+    "lng": 11.8769114,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104438",
@@ -1447,9 +1567,10 @@
     "citta": "PONTE DI PIAVE",
     "provincia": "TV",
     "cap": "31047",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0422-759139"
+    "lat": 45.715249899999996,
+    "lng": 12.4629441,
+    "telefono": "0422-759139",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104473",
@@ -1459,9 +1580,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00162",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-86324361"
+    "lat": 41.9228884,
+    "lng": 12.525728899999999,
+    "telefono": "06-86324361",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104487",
@@ -1471,9 +1593,10 @@
     "citta": "GENOVA",
     "provincia": "GE",
     "cap": "16154",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "010-6531410"
+    "lat": 44.4245191,
+    "lng": 8.8502494,
+    "telefono": "010-6531410",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104517",
@@ -1483,9 +1606,10 @@
     "citta": "SASSARI",
     "provincia": "SS",
     "cap": "07100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "079-233426"
+    "lat": 40.7203278,
+    "lng": 8.559159,
+    "telefono": "079-233426",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104519",
@@ -1495,9 +1619,10 @@
     "citta": "RAGUSA",
     "provincia": "RG",
     "cap": "97100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0932 642930"
+    "lat": 36.9291154,
+    "lng": 14.7179232,
+    "telefono": "0932 642930",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104534",
@@ -1507,9 +1632,10 @@
     "citta": "BARI",
     "provincia": "BA",
     "cap": "70126",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-5494277"
+    "lat": 41.1059094,
+    "lng": 16.919343599999998,
+    "telefono": "080-5494277",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104545",
@@ -1519,9 +1645,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20124",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02-28096974"
+    "lat": 45.4886945,
+    "lng": 9.193910299999999,
+    "telefono": "02-28096974",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104596",
@@ -1531,9 +1658,10 @@
     "citta": "MARIGLIANO",
     "provincia": "NA",
     "cap": "80034",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-8854576"
+    "lat": 40.9255858,
+    "lng": 14.4441926,
+    "telefono": "081-8854576",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104614",
@@ -1543,9 +1671,10 @@
     "citta": "FIRENZE",
     "provincia": "FI",
     "cap": "50137",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "055-666660"
+    "lat": 43.7761475,
+    "lng": 11.2880627,
+    "telefono": "055-666660",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104658",
@@ -1555,9 +1684,10 @@
     "citta": "BORGO SAN LORENZO",
     "provincia": "FI",
     "cap": "50032",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "055-8459831"
+    "lat": 43.953454099999995,
+    "lng": 11.3899381,
+    "telefono": "055-8459831",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104660",
@@ -1567,9 +1697,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00141",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-8180364"
+    "lat": 41.9358417,
+    "lng": 12.528585699999999,
+    "telefono": "06-8180364",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104685",
@@ -1579,9 +1710,10 @@
     "citta": "TREVISO",
     "provincia": "TV",
     "cap": "31100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0422-582912"
+    "lat": 45.663344099999996,
+    "lng": 12.263867000000001,
+    "telefono": "0422-582912",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104726",
@@ -1591,9 +1723,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00153",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5810259"
+    "lat": 41.8835619,
+    "lng": 12.469208199999999,
+    "telefono": "06-5810259",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104756",
@@ -1603,9 +1736,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02 72000419"
+    "lat": 45.4658447,
+    "lng": 9.1932701,
+    "telefono": "02 72000419",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104771",
@@ -1615,9 +1749,10 @@
     "citta": "SANT'AGATA LI BATTIATI",
     "provincia": "CT",
     "cap": "95030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095-212784"
+    "lat": 37.559204699999995,
+    "lng": 15.076166200000001,
+    "telefono": "095-212784",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104811",
@@ -1627,9 +1762,10 @@
     "citta": "SIRACUSA",
     "provincia": "SR",
     "cap": "96100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0931 494488"
+    "lat": 37.095224099999996,
+    "lng": 15.2590819,
+    "telefono": "0931 494488",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104842",
@@ -1639,9 +1775,10 @@
     "citta": "DECIMOMANNU",
     "provincia": "CA",
     "cap": "09033",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "338-7744435"
+    "lat": 39.3122068,
+    "lng": 8.9732091,
+    "telefono": "338-7744435",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104898",
@@ -1651,9 +1788,10 @@
     "citta": "UTA",
     "provincia": "SU",
     "cap": "09010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "070-968886"
+    "lat": 39.293365099999995,
+    "lng": 8.9529336,
+    "telefono": "070-968886",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104908",
@@ -1663,9 +1801,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00179",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-7810870"
+    "lat": 41.873804199999995,
+    "lng": 12.518787399999999,
+    "telefono": "06-7810870",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104928",
@@ -1675,9 +1814,10 @@
     "citta": "TERLIZZI",
     "provincia": "BA",
     "cap": "70038",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-3515498"
+    "lat": 41.1335153,
+    "lng": 16.5431542,
+    "telefono": "080-3515498",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104938",
@@ -1687,9 +1827,10 @@
     "citta": "CODROIPO",
     "provincia": "UD",
     "cap": "33033",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0432-906101"
+    "lat": 45.9603146,
+    "lng": 12.983614699999999,
+    "telefono": "0432-906101",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104941",
@@ -1699,9 +1840,10 @@
     "citta": "FIRENZE",
     "provincia": "FI",
     "cap": "50124",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "055-2049217"
+    "lat": 43.7360785,
+    "lng": 11.2246224,
+    "telefono": "055-2049217",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104944",
@@ -1711,9 +1853,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00139",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.9633316,
+    "lng": 12.513608699999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-104976",
@@ -1723,9 +1866,10 @@
     "citta": "S MARGHERITA LIGURE",
     "provincia": "GE",
     "cap": "16038",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0185-287189"
+    "lat": 44.3338119,
+    "lng": 9.2132005,
+    "telefono": "0185-287189",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105010",
@@ -1735,9 +1879,10 @@
     "citta": "ACIREALE",
     "provincia": "CT",
     "cap": "95024",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095-601367"
+    "lat": 37.6074098,
+    "lng": 15.153820999999999,
+    "telefono": "095-601367",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105024",
@@ -1747,9 +1892,10 @@
     "citta": "FIUMICINO",
     "provincia": "RM",
     "cap": "00054",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-6580798"
+    "lat": 41.75983,
+    "lng": 12.2305917,
+    "telefono": "06-6580798",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105053",
@@ -1759,9 +1905,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00147",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5141463"
+    "lat": 41.851881,
+    "lng": 12.494245,
+    "telefono": "06-5141463",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105059",
@@ -1771,9 +1918,10 @@
     "citta": "GIULIANOVA",
     "provincia": "TE",
     "cap": "64021",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "085-8006710"
+    "lat": 42.7529888,
+    "lng": 13.9644008,
+    "telefono": "085-8006710",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105069",
@@ -1783,9 +1931,10 @@
     "citta": "SIRACUSA",
     "provincia": "SR",
     "cap": "96100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0931-67700"
+    "lat": 37.0753753,
+    "lng": 15.290100899999997,
+    "telefono": "0931-67700",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105075",
@@ -1795,9 +1944,10 @@
     "citta": "BRESCIA",
     "provincia": "BS",
     "cap": "25124",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "030-2420564"
+    "lat": 45.5232933,
+    "lng": 10.219277900000002,
+    "telefono": "030-2420564",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105078",
@@ -1807,9 +1957,10 @@
     "citta": "TORTORA",
     "provincia": "CS",
     "cap": "87020",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0985-764661"
+    "lat": 39.916283,
+    "lng": 15.7666368,
+    "telefono": "0985-764661",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105110",
@@ -1819,9 +1970,10 @@
     "citta": "GRAVELLONA TOCE",
     "provincia": "VB",
     "cap": "28883",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0323-840945"
+    "lat": 45.9301702,
+    "lng": 8.437339,
+    "telefono": "0323-840945",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105195",
@@ -1831,9 +1983,10 @@
     "citta": "LIVORNO",
     "provincia": "LI",
     "cap": "57121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "586401359"
+    "lat": 43.553945299999995,
+    "lng": 10.329047599999999,
+    "telefono": "586401359",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105197",
@@ -1843,9 +1996,10 @@
     "citta": "SANT'AMBROGIO DI VALPOLICELLA",
     "provincia": "VR",
     "cap": "37015",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "045-6861028"
+    "lat": 45.521212299999995,
+    "lng": 10.8363132,
+    "telefono": "045-6861028",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105258",
@@ -1855,9 +2009,10 @@
     "citta": "OSPEDALETTI",
     "provincia": "IM",
     "cap": "18014",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "184682438"
+    "lat": 43.801041399999995,
+    "lng": 7.7208439,
+    "telefono": "184682438",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105273",
@@ -1867,9 +2022,10 @@
     "citta": "GADESCO PIEVE DELMON",
     "provincia": "CR",
     "cap": "26030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0372-838429"
+    "lat": 45.155319999999996,
+    "lng": 10.099235,
+    "telefono": "0372-838429",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105396",
@@ -1879,9 +2035,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00144",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5001166"
+    "lat": 41.8172663,
+    "lng": 12.4772612,
+    "telefono": "06-5001166",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105430",
@@ -1891,9 +2048,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00136",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0639749631"
+    "lat": 41.904848099999995,
+    "lng": 12.444916599999999,
+    "telefono": "0639749631",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105456",
@@ -1903,9 +2061,10 @@
     "citta": "SPOLTORE",
     "provincia": "PE",
     "cap": "65010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "085-4170033"
+    "lat": 42.4562853,
+    "lng": 14.1787672,
+    "telefono": "085-4170033",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105474",
@@ -1915,9 +2074,10 @@
     "citta": "CARAVAGGIO",
     "provincia": "BG",
     "cap": "24043",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.5019791,
+    "lng": 9.6276137,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105495",
@@ -1927,9 +2087,10 @@
     "citta": "UDINE",
     "provincia": "UD",
     "cap": "33100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0432-480885"
+    "lat": 46.0769373,
+    "lng": 13.2437165,
+    "telefono": "0432-480885",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105563",
@@ -1939,9 +2100,10 @@
     "citta": "SAN LAZZARO SAVENA",
     "provincia": "BO",
     "cap": "40068",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "051-472974"
+    "lat": 44.4574956,
+    "lng": 11.377604500000002,
+    "telefono": "051-472974",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105616",
@@ -1951,9 +2113,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-2396551"
+    "lat": 40.828013,
+    "lng": 14.201317099999999,
+    "telefono": "081-2396551",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105669",
@@ -1963,9 +2126,10 @@
     "citta": "PULSANO",
     "provincia": "TA",
     "cap": "74026",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "099-5330082"
+    "lat": 40.377159899999995,
+    "lng": 17.3567918,
+    "telefono": "099-5330082",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105754",
@@ -1975,9 +2139,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00138",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-8889203"
+    "lat": 42.0067636,
+    "lng": 12.5191199,
+    "telefono": "06-8889203",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105767",
@@ -1987,9 +2152,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00128",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5070104"
+    "lat": 41.785983699999996,
+    "lng": 12.431879499999999,
+    "telefono": "06-5070104",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105781",
@@ -1999,9 +2165,10 @@
     "citta": "PORTO TORRES",
     "provincia": "SS",
     "cap": "07046",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "079 514088"
+    "lat": 40.836037,
+    "lng": 8.4013294,
+    "telefono": "079 514088",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105873",
@@ -2011,9 +2178,10 @@
     "citta": "PALERMO",
     "provincia": "PA",
     "cap": "90145",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "091 205031"
+    "lat": 38.137497599999996,
+    "lng": 13.311385699999999,
+    "telefono": "091 205031",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105910",
@@ -2023,9 +2191,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-5754602"
+    "lat": 40.8151596,
+    "lng": 14.206161,
+    "telefono": "081-5754602",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105944",
@@ -2035,9 +2204,10 @@
     "citta": "TRAPANI",
     "provincia": "TP",
     "cap": "91100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0923-21577"
+    "lat": 38.019355499999996,
+    "lng": 12.5215942,
+    "telefono": "0923-21577",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105977",
@@ -2047,9 +2217,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00141",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-88641651"
+    "lat": 41.9422571,
+    "lng": 12.5235027,
+    "telefono": "06-88641651",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-105994",
@@ -2059,9 +2230,10 @@
     "citta": "SORBOLO",
     "provincia": "PR",
     "cap": "43058",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0521-694132"
+    "lat": 44.849381699999995,
+    "lng": 10.4491859,
+    "telefono": "0521-694132",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106032",
@@ -2071,9 +2243,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-7612384"
+    "lat": 40.835979699999996,
+    "lng": 14.2211905,
+    "telefono": "081-7612384",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106096",
@@ -2083,9 +2256,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00166",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 61560132-6"
+    "lat": 41.9384382,
+    "lng": 12.3769054,
+    "telefono": "06 61560132-6",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106139",
@@ -2095,9 +2269,10 @@
     "citta": "FIORENZUOLA D'ARDA",
     "provincia": "PC",
     "cap": "29017",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0523-248466"
+    "lat": 44.9232156,
+    "lng": 9.9153007,
+    "telefono": "0523-248466",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106164",
@@ -2107,9 +2282,10 @@
     "citta": "NOLA",
     "provincia": "NA",
     "cap": "80035",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0815126387"
+    "lat": 40.9290824,
+    "lng": 14.5361835,
+    "telefono": "0815126387",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106214",
@@ -2119,9 +2295,10 @@
     "citta": "CORBETTA",
     "provincia": "MI",
     "cap": "20011",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02-9779622"
+    "lat": 45.4687299,
+    "lng": 8.9167209,
+    "telefono": "02-9779622",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106227",
@@ -2131,9 +2308,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00198",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-8548238"
+    "lat": 41.9133184,
+    "lng": 12.5064808,
+    "telefono": "06-8548238",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106243",
@@ -2143,9 +2321,10 @@
     "citta": "UDINE",
     "provincia": "UD",
     "cap": "33100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0432-501969"
+    "lat": 46.062114099999995,
+    "lng": 13.234201299999999,
+    "telefono": "0432-501969",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106248",
@@ -2155,9 +2334,10 @@
     "citta": "MARCIANISE",
     "provincia": "CE",
     "cap": "81025",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0823-826161"
+    "lat": 41.037079399999996,
+    "lng": 14.3052443,
+    "telefono": "0823-826161",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106249",
@@ -2167,9 +2347,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00186",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-68307058"
+    "lat": 41.8939138,
+    "lng": 12.4750955,
+    "telefono": "06-68307058",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106254",
@@ -2179,9 +2360,10 @@
     "citta": "VITTORIO VENETO",
     "provincia": "TV",
     "cap": "31029",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.9942169,
+    "lng": 12.2928,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106293",
@@ -2191,9 +2373,10 @@
     "citta": "MINTURNO",
     "provincia": "LT",
     "cap": "04026",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0771-614967"
+    "lat": 41.2553486,
+    "lng": 13.7123835,
+    "telefono": "0771-614967",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106298",
@@ -2203,9 +2386,10 @@
     "citta": "CALTAGIRONE",
     "provincia": "CT",
     "cap": "95041",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0933-21805"
+    "lat": 37.221973399999996,
+    "lng": 14.525123199999998,
+    "telefono": "0933-21805",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106350",
@@ -2215,9 +2399,10 @@
     "citta": "GRUGLIASCO",
     "provincia": "TO",
     "cap": "10095",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "011703099-ANN..."
+    "lat": 45.0547316,
+    "lng": 7.612660099999999,
+    "telefono": "011703099-ANN...",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106366",
@@ -2227,9 +2412,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00153",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5812110"
+    "lat": 41.8756081,
+    "lng": 12.4679383,
+    "telefono": "06-5812110",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106423",
@@ -2239,9 +2425,10 @@
     "citta": "FROSINONE",
     "provincia": "FR",
     "cap": "03100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0775-201004"
+    "lat": 41.630769699999995,
+    "lng": 13.346502,
+    "telefono": "0775-201004",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106437",
@@ -2251,9 +2438,10 @@
     "citta": "LANGHIRANO",
     "provincia": "PR",
     "cap": "43013",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0521-858507"
+    "lat": 44.6137687,
+    "lng": 10.2654233,
+    "telefono": "0521-858507",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106480",
@@ -2263,9 +2451,10 @@
     "citta": "VITTORIA",
     "provincia": "RG",
     "cap": "97019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0932-981483"
+    "lat": 36.9407363,
+    "lng": 14.527246799999999,
+    "telefono": "0932-981483",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106509",
@@ -2275,9 +2464,10 @@
     "citta": "VILLARICCA",
     "provincia": "NA",
     "cap": "80010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-8944635"
+    "lat": 40.918786399999995,
+    "lng": 14.177619799999999,
+    "telefono": "081-8944635",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106515",
@@ -2287,9 +2477,10 @@
     "citta": "GELA",
     "provincia": "CL",
     "cap": "93012",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0933-912857"
+    "lat": 37.0646681,
+    "lng": 14.254382,
+    "telefono": "0933-912857",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106538",
@@ -2299,9 +2490,10 @@
     "citta": "AZZANO SAN PAOLO",
     "provincia": "BG",
     "cap": "24052",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "035-530128"
+    "lat": 45.661068199999995,
+    "lng": 9.6749107,
+    "telefono": "035-530128",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106547",
@@ -2311,9 +2503,10 @@
     "citta": "TRIESTE",
     "provincia": "TS",
     "cap": "34125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "040-772148"
+    "lat": 45.650379,
+    "lng": 13.7788244,
+    "telefono": "040-772148",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106552",
@@ -2323,9 +2516,10 @@
     "citta": "SAN SECONDO PARMENSE",
     "provincia": "PR",
     "cap": "43017",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0521-872119"
+    "lat": 44.9199152,
+    "lng": 10.2294287,
+    "telefono": "0521-872119",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106559",
@@ -2335,9 +2529,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00189",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-3311575"
+    "lat": 41.9602351,
+    "lng": 12.452592,
+    "telefono": "06-3311575",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106591",
@@ -2347,9 +2542,10 @@
     "citta": "COLLEFERRO",
     "provincia": "RM",
     "cap": "00034",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-97236585"
+    "lat": 41.7261722,
+    "lng": 13.004242699999999,
+    "telefono": "06-97236585",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106619",
@@ -2359,9 +2555,10 @@
     "citta": "BRINDISI",
     "provincia": "BR",
     "cap": "72100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0831-521849"
+    "lat": 40.636886499999996,
+    "lng": 17.9450201,
+    "telefono": "0831-521849",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106624",
@@ -2371,9 +2568,10 @@
     "citta": "MESSINA",
     "provincia": "ME",
     "cap": "98122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "090-711942"
+    "lat": 38.1923144,
+    "lng": 15.5452294,
+    "telefono": "090-711942",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106717",
@@ -2383,9 +2581,10 @@
     "citta": "BARI",
     "provincia": "BA",
     "cap": "70124",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-5610265"
+    "lat": 41.1027722,
+    "lng": 16.859743599999998,
+    "telefono": "080-5610265",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106789",
@@ -2395,9 +2594,10 @@
     "citta": "BARI",
     "provincia": "BA",
     "cap": "70124",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-5421714"
+    "lat": 41.1144643,
+    "lng": 16.8638001,
+    "telefono": "080-5421714",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106805",
@@ -2407,9 +2607,10 @@
     "citta": "MACERATA",
     "provincia": "MC",
     "cap": "62100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0733 230412"
+    "lat": 43.297724,
+    "lng": 13.453622,
+    "telefono": "0733 230412",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-106871",
@@ -2419,9 +2620,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00156",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 8274197"
+    "lat": 41.9352746,
+    "lng": 12.5528944,
+    "telefono": "06 8274197",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107015",
@@ -2431,9 +2633,10 @@
     "citta": "MACOMER",
     "provincia": "NU",
     "cap": "08015",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "078571420"
+    "lat": 40.264408599999996,
+    "lng": 8.772191099999999,
+    "telefono": "078571420",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107058",
@@ -2443,9 +2646,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80127",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "333-5690721"
+    "lat": 40.841009899999996,
+    "lng": 14.219048899999999,
+    "telefono": "333-5690721",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107071",
@@ -2455,9 +2659,10 @@
     "citta": "RUFINA",
     "provincia": "FI",
     "cap": "50068",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "055-8397033"
+    "lat": 43.827023,
+    "lng": 11.488923999999999,
+    "telefono": "055-8397033",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107111",
@@ -2467,9 +2672,10 @@
     "citta": "LEVERANO",
     "provincia": "LE",
     "cap": "73045",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0832-923188"
+    "lat": 40.2909339,
+    "lng": 18.0003422,
+    "telefono": "0832-923188",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107163",
@@ -2479,9 +2685,10 @@
     "citta": "VERCELLI",
     "provincia": "VC",
     "cap": "13100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0161-257007"
+    "lat": 45.323639799999995,
+    "lng": 8.4187829,
+    "telefono": "0161-257007",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107183",
@@ -2491,9 +2698,10 @@
     "citta": "VILLAFRANCA DI VERONA",
     "provincia": "VR",
     "cap": "37069",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "045-7903623"
+    "lat": 45.3581497,
+    "lng": 10.838685,
+    "telefono": "045-7903623",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107211",
@@ -2503,9 +2711,10 @@
     "citta": "BARI",
     "provincia": "BA",
     "cap": "70126",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080 5426216"
+    "lat": 41.1154128,
+    "lng": 16.8784249,
+    "telefono": "080 5426216",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107248",
@@ -2515,9 +2724,10 @@
     "citta": "COSENZA",
     "provincia": "CS",
     "cap": "87100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0984-31857"
+    "lat": 39.3067547,
+    "lng": 16.2473447,
+    "telefono": "0984-31857",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107303",
@@ -2527,9 +2737,10 @@
     "citta": "MARINO",
     "provincia": "RM",
     "cap": "00040",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 93548015"
+    "lat": 41.7631165,
+    "lng": 12.617651900000002,
+    "telefono": "06 93548015",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107367",
@@ -2539,9 +2750,10 @@
     "citta": "PINZOLO",
     "provincia": "TN",
     "cap": "38086",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0465-501058"
+    "lat": 46.1601183,
+    "lng": 10.765406299999999,
+    "telefono": "0465-501058",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107373",
@@ -2551,9 +2763,10 @@
     "citta": "SAVONA",
     "provincia": "SV",
     "cap": "17100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "019-829803"
+    "lat": 44.308429499999995,
+    "lng": 8.478684399999999,
+    "telefono": "019-829803",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107393",
@@ -2563,9 +2776,10 @@
     "citta": "SCICLI",
     "provincia": "RG",
     "cap": "97018",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0932-937250"
+    "lat": 36.7634956,
+    "lng": 14.638171799999999,
+    "telefono": "0932-937250",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107486",
@@ -2575,9 +2789,10 @@
     "citta": "TORRE DEL GRECO",
     "provincia": "NA",
     "cap": "80059",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-8824052"
+    "lat": 40.791229799999996,
+    "lng": 14.364745399999999,
+    "telefono": "081-8824052",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107491",
@@ -2587,9 +2802,10 @@
     "citta": "PARMA",
     "provincia": "PR",
     "cap": "43123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0521-960509"
+    "lat": 44.79104110000001,
+    "lng": 10.3283585,
+    "telefono": "0521-960509",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107537",
@@ -2599,9 +2815,10 @@
     "citta": "MESSINA",
     "provincia": "ME",
     "cap": "98121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "090 51833"
+    "lat": 38.201385900000005,
+    "lng": 15.556137900000001,
+    "telefono": "090 51833",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107596",
@@ -2611,9 +2828,10 @@
     "citta": "ASTI",
     "provincia": "AT",
     "cap": "14100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0141-212846"
+    "lat": 44.9058948,
+    "lng": 8.201956899999999,
+    "telefono": "0141-212846",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107646",
@@ -2623,9 +2841,10 @@
     "citta": "ROVETTA",
     "provincia": "BG",
     "cap": "24020",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0346-72041"
+    "lat": 45.8908103,
+    "lng": 9.9886818,
+    "telefono": "0346-72041",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107663",
@@ -2635,9 +2854,10 @@
     "citta": "CASERTA",
     "provincia": "CE",
     "cap": "81100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0823-326099"
+    "lat": 41.0770349,
+    "lng": 14.338489000000001,
+    "telefono": "0823-326099",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107713",
@@ -2647,9 +2867,10 @@
     "citta": "NOVARA",
     "provincia": "NO",
     "cap": "28100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0321-452781"
+    "lat": 45.436538,
+    "lng": 8.6052322,
+    "telefono": "0321-452781",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107740",
@@ -2659,9 +2880,10 @@
     "citta": "SANT'ANTIMO",
     "provincia": "NA",
     "cap": "80029",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-8332855"
+    "lat": 40.9432349,
+    "lng": 14.2365297,
+    "telefono": "081-8332855",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107764",
@@ -2671,9 +2893,10 @@
     "citta": "SAN BENEDETTO DEL TR",
     "provincia": "AP",
     "cap": "63074",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0735 751894"
+    "lat": 42.9179035,
+    "lng": 13.8908612,
+    "telefono": "0735 751894",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107775",
@@ -2683,9 +2906,10 @@
     "citta": "MESSINA",
     "provincia": "ME",
     "cap": "98123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "090/2936013"
+    "lat": 38.17293,
+    "lng": 15.544023999999999,
+    "telefono": "090/2936013",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107789",
@@ -2695,9 +2919,10 @@
     "citta": "VITERBO",
     "provincia": "VT",
     "cap": "01100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0761-354307"
+    "lat": 42.4288958,
+    "lng": 12.108449799999999,
+    "telefono": "0761-354307",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107911",
@@ -2707,9 +2932,10 @@
     "citta": "MESSINA",
     "provincia": "ME",
     "cap": "98121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "090-45921"
+    "lat": 38.206889,
+    "lng": 15.552353400000001,
+    "telefono": "090-45921",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107917",
@@ -2719,9 +2945,10 @@
     "citta": "BRICHERASIO",
     "provincia": "TO",
     "cap": "10060",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0121 59774"
+    "lat": 44.822986799999995,
+    "lng": 7.302879399999999,
+    "telefono": "0121 59774",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107938",
@@ -2731,9 +2958,10 @@
     "citta": "SEREGNO",
     "provincia": "MB",
     "cap": "20831",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0362 231535"
+    "lat": 45.6482749,
+    "lng": 9.2046589,
+    "telefono": "0362 231535",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107955",
@@ -2743,9 +2971,10 @@
     "citta": "MUSSOLENTE",
     "provincia": "VI",
     "cap": "36065",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0424 574056"
+    "lat": 45.7554551,
+    "lng": 11.812347599999999,
+    "telefono": "0424 574056",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-107990",
@@ -2755,9 +2984,10 @@
     "citta": "CATANIA",
     "provincia": "CT",
     "cap": "95128",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095 439357"
+    "lat": 37.5250749,
+    "lng": 15.0878466,
+    "telefono": "095 439357",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108036",
@@ -2767,9 +2997,10 @@
     "citta": "FIANO ROMANO",
     "provincia": "RM",
     "cap": "00065",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0765 209680"
+    "lat": 42.14412780000001,
+    "lng": 12.5944083,
+    "telefono": "0765 209680",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108041",
@@ -2779,9 +3010,10 @@
     "citta": "CASCINA",
     "provincia": "PI",
     "cap": "56021",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 43.673387899999994,
+    "lng": 10.473590800000002,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108060",
@@ -2791,9 +3023,10 @@
     "citta": "TARANTO",
     "provincia": "TA",
     "cap": "74121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "099 7351968"
+    "lat": 40.4625248,
+    "lng": 17.2602451,
+    "telefono": "099 7351968",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108082",
@@ -2803,9 +3036,10 @@
     "citta": "SUCCIVO",
     "provincia": "CE",
     "cap": "81030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081/8910419"
+    "lat": 40.967025899999996,
+    "lng": 14.256423199999999,
+    "telefono": "081/8910419",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108133",
@@ -2815,9 +3049,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80127",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 5781302"
+    "lat": 40.843841499999996,
+    "lng": 14.232530200000001,
+    "telefono": "081 5781302",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108230",
@@ -2827,9 +3062,10 @@
     "citta": "MODICA",
     "provincia": "RG",
     "cap": "97015",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0932 764505"
+    "lat": 36.832505,
+    "lng": 14.773934799999997,
+    "telefono": "0932 764505",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108292",
@@ -2839,9 +3075,10 @@
     "citta": "TRIESTE",
     "provincia": "TS",
     "cap": "34124",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "040 3224421"
+    "lat": 45.647668499999995,
+    "lng": 13.766031199999999,
+    "telefono": "040 3224421",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108307",
@@ -2851,9 +3088,10 @@
     "citta": "VERBANIA",
     "provincia": "VB",
     "cap": "28921",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0323 519181"
+    "lat": 45.9346834,
+    "lng": 8.5720969,
+    "telefono": "0323 519181",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108415",
@@ -2863,9 +3101,10 @@
     "citta": "VELLETRI",
     "provincia": "RM",
     "cap": "00049",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 96 33 697"
+    "lat": 41.6931851,
+    "lng": 12.780669999999999,
+    "telefono": "06 96 33 697",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108878",
@@ -2875,9 +3114,10 @@
     "citta": "BITETTO",
     "provincia": "BA",
     "cap": "70020",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.0397753,
+    "lng": 16.7464764,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108879",
@@ -2887,9 +3127,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 5681202"
+    "lat": 41.7345815,
+    "lng": 12.2904696,
+    "telefono": "06 5681202",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108930",
@@ -2899,9 +3140,10 @@
     "citta": "VIBO VALENTIA",
     "provincia": "VV",
     "cap": "89900",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0963 265833-R..."
+    "lat": 38.6533716,
+    "lng": 16.0540181,
+    "telefono": "0963 265833-R...",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108940",
@@ -2911,9 +3153,10 @@
     "citta": "SAVIGLIANO",
     "provincia": "CN",
     "cap": "12038",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0172-712258"
+    "lat": 44.6468996,
+    "lng": 7.6557865000000005,
+    "telefono": "0172-712258",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108986",
@@ -2923,9 +3166,10 @@
     "citta": "SARNICO",
     "provincia": "BG",
     "cap": "24067",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "035 910152"
+    "lat": 45.6679852,
+    "lng": 9.957110499999999,
+    "telefono": "035 910152",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108993",
@@ -2935,9 +3179,10 @@
     "citta": "VEDUGGIO CON COLZANO",
     "provincia": "MB",
     "cap": "20837",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0362 911468"
+    "lat": 45.729705700000004,
+    "lng": 9.2653842,
+    "telefono": "0362 911468",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-108999",
@@ -2947,9 +3192,10 @@
     "citta": "FOGGIA",
     "provincia": "FG",
     "cap": "71121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0881 772952"
+    "lat": 41.4642337,
+    "lng": 15.5497274,
+    "telefono": "0881 772952",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109001",
@@ -2959,9 +3205,10 @@
     "citta": "LIVIGNO",
     "provincia": "SO",
     "cap": "23030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0342/996492"
+    "lat": 46.5418606,
+    "lng": 10.1386714,
+    "telefono": "0342/996492",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109015",
@@ -2971,9 +3218,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80135",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 5442136"
+    "lat": 40.8562867,
+    "lng": 14.248543399999999,
+    "telefono": "081 5442136",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109026",
@@ -2983,9 +3231,10 @@
     "citta": "PESCARA",
     "provincia": "PE",
     "cap": "65100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "085 4211895"
+    "lat": 42.467163,
+    "lng": 14.209760999999999,
+    "telefono": "085 4211895",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109056",
@@ -2995,9 +3244,10 @@
     "citta": "GARDONE RIVIERA",
     "provincia": "BS",
     "cap": "25083",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0365 20117"
+    "lat": 45.6178878,
+    "lng": 10.559664,
+    "telefono": "0365 20117",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109075",
@@ -3007,9 +3257,10 @@
     "citta": "BENEVENTO",
     "provincia": "BN",
     "cap": "82100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.1269676,
+    "lng": 14.789641000000001,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109112",
@@ -3019,9 +3270,10 @@
     "citta": "ALBOSAGGIA",
     "provincia": "SO",
     "cap": "23010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0342 511590"
+    "lat": 46.1577658,
+    "lng": 9.8653494,
+    "telefono": "0342 511590",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109118",
@@ -3031,9 +3283,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00132",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.8641128,
+    "lng": 12.6692868,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109125",
@@ -3043,9 +3296,10 @@
     "citta": "CASAGIOVE",
     "provincia": "CE",
     "cap": "81022",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.0762368,
+    "lng": 14.3160603,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109139",
@@ -3055,9 +3309,10 @@
     "citta": "CASALUCE",
     "provincia": "CE",
     "cap": "81030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0815039576"
+    "lat": 41.0028947,
+    "lng": 14.196082899999999,
+    "telefono": "0815039576",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109150",
@@ -3067,9 +3322,10 @@
     "citta": "ANDRIA",
     "provincia": "BT",
     "cap": "76123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0883/543411"
+    "lat": 41.2205509,
+    "lng": 16.2989303,
+    "telefono": "0883/543411",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109160",
@@ -3079,9 +3335,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00181",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 7850528"
+    "lat": 41.8744217,
+    "lng": 12.523785799999999,
+    "telefono": "06 7850528",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109175",
@@ -3091,9 +3348,10 @@
     "citta": "PALERMO",
     "provincia": "PA",
     "cap": "90127",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 38.1025273,
+    "lng": 13.355116599999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109188",
@@ -3103,9 +3361,10 @@
     "citta": "MESAGNE",
     "provincia": "BR",
     "cap": "72023",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0831 737021"
+    "lat": 40.5585605,
+    "lng": 17.8006287,
+    "telefono": "0831 737021",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109200",
@@ -3115,9 +3374,10 @@
     "citta": "VIGNANELLO",
     "provincia": "VT",
     "cap": "01039",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0761 755453"
+    "lat": 42.3824359,
+    "lng": 12.2778913,
+    "telefono": "0761 755453",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109221",
@@ -3127,9 +3387,10 @@
     "citta": "CAMMARATA",
     "provincia": "AG",
     "cap": "92022",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0922/903401"
+    "lat": 37.629683799999995,
+    "lng": 13.630892699999999,
+    "telefono": "0922/903401",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109271",
@@ -3139,9 +3400,10 @@
     "citta": "TORINO",
     "provincia": "TO",
     "cap": "10134",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "375 511 4704"
+    "lat": 45.048159999999996,
+    "lng": 7.663367,
+    "telefono": "375 511 4704",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109301",
@@ -3151,9 +3413,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00191",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 3313099"
+    "lat": 41.9541401,
+    "lng": 12.4576955,
+    "telefono": "06 3313099",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109324",
@@ -3163,9 +3426,10 @@
     "citta": "CATANIA",
     "provincia": "CT",
     "cap": "95127",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095 503937"
+    "lat": 37.520750299999996,
+    "lng": 15.0963466,
+    "telefono": "095 503937",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109375",
@@ -3175,9 +3439,10 @@
     "citta": "CANEGRATE",
     "provincia": "MI",
     "cap": "20010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0331 404733"
+    "lat": 45.5678063,
+    "lng": 8.926912,
+    "telefono": "0331 404733",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109382",
@@ -3187,9 +3452,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00192",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0639738166"
+    "lat": 41.906593099999995,
+    "lng": 12.4588807,
+    "telefono": "0639738166",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109418",
@@ -3199,9 +3465,10 @@
     "citta": "ACIREALE",
     "provincia": "CT",
     "cap": "95024",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095 809072"
+    "lat": 37.6648257,
+    "lng": 15.166370599999999,
+    "telefono": "095 809072",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109425",
@@ -3211,9 +3478,10 @@
     "citta": "ARCOLE",
     "provincia": "VR",
     "cap": "37040",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "045/6180047"
+    "lat": 45.384400199999995,
+    "lng": 11.3120449,
+    "telefono": "045/6180047",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109435",
@@ -3223,9 +3491,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02 36520135"
+    "lat": 45.458658799999995,
+    "lng": 9.1774117,
+    "telefono": "02 36520135",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109471",
@@ -3235,9 +3504,10 @@
     "citta": "TREBASELEGHE",
     "provincia": "PD",
     "cap": "35010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "049 9388770"
+    "lat": 45.5923313,
+    "lng": 12.047931199999999,
+    "telefono": "049 9388770",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109577",
@@ -3247,9 +3517,10 @@
     "citta": "RONCIGLIONE",
     "provincia": "VT",
     "cap": "01037",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0761 625053-6..."
+    "lat": 42.291728899999995,
+    "lng": 12.211877999999999,
+    "telefono": "0761 625053-6...",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109631",
@@ -3259,9 +3530,10 @@
     "citta": "ALBA",
     "provincia": "CN",
     "cap": "12051",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0173 287316"
+    "lat": 44.6862381,
+    "lng": 8.011787199999999,
+    "telefono": "0173 287316",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109632",
@@ -3271,9 +3543,10 @@
     "citta": "PORTICI",
     "provincia": "NA",
     "cap": "80055",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 272674"
+    "lat": 40.8193305,
+    "lng": 14.340249199999999,
+    "telefono": "081 272674",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109665",
@@ -3283,9 +3556,10 @@
     "citta": "PESCARA",
     "provincia": "PE",
     "cap": "65100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 42.4554822,
+    "lng": 14.217839699999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109695",
@@ -3295,9 +3569,10 @@
     "citta": "PARABIAGO",
     "provincia": "MI",
     "cap": "20015",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0331 551616"
+    "lat": 45.5573546,
+    "lng": 8.943515,
+    "telefono": "0331 551616",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109700",
@@ -3307,9 +3582,10 @@
     "citta": "SCAFATI",
     "provincia": "SA",
     "cap": "84018",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 8502241"
+    "lat": 40.7557749,
+    "lng": 14.5285089,
+    "telefono": "081 8502241",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109702",
@@ -3319,9 +3595,10 @@
     "citta": "PIACENZA",
     "provincia": "PC",
     "cap": "29100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0523 320973"
+    "lat": 45.050898,
+    "lng": 9.691659,
+    "telefono": "0523 320973",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109707",
@@ -3331,9 +3608,10 @@
     "citta": "AVELLINO",
     "provincia": "AV",
     "cap": "83100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0825 32034-35965"
+    "lat": 40.913882699999995,
+    "lng": 14.788895499999999,
+    "telefono": "0825 32034-35965",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109747",
@@ -3343,9 +3621,10 @@
     "citta": "CASERTA",
     "provincia": "CE",
     "cap": "81100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0823 343713"
+    "lat": 41.0737783,
+    "lng": 14.356670900000001,
+    "telefono": "0823 343713",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109835",
@@ -3355,9 +3634,10 @@
     "citta": "REGGIO CALABRIA",
     "provincia": "RC",
     "cap": "89125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0965 24013"
+    "lat": 38.1094703,
+    "lng": 15.6448538,
+    "telefono": "0965 24013",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109865",
@@ -3367,9 +3647,10 @@
     "citta": "POGGIO A CAIANO",
     "provincia": "PO",
     "cap": "59016",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "055877014"
+    "lat": 43.8121468,
+    "lng": 11.054816899999999,
+    "telefono": "055877014",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109929",
@@ -3379,9 +3660,10 @@
     "citta": "GIUGLIANO IN CAMPANIA",
     "provincia": "NA",
     "cap": "80014",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 40.92717090000001,
+    "lng": 14.180388599999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-109954",
@@ -3391,9 +3673,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.4795258,
+    "lng": 9.1915957,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110042",
@@ -3403,9 +3686,10 @@
     "citta": "GALATONE",
     "provincia": "LE",
     "cap": "73044",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0833 861571"
+    "lat": 40.1447437,
+    "lng": 18.0677016,
+    "telefono": "0833 861571",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110089",
@@ -3415,9 +3699,10 @@
     "citta": "SAVONA",
     "provincia": "SV",
     "cap": "17100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "019 851669"
+    "lat": 44.3096015,
+    "lng": 8.4844447,
+    "telefono": "019 851669",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110101",
@@ -3427,9 +3712,10 @@
     "citta": "FOSSANO",
     "provincia": "CN",
     "cap": "12045",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0172 60058"
+    "lat": 44.549916499999995,
+    "lng": 7.7252285,
+    "telefono": "0172 60058",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110255",
@@ -3439,9 +3725,10 @@
     "citta": "QUALIANO",
     "provincia": "NA",
     "cap": "80019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 8186593"
+    "lat": 40.9169627,
+    "lng": 14.1454022,
+    "telefono": "081 8186593",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110271",
@@ -3451,9 +3738,10 @@
     "citta": "VARAZZE",
     "provincia": "SV",
     "cap": "17019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "019 934610"
+    "lat": 44.359747399999996,
+    "lng": 8.5793862,
+    "telefono": "019 934610",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110288",
@@ -3463,9 +3751,10 @@
     "citta": "CASTELLARANO",
     "provincia": "RE",
     "cap": "42014",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0536 403722"
+    "lat": 44.5082972,
+    "lng": 10.729496600000001,
+    "telefono": "0536 403722",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110361",
@@ -3475,9 +3764,10 @@
     "citta": "MONASTEROLO DI SAV.",
     "provincia": "CN",
     "cap": "12030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0172 373014"
+    "lat": 44.6876207,
+    "lng": 7.621037899999998,
+    "telefono": "0172 373014",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110417",
@@ -3487,9 +3777,10 @@
     "citta": "AVERSA",
     "provincia": "CE",
     "cap": "81031",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 8111760"
+    "lat": 40.965120399999996,
+    "lng": 14.2077574,
+    "telefono": "081 8111760",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110419",
@@ -3499,9 +3790,10 @@
     "citta": "STRESA",
     "provincia": "VB",
     "cap": "28838",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0323-933833"
+    "lat": 45.884037799999994,
+    "lng": 8.5397569,
+    "telefono": "0323-933833",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110435",
@@ -3511,9 +3803,10 @@
     "citta": "AGLIANA",
     "provincia": "PT",
     "cap": "51031",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0574 750379"
+    "lat": 43.9095728,
+    "lng": 10.9940731,
+    "telefono": "0574 750379",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110454",
@@ -3523,9 +3816,10 @@
     "citta": "PARMA",
     "provincia": "PR",
     "cap": "43123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0521 487546"
+    "lat": 44.7905163,
+    "lng": 10.3615857,
+    "telefono": "0521 487546",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110475",
@@ -3535,9 +3829,10 @@
     "citta": "PORTO EMPEDOCLE",
     "provincia": "AG",
     "cap": "92014",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 37.2942506,
+    "lng": 13.5261552,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110521",
@@ -3547,9 +3842,10 @@
     "citta": "CORBOLONE DI S. STINO DI LIVENZA",
     "provincia": "VE",
     "cap": "30029",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0421 461711"
+    "lat": 45.743907799999995,
+    "lng": 12.6731027,
+    "telefono": "0421 461711",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110530",
@@ -3559,9 +3855,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00128",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06/83796033"
+    "lat": 41.7846057,
+    "lng": 12.470922499999999,
+    "telefono": "06/83796033",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110533",
@@ -3571,9 +3868,10 @@
     "citta": "TAURIANOVA",
     "provincia": "RC",
     "cap": "89029",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0966 643269"
+    "lat": 38.3524762,
+    "lng": 16.0168336,
+    "telefono": "0966 643269",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110539",
@@ -3583,9 +3881,10 @@
     "citta": "MESTRE",
     "provincia": "VE",
     "cap": "30172",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "041 975185"
+    "lat": 45.487148,
+    "lng": 12.2386346,
+    "telefono": "041 975185",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110545",
@@ -3595,9 +3894,10 @@
     "citta": "MASSAFRA",
     "provincia": "TA",
     "cap": "74016",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "099 8851284"
+    "lat": 40.5881903,
+    "lng": 17.1163277,
+    "telefono": "099 8851284",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110626",
@@ -3607,9 +3907,10 @@
     "citta": "CIVITAVECCHIA",
     "provincia": "RM",
     "cap": "00053",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 42.1022464,
+    "lng": 11.805033799999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110703",
@@ -3619,9 +3920,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00145",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 5417947"
+    "lat": 41.8561559,
+    "lng": 12.4842365,
+    "telefono": "06 5417947",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110721",
@@ -3631,9 +3933,10 @@
     "citta": "CATANIA",
     "provincia": "CT",
     "cap": "95131",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095 531400"
+    "lat": 37.5035076,
+    "lng": 15.093528500000001,
+    "telefono": "095 531400",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110726",
@@ -3643,9 +3946,10 @@
     "citta": "MESSINA",
     "provincia": "ME",
     "cap": "98123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 38.1824927,
+    "lng": 15.5570308,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110740",
@@ -3655,9 +3959,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00192",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "063242009"
+    "lat": 41.9094079,
+    "lng": 12.4622022,
+    "telefono": "063242009",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110895",
@@ -3667,9 +3972,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00183",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 7008855"
+    "lat": 41.8815379,
+    "lng": 12.513122899999999,
+    "telefono": "06 7008855",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-110939",
@@ -3679,9 +3985,10 @@
     "citta": "FARRA DI SOLIGO",
     "provincia": "TV",
     "cap": "31010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0438/83258"
+    "lat": 45.911028699999996,
+    "lng": 12.1559865,
+    "telefono": "0438/83258",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111017",
@@ -3691,9 +3998,10 @@
     "citta": "TRANI",
     "provincia": "BT",
     "cap": "76125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0883 501068"
+    "lat": 41.281774999999996,
+    "lng": 16.4068966,
+    "telefono": "0883 501068",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111045",
@@ -3703,9 +4011,10 @@
     "citta": "OSTIA",
     "provincia": "RM",
     "cap": "00100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 83652712"
+    "lat": 41.736233299999995,
+    "lng": 12.2757052,
+    "telefono": "06 83652712",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111199",
@@ -3715,9 +4024,10 @@
     "citta": "GRUMO APPULA",
     "provincia": "BA",
     "cap": "70025",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.0076526,
+    "lng": 16.707631499999998,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111201",
@@ -3727,9 +4037,10 @@
     "citta": "SAN BENEDETTO DEL TRONTO",
     "provincia": "AP",
     "cap": "63074",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0735 582286"
+    "lat": 42.9574862,
+    "lng": 13.879510199999999,
+    "telefono": "0735 582286",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111229",
@@ -3739,9 +4050,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80131",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 7701164"
+    "lat": 40.861506999999996,
+    "lng": 14.2199885,
+    "telefono": "081 7701164",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111243",
@@ -3751,9 +4063,10 @@
     "citta": "CASTELLAMMARE DI STABIA",
     "provincia": "NA",
     "cap": "80053",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0818711068"
+    "lat": 40.6978662,
+    "lng": 14.4853744,
+    "telefono": "0818711068",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111260",
@@ -3763,9 +4076,10 @@
     "citta": "VICO EQUENSE",
     "provincia": "NA",
     "cap": "80069",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 8017189"
+    "lat": 40.6617106,
+    "lng": 14.427118799999999,
+    "telefono": "081 8017189",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111269",
@@ -3775,9 +4089,10 @@
     "citta": "CASAPULLA",
     "provincia": "CE",
     "cap": "81020",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0823 467743"
+    "lat": 41.0774055,
+    "lng": 14.2888243,
+    "telefono": "0823 467743",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111271",
@@ -3787,9 +4102,10 @@
     "citta": "BRUSAPORTO",
     "provincia": "BG",
     "cap": "24060",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "035 680933"
+    "lat": 45.6702072,
+    "lng": 9.7635611,
+    "telefono": "035 680933",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111296",
@@ -3799,9 +4115,10 @@
     "citta": "TRAPANI",
     "provincia": "TP",
     "cap": "91100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0923 546498"
+    "lat": 38.0188669,
+    "lng": 12.524828399999999,
+    "telefono": "0923 546498",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111297",
@@ -3811,9 +4128,10 @@
     "citta": "MARTINA FRANCA",
     "provincia": "TA",
     "cap": "74015",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080 8697585"
+    "lat": 40.700939999999996,
+    "lng": 17.329720899999998,
+    "telefono": "080 8697585",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111506",
@@ -3823,9 +4141,10 @@
     "citta": "LIVORNO",
     "provincia": "LI",
     "cap": "57126",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0586 810048"
+    "lat": 43.5443767,
+    "lng": 10.3133126,
+    "telefono": "0586 810048",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111528",
@@ -3835,9 +4154,10 @@
     "citta": "BARLETTA",
     "provincia": "BT",
     "cap": "76121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.3101565,
+    "lng": 16.2675645,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111550",
@@ -3847,9 +4167,10 @@
     "citta": "SAN REMO",
     "provincia": "IM",
     "cap": "18038",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0184 531968"
+    "lat": 43.816168399999995,
+    "lng": 7.7748485,
+    "telefono": "0184 531968",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111571",
@@ -3859,9 +4180,10 @@
     "citta": "CASAMASSIMA",
     "provincia": "BA",
     "cap": "70100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080 4537017"
+    "lat": 40.957553,
+    "lng": 16.9176104,
+    "telefono": "080 4537017",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111609",
@@ -3871,9 +4193,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20133",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02 29514393"
+    "lat": 45.479230799999996,
+    "lng": 9.217547399999999,
+    "telefono": "02 29514393",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111671",
@@ -3883,9 +4206,10 @@
     "citta": "CIVITAVECCHIA",
     "provincia": "RM",
     "cap": "00053",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 42.0928178,
+    "lng": 11.795873799999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111675",
@@ -3895,9 +4219,10 @@
     "citta": "CRISPIANO",
     "provincia": "TA",
     "cap": "74012",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 40.5993214,
+    "lng": 17.237025499999998,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111771",
@@ -3907,9 +4232,10 @@
     "citta": "CAORSO",
     "provincia": "PC",
     "cap": "29012",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0523821229"
+    "lat": 45.0491702,
+    "lng": 9.8746298,
+    "telefono": "0523821229",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111795",
@@ -3919,9 +4245,10 @@
     "citta": "PERUGIA",
     "provincia": "PG",
     "cap": "06128",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "075-5005155"
+    "lat": 43.1016285,
+    "lng": 12.372884299999999,
+    "telefono": "075-5005155",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111866",
@@ -3931,9 +4258,10 @@
     "citta": "FIRENZE",
     "provincia": "FI",
     "cap": "50143",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "055-7398595"
+    "lat": 43.7680395,
+    "lng": 11.2196949,
+    "telefono": "055-7398595",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111873",
@@ -3943,9 +4271,10 @@
     "citta": "FRANCAVILLA AL MARE",
     "provincia": "CH",
     "cap": "66023",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "085 4913617"
+    "lat": 42.425181099999996,
+    "lng": 14.276539699999999,
+    "telefono": "085 4913617",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111886",
@@ -3955,9 +4284,10 @@
     "citta": "CARUGATE",
     "provincia": "MI",
     "cap": "20061",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.54640010000001,
+    "lng": 9.3434864,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111956",
@@ -3967,9 +4297,10 @@
     "citta": "BAGHERIA",
     "provincia": "PA",
     "cap": "90011",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "091 6619009"
+    "lat": 38.083728099999995,
+    "lng": 13.5161185,
+    "telefono": "091 6619009",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-111974",
@@ -3979,9 +4310,10 @@
     "citta": "RIANO",
     "provincia": "RM",
     "cap": "00060",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "069034196"
+    "lat": 42.0909687,
+    "lng": 12.5219803,
+    "telefono": "069034196",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112072",
@@ -3991,9 +4323,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00151",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "065373484"
+    "lat": 41.8712455,
+    "lng": 12.443568299999999,
+    "telefono": "065373484",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112155",
@@ -4003,9 +4336,10 @@
     "citta": "CATANIA",
     "provincia": "CT",
     "cap": "95128",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095432596"
+    "lat": 37.5133936,
+    "lng": 15.0848739,
+    "telefono": "095432596",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112194",
@@ -4015,9 +4349,10 @@
     "citta": "SASSARI",
     "provincia": "SS",
     "cap": "07100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "079 6767769"
+    "lat": 40.715083899999996,
+    "lng": 8.5819101,
+    "telefono": "079 6767769",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112211",
@@ -4027,9 +4362,10 @@
     "citta": "ACIREALE",
     "provincia": "CT",
     "cap": "95024",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 37.6435374,
+    "lng": 15.158208499999997,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112212",
@@ -4039,9 +4375,10 @@
     "citta": "RAGUSA",
     "provincia": "RG",
     "cap": "97100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0932 518906"
+    "lat": 36.9160275,
+    "lng": 14.7185181,
+    "telefono": "0932 518906",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112305",
@@ -4051,9 +4388,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00152",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 88798212"
+    "lat": 41.8838164,
+    "lng": 12.4575523,
+    "telefono": "06 88798212",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112343",
@@ -4063,9 +4401,10 @@
     "citta": "TREMESTIERI ETNEO",
     "provincia": "CT",
     "cap": "95030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "095-494102"
+    "lat": 37.5352883,
+    "lng": 15.101246699999999,
+    "telefono": "095-494102",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112349",
@@ -4075,9 +4414,10 @@
     "citta": "SPOLTORE",
     "provincia": "PE",
     "cap": "65010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "085-413297"
+    "lat": 42.456137899999995,
+    "lng": 14.191276799999999,
+    "telefono": "085-413297",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112372",
@@ -4087,9 +4427,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00162",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-44291190"
+    "lat": 41.9111208,
+    "lng": 12.5208021,
+    "telefono": "06-44291190",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112417",
@@ -4099,9 +4440,10 @@
     "citta": "ARZANO",
     "provincia": "NA",
     "cap": "80022",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 731 4757"
+    "lat": 40.916136,
+    "lng": 14.268268599999999,
+    "telefono": "081 731 4757",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112450",
@@ -4111,9 +4453,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00161",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-44250248"
+    "lat": 41.9103085,
+    "lng": 12.502379399999999,
+    "telefono": "06-44250248",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112500",
@@ -4123,9 +4466,10 @@
     "citta": "SAN SALVATORE TELESI",
     "provincia": "BN",
     "cap": "82030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0824-948489"
+    "lat": 41.2344493,
+    "lng": 14.5028875,
+    "telefono": "0824-948489",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112503",
@@ -4135,9 +4479,10 @@
     "citta": "BAGHERIA",
     "provincia": "PA",
     "cap": "90011",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "091 7527749"
+    "lat": 38.084590299999995,
+    "lng": 13.501635199999999,
+    "telefono": "091 7527749",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112547",
@@ -4147,9 +4492,10 @@
     "citta": "NOVI LIGURE",
     "provincia": "AL",
     "cap": "15067",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0143 2310"
+    "lat": 44.7625314,
+    "lng": 8.785306,
+    "telefono": "0143 2310",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112565",
@@ -4159,9 +4505,10 @@
     "citta": "ISERNIA",
     "provincia": "IS",
     "cap": "86170",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0865-299310"
+    "lat": 41.608491300000004,
+    "lng": 14.2349349,
+    "telefono": "0865-299310",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112592",
@@ -4171,9 +4518,10 @@
     "citta": "RIONERO IN VULTURE",
     "provincia": "PZ",
     "cap": "85028",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0972 202549"
+    "lat": 40.925916099999995,
+    "lng": 15.6599788,
+    "telefono": "0972 202549",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112604",
@@ -4183,9 +4531,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00159",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "064393532"
+    "lat": 41.9062704,
+    "lng": 12.5511579,
+    "telefono": "064393532",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112618",
@@ -4195,9 +4544,10 @@
     "citta": "MESSINA",
     "provincia": "ME",
     "cap": "98124",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0902924210"
+    "lat": 38.175984299999996,
+    "lng": 15.5468238,
+    "telefono": "0902924210",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112621",
@@ -4207,9 +4557,10 @@
     "citta": "LADISPOLI",
     "provincia": "RM",
     "cap": "00050",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 5272 7267"
+    "lat": 41.9483678,
+    "lng": 12.083983199999999,
+    "telefono": "06 5272 7267",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112650",
@@ -4219,9 +4570,10 @@
     "citta": "MIRANO",
     "provincia": "VE",
     "cap": "30035",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "041-432198"
+    "lat": 45.4915319,
+    "lng": 12.106802199999999,
+    "telefono": "041-432198",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112691",
@@ -4231,9 +4583,10 @@
     "citta": "CANICATTI'",
     "provincia": "AG",
     "cap": "92024",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0922-851261"
+    "lat": 37.3524335,
+    "lng": 13.842391899999999,
+    "telefono": "0922-851261",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112714",
@@ -4243,9 +4596,10 @@
     "citta": "SPINEA",
     "provincia": "VE",
     "cap": "30038",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "041/990123"
+    "lat": 45.4920438,
+    "lng": 12.1635957,
+    "telefono": "041/990123",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112716",
@@ -4255,9 +4609,10 @@
     "citta": "SANTA TERESA DI GALLURA",
     "provincia": "SS",
     "cap": "07028",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.2422285,
+    "lng": 9.1889249,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112738",
@@ -4267,9 +4622,10 @@
     "citta": "FREGENE",
     "provincia": "RM",
     "cap": "00054",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 88796836"
+    "lat": 41.8428404,
+    "lng": 12.2017248,
+    "telefono": "06 88796836",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112771",
@@ -4279,9 +4635,10 @@
     "citta": "TERAMO",
     "provincia": "TE",
     "cap": "64100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 42.6697098,
+    "lng": 13.7067547,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112794",
@@ -4291,9 +4648,10 @@
     "citta": "PIACENZA",
     "provincia": "PC",
     "cap": "29121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0523321662"
+    "lat": 45.0535819,
+    "lng": 9.6950802,
+    "telefono": "0523321662",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112822",
@@ -4303,9 +4661,10 @@
     "citta": "CONCORDIA SAGITTARIA",
     "provincia": "VE",
     "cap": "30023",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0421-270214"
+    "lat": 45.758472999999995,
+    "lng": 12.844415,
+    "telefono": "0421-270214",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112827",
@@ -4315,9 +4674,10 @@
     "citta": "GORIZIA",
     "provincia": "GO",
     "cap": "34170",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0481-531443"
+    "lat": 45.93976180000001,
+    "lng": 13.6151346,
+    "telefono": "0481-531443",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112829",
@@ -4327,9 +4687,10 @@
     "citta": "GIULIANOVA",
     "provincia": "TE",
     "cap": "64021",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "085 219 8243"
+    "lat": 42.73225480000001,
+    "lng": 13.960112299999999,
+    "telefono": "085 219 8243",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112881",
@@ -4339,9 +4700,10 @@
     "citta": "LONGOBARDI",
     "provincia": "CS",
     "cap": "87030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 39.205456,
+    "lng": 16.0626695,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112884",
@@ -4351,9 +4713,10 @@
     "citta": "PISA",
     "provincia": "PI",
     "cap": "56125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "050-24345"
+    "lat": 43.7113854,
+    "lng": 10.399441900000001,
+    "telefono": "050-24345",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112971",
@@ -4363,9 +4726,10 @@
     "citta": "TERRACINA",
     "provincia": "LT",
     "cap": "04019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0773702342"
+    "lat": 41.2981239,
+    "lng": 13.232714,
+    "telefono": "0773702342",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-112975",
@@ -4375,9 +4739,10 @@
     "citta": "FRATTAMAGGIORE",
     "provincia": "NA",
     "cap": "80027",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0818344034"
+    "lat": 40.9414022,
+    "lng": 14.276002799999999,
+    "telefono": "0818344034",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113010",
@@ -4387,9 +4752,10 @@
     "citta": "SPOLETO",
     "provincia": "PG",
     "cap": "06049",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0743-207084"
+    "lat": 42.7519929,
+    "lng": 12.7298704,
+    "telefono": "0743-207084",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113046",
@@ -4399,9 +4765,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00136",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0654648468"
+    "lat": 41.9240314,
+    "lng": 12.447925099999999,
+    "telefono": "0654648468",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113048",
@@ -4411,9 +4778,10 @@
     "citta": "ANZIO",
     "provincia": "RM",
     "cap": "00403",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0659879302"
+    "lat": 41.4830371,
+    "lng": 12.6115339,
+    "telefono": "0659879302",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113078",
@@ -4423,9 +4791,10 @@
     "citta": "MONTESILVANO",
     "provincia": "PE",
     "cap": "65015",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "085 4681873"
+    "lat": 42.4996704,
+    "lng": 14.1318582,
+    "telefono": "085 4681873",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113079",
@@ -4435,9 +4804,10 @@
     "citta": "MAIDA",
     "provincia": "CZ",
     "cap": "88025",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0968 751108"
+    "lat": 38.900223,
+    "lng": 16.3505504,
+    "telefono": "0968 751108",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113118",
@@ -4447,9 +4817,10 @@
     "citta": "GUARDIA VOMANO",
     "provincia": "TE",
     "cap": "64024",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "085 898101"
+    "lat": 42.631640999999995,
+    "lng": 13.880549,
+    "telefono": "085 898101",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113151",
@@ -4459,9 +4830,10 @@
     "citta": "PORTICI",
     "provincia": "NA",
     "cap": "80055",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 1840 5990..."
+    "lat": 40.8186438,
+    "lng": 14.3322311,
+    "telefono": "081 1840 5990...",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113153",
@@ -4471,9 +4843,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00173",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.850969,
+    "lng": 12.599197,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113192",
@@ -4483,9 +4856,10 @@
     "citta": "REGGIO CALABRIA",
     "provincia": "RC",
     "cap": "89126",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0965 026412"
+    "lat": 38.107385,
+    "lng": 15.6669677,
+    "telefono": "0965 026412",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113245",
@@ -4495,9 +4869,10 @@
     "citta": "FIESSO D'ARTICO",
     "provincia": "VE",
     "cap": "30032",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "041 5160508"
+    "lat": 45.416916,
+    "lng": 12.029152999999999,
+    "telefono": "041 5160508",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113246",
@@ -4507,9 +4882,10 @@
     "citta": "PALERMO",
     "provincia": "PA",
     "cap": "90141",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "091-584096"
+    "lat": 38.1266757,
+    "lng": 13.3467206,
+    "telefono": "091-584096",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113257",
@@ -4519,9 +4895,10 @@
     "citta": "ODERZO",
     "provincia": "TV",
     "cap": "31046",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.783573399999995,
+    "lng": 12.499625799999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113280",
@@ -4531,9 +4908,10 @@
     "citta": "OSTUNI",
     "provincia": "BR",
     "cap": "72017",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0831-301690"
+    "lat": 40.728789899999995,
+    "lng": 17.57499,
+    "telefono": "0831-301690",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113282",
@@ -4543,9 +4921,10 @@
     "citta": "VITERBO",
     "provincia": "VT",
     "cap": "01100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0761-324240"
+    "lat": 42.4135396,
+    "lng": 12.1158092,
+    "telefono": "0761-324240",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113301",
@@ -4555,9 +4934,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00172",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 2410254"
+    "lat": 41.8814865,
+    "lng": 12.561157200000002,
+    "telefono": "06 2410254",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113319",
@@ -4567,9 +4947,10 @@
     "citta": "GALLIPOLI",
     "provincia": "LE",
     "cap": "73014",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0833 266643"
+    "lat": 40.0560836,
+    "lng": 17.991339399999998,
+    "telefono": "0833 266643",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113322",
@@ -4579,9 +4960,10 @@
     "citta": "MADDALONI",
     "provincia": "CE",
     "cap": "81024",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0823434123"
+    "lat": 41.0400947,
+    "lng": 14.3831714,
+    "telefono": "0823434123",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113383",
@@ -4591,9 +4973,10 @@
     "citta": "MESSINA",
     "provincia": "ME",
     "cap": "98167",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "090-393253"
+    "lat": 38.2555429,
+    "lng": 15.602404600000002,
+    "telefono": "090-393253",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113399",
@@ -4603,9 +4986,10 @@
     "citta": "ABANO TERME",
     "provincia": "PD",
     "cap": "35031",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "049-8669049"
+    "lat": 45.3523555,
+    "lng": 11.7800785,
+    "telefono": "049-8669049",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113400",
@@ -4615,9 +4999,10 @@
     "citta": "GIOIA DEL COLLE",
     "provincia": "BA",
     "cap": "70023",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080 3431118"
+    "lat": 40.7957985,
+    "lng": 16.9208922,
+    "telefono": "080 3431118",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113432",
@@ -4627,9 +5012,10 @@
     "citta": "FRANCAVILLA FONTANA",
     "provincia": "BR",
     "cap": "72021",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 40.5388851,
+    "lng": 17.579288000000002,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113440",
@@ -4639,9 +5025,10 @@
     "citta": "TIVOLI",
     "provincia": "RM",
     "cap": "00019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0774-312183"
+    "lat": 41.963356,
+    "lng": 12.799817,
+    "telefono": "0774-312183",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113515",
@@ -4651,9 +5038,10 @@
     "citta": "AVERSA",
     "provincia": "CE",
     "cap": "81031",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-8113410-8"
+    "lat": 40.975606899999995,
+    "lng": 14.2193218,
+    "telefono": "081-8113410-8",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113534",
@@ -4663,9 +5051,10 @@
     "citta": "BONO",
     "provincia": "SS",
     "cap": "07011",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "079790138"
+    "lat": 40.414864,
+    "lng": 9.028046999999999,
+    "telefono": "079790138",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113576",
@@ -4675,9 +5064,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00148",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 65192856"
+    "lat": 41.8424075,
+    "lng": 12.4213769,
+    "telefono": "06 65192856",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113595",
@@ -4687,9 +5077,10 @@
     "citta": "PASSOSCURO",
     "provincia": "RM",
     "cap": "00050",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "66670412"
+    "lat": 41.9024547,
+    "lng": 12.1576129,
+    "telefono": "66670412",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113603",
@@ -4699,9 +5090,10 @@
     "citta": "NOALE",
     "provincia": "VE",
     "cap": "30033",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "041 440071"
+    "lat": 45.5500852,
+    "lng": 12.0726587,
+    "telefono": "041 440071",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113640",
@@ -4711,9 +5103,10 @@
     "citta": "CARINI",
     "provincia": "PA",
     "cap": "90044",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "3471946469"
+    "lat": 38.1479437,
+    "lng": 13.1884591,
+    "telefono": "3471946469",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113653",
@@ -4723,9 +5116,10 @@
     "citta": "FRASCATI",
     "provincia": "RM",
     "cap": "00044",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-9426333"
+    "lat": 41.817000199999995,
+    "lng": 12.68717,
+    "telefono": "06-9426333",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113685",
@@ -4735,9 +5129,10 @@
     "citta": "MATERA",
     "provincia": "MT",
     "cap": "75100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0835 333341"
+    "lat": 40.664162,
+    "lng": 16.609106000000004,
+    "telefono": "0835 333341",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113715",
@@ -4747,9 +5142,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00118",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 45667134"
+    "lat": 41.810466999999996,
+    "lng": 12.631660499999999,
+    "telefono": "06 45667134",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113795",
@@ -4759,9 +5155,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02-86464906"
+    "lat": 45.466775,
+    "lng": 9.181550999999999,
+    "telefono": "02-86464906",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113796",
@@ -4771,9 +5168,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02-76000471"
+    "lat": 45.469092499999995,
+    "lng": 9.199384199999999,
+    "telefono": "02-76000471",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113797",
@@ -4783,9 +5181,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20129",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02-2049584"
+    "lat": 45.4709092,
+    "lng": 9.2157738,
+    "telefono": "02-2049584",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113817",
@@ -4795,9 +5194,10 @@
     "citta": "SALSOMAGGIORE TERME",
     "provincia": "PR",
     "cap": "43039",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 44.817428500000005,
+    "lng": 9.9941136,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-113936",
@@ -4807,9 +5207,10 @@
     "citta": "BOSCOREALE",
     "provincia": "NA",
     "cap": "80041",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0815371621"
+    "lat": 40.779448699999996,
+    "lng": 14.5028533,
+    "telefono": "0815371621",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114121",
@@ -4819,9 +5220,10 @@
     "citta": "PARMA",
     "provincia": "PR",
     "cap": "43121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0521-233328"
+    "lat": 44.8018253,
+    "lng": 10.3256576,
+    "telefono": "0521-233328",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114170",
@@ -4831,9 +5233,10 @@
     "citta": "POGGIO MIRTETO",
     "provincia": "RI",
     "cap": "02047",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0765-24128"
+    "lat": 42.2657677,
+    "lng": 12.6855589,
+    "telefono": "0765-24128",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114196",
@@ -4843,9 +5246,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00133",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.8571132,
+    "lng": 12.6014658,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114223",
@@ -4855,9 +5259,10 @@
     "citta": "VALDERICE",
     "provincia": "TP",
     "cap": "91019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0923-833800"
+    "lat": 38.038335200000006,
+    "lng": 12.6141993,
+    "telefono": "0923-833800",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114519",
@@ -4867,9 +5272,10 @@
     "citta": "AVERSA",
     "provincia": "CE",
     "cap": "81031",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0818901229"
+    "lat": 40.9621816,
+    "lng": 14.201861899999999,
+    "telefono": "0818901229",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114521",
@@ -4879,9 +5285,10 @@
     "citta": "QUARTUCCIU",
     "provincia": "CA",
     "cap": "09044",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "070-8477242"
+    "lat": 39.2568644,
+    "lng": 9.185445399999999,
+    "telefono": "070-8477242",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114558",
@@ -4891,9 +5298,10 @@
     "citta": "FOGGIA",
     "provincia": "FG",
     "cap": "71121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.4524936,
+    "lng": 15.5510299,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114568",
@@ -4903,9 +5311,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80124",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0812301018"
+    "lat": 40.8193273,
+    "lng": 14.1873469,
+    "telefono": "0812301018",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114645",
@@ -4915,9 +5324,10 @@
     "citta": "MILAZZO",
     "provincia": "ME",
     "cap": "98057",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "090-9282142"
+    "lat": 38.2212882,
+    "lng": 15.2413653,
+    "telefono": "090-9282142",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114684",
@@ -4927,9 +5337,10 @@
     "citta": "ALTAMURA",
     "provincia": "BA",
     "cap": "70022",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0803115408"
+    "lat": 40.8267901,
+    "lng": 16.557002999999998,
+    "telefono": "0803115408",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114709",
@@ -4939,9 +5350,10 @@
     "citta": "ORTONA",
     "provincia": "CH",
     "cap": "66026",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 42.3553596,
+    "lng": 14.403403899999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114737",
@@ -4951,9 +5363,10 @@
     "citta": "MESSINA",
     "provincia": "ME",
     "cap": "98121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "090 364715"
+    "lat": 38.205802999999996,
+    "lng": 15.554901,
+    "telefono": "090 364715",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114781",
@@ -4963,9 +5376,10 @@
     "citta": "LATINA",
     "provincia": "LT",
     "cap": "04100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0773664800"
+    "lat": 41.4625007,
+    "lng": 12.9157789,
+    "telefono": "0773664800",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114863",
@@ -4975,9 +5389,10 @@
     "citta": "FRASCATI",
     "provincia": "RM",
     "cap": "00044",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.8084227,
+    "lng": 12.6805015,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-114900",
@@ -4987,9 +5402,10 @@
     "citta": "SAN CLEMENTE",
     "provincia": "RN",
     "cap": "47832",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0541-857206"
+    "lat": 43.914935199999995,
+    "lng": 12.6390849,
+    "telefono": "0541-857206",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115142",
@@ -4999,9 +5415,10 @@
     "citta": "PRATA DI PORDENONE",
     "provincia": "PN",
     "cap": "33080",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0434-620006"
+    "lat": 45.8939235,
+    "lng": 12.5945811,
+    "telefono": "0434-620006",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115155",
@@ -5011,9 +5428,10 @@
     "citta": "LIVORNO",
     "provincia": "LI",
     "cap": "57125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0586 899429"
+    "lat": 43.5301092,
+    "lng": 10.327216199999999,
+    "telefono": "0586 899429",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115165",
@@ -5023,9 +5441,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 21710232"
+    "lat": 41.725744299999995,
+    "lng": 12.293317499999999,
+    "telefono": "06 21710232",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115209",
@@ -5035,9 +5454,10 @@
     "citta": "CASTANO PRIMO",
     "provincia": "MI",
     "cap": "20022",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0331-880340"
+    "lat": 45.5513043,
+    "lng": 8.7767632,
+    "telefono": "0331-880340",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115229",
@@ -5047,9 +5467,10 @@
     "citta": "VICENZA",
     "provincia": "VI",
     "cap": "36100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0444/545050"
+    "lat": 45.552848499999996,
+    "lng": 11.536027299999999,
+    "telefono": "0444/545050",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115306",
@@ -5059,9 +5480,10 @@
     "citta": "SAN SALVO",
     "provincia": "CH",
     "cap": "66050",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "087354185"
+    "lat": 42.0455123,
+    "lng": 14.7310262,
+    "telefono": "087354185",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115341",
@@ -5071,9 +5493,10 @@
     "citta": "FELTRE",
     "provincia": "BL",
     "cap": "32032",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0439 42089"
+    "lat": 46.0594377,
+    "lng": 11.9314192,
+    "telefono": "0439 42089",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115349",
@@ -5083,9 +5506,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 40.8290351,
+    "lng": 14.207777799999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115408",
@@ -5095,9 +5519,10 @@
     "citta": "SETTIMO TORINESE",
     "provincia": "TO",
     "cap": "10036",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.1395309,
+    "lng": 7.762707099999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115442",
@@ -5107,9 +5532,10 @@
     "citta": "SCOPPITO",
     "provincia": "AQ",
     "cap": "67019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0862 717606"
+    "lat": 42.35958,
+    "lng": 13.289838900000001,
+    "telefono": "0862 717606",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115664",
@@ -5119,9 +5545,10 @@
     "citta": "SAN VITO DI CADORE",
     "provincia": "BL",
     "cap": "32046",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0436-9194"
+    "lat": 46.460157099999996,
+    "lng": 12.2046192,
+    "telefono": "0436-9194",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115696",
@@ -5131,9 +5558,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00142",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5401702"
+    "lat": 41.8467029,
+    "lng": 12.484235400000001,
+    "telefono": "06-5401702",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115716",
@@ -5143,9 +5571,10 @@
     "citta": "POMEZIA",
     "provincia": "RM",
     "cap": "00071",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "069158264"
+    "lat": 41.6326994,
+    "lng": 12.493115999999999,
+    "telefono": "069158264",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115893",
@@ -5155,9 +5584,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00192",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0639733164"
+    "lat": 41.9098863,
+    "lng": 12.453536699999999,
+    "telefono": "0639733164",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-115933",
@@ -5167,9 +5597,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00146",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5506284"
+    "lat": 41.850183,
+    "lng": 12.4591446,
+    "telefono": "06-5506284",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-116351",
@@ -5179,9 +5610,10 @@
     "citta": "SALZANO",
     "provincia": "VE",
     "cap": "30030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0412379942"
+    "lat": 45.5210848,
+    "lng": 12.0962148,
+    "telefono": "0412379942",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-116427",
@@ -5191,9 +5623,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00133",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 5744652"
+    "lat": 41.8723101,
+    "lng": 12.6327453,
+    "telefono": "06 5744652",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-116618",
@@ -5203,9 +5636,10 @@
     "citta": "MATERA",
     "provincia": "MT",
     "cap": "75100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0835-332282"
+    "lat": 40.6697519,
+    "lng": 16.606062599999998,
+    "telefono": "0835-332282",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-116641",
@@ -5215,9 +5649,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00177",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.8927556,
+    "lng": 12.5505227,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-116652",
@@ -5227,9 +5662,10 @@
     "citta": "FONTE NUOVA",
     "provincia": "RM",
     "cap": "00013",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0644239622"
+    "lat": 41.9954896,
+    "lng": 12.6192693,
+    "telefono": "0644239622",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-116703",
@@ -5239,9 +5675,10 @@
     "citta": "TARANTO",
     "provincia": "TA",
     "cap": "74122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "099-7775397"
+    "lat": 40.401403099999996,
+    "lng": 17.2627472,
+    "telefono": "099-7775397",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-116711",
@@ -5251,9 +5688,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0621710232"
+    "lat": 41.7276398,
+    "lng": 12.2927819,
+    "telefono": "0621710232",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-116815",
@@ -5263,9 +5701,10 @@
     "citta": "CASTELNUOVO MAGRA",
     "provincia": "SP",
     "cap": "19033",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0187-675089"
+    "lat": 44.0910541,
+    "lng": 10.014770799999999,
+    "telefono": "0187-675089",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-116983",
@@ -5275,9 +5714,10 @@
     "citta": "GRAGNANO",
     "provincia": "NA",
     "cap": "80054",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-8742694"
+    "lat": 40.7104996,
+    "lng": 14.5170245,
+    "telefono": "081-8742694",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117053",
@@ -5287,9 +5727,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00153",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5743623"
+    "lat": 41.882140799999995,
+    "lng": 12.4857704,
+    "telefono": "06-5743623",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117058",
@@ -5299,9 +5740,10 @@
     "citta": "TRIESTE",
     "provincia": "TS",
     "cap": "34122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "040-630213"
+    "lat": 45.6513627,
+    "lng": 13.7742968,
+    "telefono": "040-630213",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117121",
@@ -5311,9 +5753,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20136",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02 58321171"
+    "lat": 45.4510617,
+    "lng": 9.1924929,
+    "telefono": "02 58321171",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117149",
@@ -5323,9 +5766,10 @@
     "citta": "RIBERA",
     "provincia": "AG",
     "cap": "92016",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0925 66463"
+    "lat": 37.501872299999995,
+    "lng": 13.268916899999999,
+    "telefono": "0925 66463",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117358",
@@ -5335,9 +5779,10 @@
     "citta": "CORATO",
     "provincia": "BA",
     "cap": "70033",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-8987584"
+    "lat": 41.146983899999995,
+    "lng": 16.4097863,
+    "telefono": "080-8987584",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117462",
@@ -5347,9 +5792,10 @@
     "citta": "VICENZA",
     "provincia": "VI",
     "cap": "36100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0444/571060"
+    "lat": 45.5493312,
+    "lng": 11.525523399999999,
+    "telefono": "0444/571060",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117495",
@@ -5359,9 +5805,10 @@
     "citta": "FOGGIA",
     "provincia": "FG",
     "cap": "71121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.461542,
+    "lng": 15.5413937,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117503",
@@ -5371,9 +5818,10 @@
     "citta": "CASTRIGNANO DEL CAPO",
     "provincia": "LE",
     "cap": "73040",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0833 758192"
+    "lat": 39.7963021,
+    "lng": 18.3532473,
+    "telefono": "0833 758192",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117771",
@@ -5383,9 +5831,10 @@
     "citta": "LEGNANO",
     "provincia": "MI",
     "cap": "20025",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0331-442257"
+    "lat": 45.596964299999996,
+    "lng": 8.9222153,
+    "telefono": "0331-442257",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117830",
@@ -5395,9 +5844,10 @@
     "citta": "CASALNUOVO",
     "provincia": "NA",
     "cap": "80013",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0818423692"
+    "lat": 40.9135712,
+    "lng": 14.347006999999998,
+    "telefono": "0818423692",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117860",
@@ -5407,9 +5857,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00168",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0637891363"
+    "lat": 41.9260667,
+    "lng": 12.4201792,
+    "telefono": "0637891363",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117958",
@@ -5419,9 +5870,10 @@
     "citta": "REGGIO CALABRIA",
     "provincia": "RC",
     "cap": "89122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0965 650027"
+    "lat": 38.1295953,
+    "lng": 15.654457199999998,
+    "telefono": "0965 650027",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117961",
@@ -5431,9 +5883,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00199",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-86216224"
+    "lat": 41.9310513,
+    "lng": 12.5186326,
+    "telefono": "06-86216224",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-117984",
@@ -5443,9 +5896,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00153",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-5746288"
+    "lat": 41.8791788,
+    "lng": 12.477282200000001,
+    "telefono": "06-5746288",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-118228",
@@ -5455,9 +5909,10 @@
     "citta": "VIDOR",
     "provincia": "TV",
     "cap": "31020",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0423/987125"
+    "lat": 45.858198699999996,
+    "lng": 12.044316199999999,
+    "telefono": "0423/987125",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-118292",
@@ -5467,9 +5922,10 @@
     "citta": "LIVORNO",
     "provincia": "LI",
     "cap": "57123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "O586880144"
+    "lat": 43.5515342,
+    "lng": 10.3117402,
+    "telefono": "O586880144",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-118300",
@@ -5479,9 +5935,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00163",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-6638837"
+    "lat": 41.882745,
+    "lng": 12.4182733,
+    "telefono": "06-6638837",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-118449",
@@ -5491,9 +5948,10 @@
     "citta": "CEFALU'",
     "provincia": "PA",
     "cap": "90015",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0921420257"
+    "lat": 38.033732799999996,
+    "lng": 14.0157428,
+    "telefono": "0921420257",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-118466",
@@ -5503,9 +5961,10 @@
     "citta": "TRIESTE",
     "provincia": "TS",
     "cap": "34133",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "040-635264"
+    "lat": 45.653748199999995,
+    "lng": 13.779866799999999,
+    "telefono": "040-635264",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-118467",
@@ -5515,9 +5974,10 @@
     "citta": "LECCE",
     "provincia": "LE",
     "cap": "73100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0832 311890"
+    "lat": 40.358804,
+    "lng": 18.180557999999998,
+    "telefono": "0832 311890",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-118476",
@@ -5527,9 +5987,10 @@
     "citta": "RIMINI",
     "provincia": "RN",
     "cap": "47923",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 44.0563314,
+    "lng": 12.536306399999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-118689",
@@ -5539,9 +6000,10 @@
     "citta": "ROGENO",
     "provincia": "LC",
     "cap": "23849",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "031-865633"
+    "lat": 45.784976099999994,
+    "lng": 9.273207,
+    "telefono": "031-865633",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-118726",
@@ -5551,9 +6013,10 @@
     "citta": "GEMONA DEL FRIULI",
     "provincia": "UD",
     "cap": "33013",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0432876634"
+    "lat": 46.2685412,
+    "lng": 13.1223332,
+    "telefono": "0432876634",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-118781",
@@ -5563,9 +6026,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00181",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-7801682"
+    "lat": 41.870554,
+    "lng": 12.535388999999999,
+    "telefono": "06-7801682",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-119007",
@@ -5575,9 +6039,10 @@
     "citta": "MATERA",
     "provincia": "MT",
     "cap": "75100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 40.6722253,
+    "lng": 16.6033433,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-119247",
@@ -5587,9 +6052,10 @@
     "citta": "VILLAFRANCA DI VERONA",
     "provincia": "VR",
     "cap": "37069",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "045/7900123"
+    "lat": 45.3522574,
+    "lng": 10.8433057,
+    "telefono": "045/7900123",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-119357",
@@ -5599,9 +6065,10 @@
     "citta": "PORTO RECANATI",
     "provincia": "MC",
     "cap": "62017",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "071-9799146"
+    "lat": 43.4323446,
+    "lng": 13.664113599999999,
+    "telefono": "071-9799146",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-119387",
@@ -5611,9 +6078,10 @@
     "citta": "SANTA GIUSTINA IN COLLE",
     "provincia": "PD",
     "cap": "35010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "049-9303333"
+    "lat": 45.562922,
+    "lng": 11.906649999999999,
+    "telefono": "049-9303333",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-119636",
@@ -5623,9 +6091,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00149",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06 5565110-65..."
+    "lat": 41.8637902,
+    "lng": 12.4588729,
+    "telefono": "06 5565110-65...",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-119671",
@@ -5635,9 +6104,10 @@
     "citta": "ALTOFONTE",
     "provincia": "PA",
     "cap": "90030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 38.0526562,
+    "lng": 13.3049927,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-119855",
@@ -5647,9 +6117,10 @@
     "citta": "MORMANNO",
     "provincia": "CS",
     "cap": "87026",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0981-81023"
+    "lat": 39.886798,
+    "lng": 15.987102000000002,
+    "telefono": "0981-81023",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-119875",
@@ -5659,9 +6130,10 @@
     "citta": "SENAGO",
     "provincia": "MI",
     "cap": "20030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02-99058256"
+    "lat": 45.578852999999995,
+    "lng": 9.1215987,
+    "telefono": "02-99058256",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-119921",
@@ -5671,9 +6143,10 @@
     "citta": "PORTOGRUARO",
     "provincia": "VE",
     "cap": "30026",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0421-273200"
+    "lat": 45.7747213,
+    "lng": 12.846361000000002,
+    "telefono": "0421-273200",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-119959",
@@ -5683,9 +6156,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00143",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "065911827"
+    "lat": 41.822903,
+    "lng": 12.4797332,
+    "telefono": "065911827",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-120170",
@@ -5695,9 +6169,10 @@
     "citta": "PERUGIA",
     "provincia": "PG",
     "cap": "06125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "075-5848404"
+    "lat": 43.1148988,
+    "lng": 12.3642413,
+    "telefono": "075-5848404",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-120184",
@@ -5707,9 +6182,10 @@
     "citta": "S MARIA CAPUA VETERE",
     "provincia": "CE",
     "cap": "81055",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.089743,
+    "lng": 14.2551698,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-120236",
@@ -5719,9 +6195,10 @@
     "citta": "ANZIO",
     "provincia": "RM",
     "cap": "00042",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "06-9875463"
+    "lat": 41.4845259,
+    "lng": 12.624708199999999,
+    "telefono": "06-9875463",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-120269",
@@ -5731,9 +6208,10 @@
     "citta": "VITTORIA",
     "provincia": "RG",
     "cap": "97019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0932734137"
+    "lat": 36.9597082,
+    "lng": 14.537275199999998,
+    "telefono": "0932734137",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-120575",
@@ -5743,9 +6221,10 @@
     "citta": "GORLAGO",
     "provincia": "BG",
     "cap": "24060",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "035951075"
+    "lat": 45.6768084,
+    "lng": 9.8283165,
+    "telefono": "035951075",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-120831",
@@ -5755,9 +6234,10 @@
     "citta": "TERRACINA",
     "provincia": "LT",
     "cap": "04019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0773-700264"
+    "lat": 41.2870735,
+    "lng": 13.2530567,
+    "telefono": "0773-700264",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-121320",
@@ -5767,9 +6247,10 @@
     "citta": "MOTTA DI LIVENZA",
     "provincia": "TV",
     "cap": "31045",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0422766062"
+    "lat": 45.7778625,
+    "lng": 12.609948399999999,
+    "telefono": "0422766062",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700031",
@@ -5779,9 +6260,10 @@
     "citta": "CHIETI",
     "provincia": "CH",
     "cap": "66100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 42.3613876,
+    "lng": 14.166509099999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700081",
@@ -5791,9 +6273,10 @@
     "citta": "REGGIO EMILIA",
     "provincia": "RE",
     "cap": "42122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 44.6936025,
+    "lng": 10.6098707,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700084",
@@ -5803,9 +6286,10 @@
     "citta": "REGGIO EMILIA",
     "provincia": "RE",
     "cap": "42122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 44.681554899999995,
+    "lng": 10.636178,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700085",
@@ -5815,9 +6299,10 @@
     "citta": "REGGIO EMILIA",
     "provincia": "RE",
     "cap": "42122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "5225431"
+    "lat": 44.698145499999995,
+    "lng": 10.6303549,
+    "telefono": "5225431",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700094",
@@ -5827,9 +6312,10 @@
     "citta": "PISTOIA",
     "provincia": "PT",
     "cap": "51100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0573-29381"
+    "lat": 43.933690899999995,
+    "lng": 10.900741,
+    "telefono": "0573-29381",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700139",
@@ -5839,9 +6325,10 @@
     "citta": "SESTO FIORENTINO",
     "provincia": "FI",
     "cap": "50019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "55446535"
+    "lat": 43.8334609,
+    "lng": 11.200055299999999,
+    "telefono": "55446535",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700180",
@@ -5851,9 +6338,10 @@
     "citta": "AOSTA",
     "provincia": "AO",
     "cap": "11100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.7313718,
+    "lng": 7.3182209,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700181",
@@ -5863,9 +6351,10 @@
     "citta": "TREVISO",
     "provincia": "TV",
     "cap": "31100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0422-263099"
+    "lat": 45.673879,
+    "lng": 12.256292,
+    "telefono": "0422-263099",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700237",
@@ -5875,9 +6364,10 @@
     "citta": "FIRENZE",
     "provincia": "FI",
     "cap": "50125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "055-232311"
+    "lat": 43.778998099999995,
+    "lng": 11.1994589,
+    "telefono": "055-232311",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700255",
@@ -5887,9 +6377,10 @@
     "citta": "MONTEMURLO",
     "provincia": "PO",
     "cap": "59013",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0574-680696"
+    "lat": 43.9299156,
+    "lng": 11.0312375,
+    "telefono": "0574-680696",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700256",
@@ -5899,9 +6390,10 @@
     "citta": "POGGIO A CAIANO",
     "provincia": "PO",
     "cap": "59016",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0574-790012"
+    "lat": 43.8280026,
+    "lng": 11.0380713,
+    "telefono": "0574-790012",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700268",
@@ -5911,9 +6403,10 @@
     "citta": "TARQUINIA",
     "provincia": "VT",
     "cap": "01016",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0766-840558"
+    "lat": 42.2510051,
+    "lng": 11.7565265,
+    "telefono": "0766-840558",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700272",
@@ -5923,9 +6416,10 @@
     "citta": "SESTO FIORENTINO",
     "provincia": "FI",
     "cap": "50019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 43.82109930000001,
+    "lng": 11.2081337,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700361",
@@ -5935,9 +6429,10 @@
     "citta": "EMPOLI",
     "provincia": "FI",
     "cap": "50053",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0571-922356"
+    "lat": 43.7142772,
+    "lng": 10.947543399999999,
+    "telefono": "0571-922356",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700396",
@@ -5947,9 +6442,10 @@
     "citta": "PADOVA",
     "provincia": "PD",
     "cap": "35100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.4096152,
+    "lng": 11.877810199999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700432",
@@ -5959,9 +6455,10 @@
     "citta": "EMPOLI",
     "provincia": "FI",
     "cap": "50053",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 43.714070299999996,
+    "lng": 10.9229722,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700530",
@@ -5971,9 +6468,10 @@
     "citta": "CERVETERI",
     "provincia": "RM",
     "cap": "00052",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.9919839,
+    "lng": 12.089724499999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700541",
@@ -5983,9 +6481,10 @@
     "citta": "SERIATE",
     "provincia": "BG",
     "cap": "24068",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.6794659,
+    "lng": 9.7452484,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700753",
@@ -5995,9 +6494,10 @@
     "citta": "UDINE",
     "provincia": "UD",
     "cap": "33100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0432-480885"
+    "lat": 46.0575319,
+    "lng": 13.2315481,
+    "telefono": "0432-480885",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700756",
@@ -6007,9 +6507,10 @@
     "citta": "PARMA",
     "provincia": "PR",
     "cap": "43100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 44.801897600000004,
+    "lng": 10.3223941,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700840",
@@ -6019,9 +6520,10 @@
     "citta": "PESCARA",
     "provincia": "PE",
     "cap": "65126",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "085-4554061"
+    "lat": 42.4566869,
+    "lng": 14.225613099999999,
+    "telefono": "085-4554061",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700865",
@@ -6031,9 +6533,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.4641086,
+    "lng": 9.1883882,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-700881",
@@ -6043,9 +6546,10 @@
     "citta": "PONSACCO",
     "provincia": "PI",
     "cap": "56038",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0587-731777"
+    "lat": 43.6294658,
+    "lng": 10.611632199999999,
+    "telefono": "0587-731777",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-701021",
@@ -6055,9 +6559,10 @@
     "citta": "MATERA",
     "provincia": "MT",
     "cap": "75100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0835-416840"
+    "lat": 40.6667233,
+    "lng": 16.6043438,
+    "telefono": "0835-416840",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-701041",
@@ -6067,9 +6572,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20144",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "02-48006317"
+    "lat": 45.4661051,
+    "lng": 9.1639237,
+    "telefono": "02-48006317",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-701139",
@@ -6079,9 +6585,10 @@
     "citta": "ORVIETO",
     "provincia": "TR",
     "cap": "05018",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0763-301949"
+    "lat": 42.7221951,
+    "lng": 12.132786,
+    "telefono": "0763-301949",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-701144",
@@ -6091,9 +6598,10 @@
     "citta": "PONTECAGNANO",
     "provincia": "SA",
     "cap": "84098",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "089-3856670"
+    "lat": 40.6359826,
+    "lng": 14.9071298,
+    "telefono": "089-3856670",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-701146",
@@ -6103,9 +6611,10 @@
     "citta": "FIDENZA",
     "provincia": "PR",
     "cap": "43036",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 44.8595973,
+    "lng": 10.0750101,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-701215",
@@ -6115,9 +6624,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.4697118,
+    "lng": 9.1927152,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-701235",
@@ -6127,9 +6637,10 @@
     "citta": "MILANO",
     "provincia": "MI",
     "cap": "20122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.4560345,
+    "lng": 9.196133300000001,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-701653",
@@ -6139,9 +6650,10 @@
     "citta": "PALERMO",
     "provincia": "PA",
     "cap": "90123",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 38.1113216,
+    "lng": 13.368266000000002,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-701655",
@@ -6151,9 +6663,10 @@
     "citta": "TERMOLI",
     "provincia": "CB",
     "cap": "86100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 42.0000065,
+    "lng": 14.990954899999998,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-701776",
@@ -6163,9 +6676,10 @@
     "citta": "FIRENZE",
     "provincia": "FI",
     "cap": "50133",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 43.787262,
+    "lng": 11.2691503,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-702052",
@@ -6175,9 +6689,10 @@
     "citta": "REGGIO EMILIA",
     "provincia": "RE",
     "cap": "42122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 44.690230199999995,
+    "lng": 10.655496399999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-702075",
@@ -6187,9 +6702,10 @@
     "citta": "CAVRIAGO",
     "provincia": "RE",
     "cap": "42025",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 44.694401899999995,
+    "lng": 10.5350555,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-702093",
@@ -6199,9 +6715,10 @@
     "citta": "ISOLA VICENTINA",
     "provincia": "VI",
     "cap": "36033",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.6357182,
+    "lng": 11.4375451,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-702219",
@@ -6211,9 +6728,10 @@
     "citta": "SAN SEVERO",
     "provincia": "FG",
     "cap": "71016",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.68497740000001,
+    "lng": 15.3768333,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-702367",
@@ -6223,9 +6741,10 @@
     "citta": "SESTU",
     "provincia": "CA",
     "cap": "09028",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 39.2092716,
+    "lng": 9.1325375,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-702379",
@@ -6235,9 +6754,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00152",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.8849498,
+    "lng": 12.4607852,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-702648",
@@ -6247,9 +6767,10 @@
     "citta": "VALCORRENTE BELPASSO",
     "provincia": "CT",
     "cap": "95032",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 37.5447048,
+    "lng": 14.9514619,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-702724",
@@ -6259,9 +6780,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00175",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.8645302,
+    "lng": 12.554203800000002,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-702970",
@@ -6271,9 +6793,10 @@
     "citta": "TREVISO",
     "provincia": "TV",
     "cap": "31100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.666302,
+    "lng": 12.2263895,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-703018",
@@ -6283,9 +6806,10 @@
     "citta": "ACERRA",
     "provincia": "NA",
     "cap": "80011",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 40.9365691,
+    "lng": 14.365321699999997,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-703134",
@@ -6295,9 +6819,10 @@
     "citta": "CASORIA",
     "provincia": "NA",
     "cap": "80026",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 40.899195999999996,
+    "lng": 14.3009504,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-703138",
@@ -6307,9 +6832,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80128",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 40.8514096,
+    "lng": 14.221177299999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-703683",
@@ -6319,9 +6845,10 @@
     "citta": "ROMA",
     "provincia": "RM",
     "cap": "00199",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.9272662,
+    "lng": 12.5159732,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-703702",
@@ -6331,9 +6858,10 @@
     "citta": "CATANIA",
     "provincia": "CT",
     "cap": "95100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 37.517679199999996,
+    "lng": 15.0908029,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-703760",
@@ -6343,9 +6871,10 @@
     "citta": "FOIANO DI CHIANA",
     "provincia": "AR",
     "cap": "52045",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 43.225272,
+    "lng": 11.8030736,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-703982",
@@ -6355,9 +6884,10 @@
     "citta": "VALDENGO",
     "provincia": "BI",
     "cap": "13855",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.571372,
+    "lng": 8.136275399999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-703983",
@@ -6367,9 +6897,10 @@
     "citta": "BARI",
     "provincia": "BA",
     "cap": "70121",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 41.1193758,
+    "lng": 16.8698341,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-704056",
@@ -6379,9 +6910,10 @@
     "citta": "SAN GIUSEPPE VESUVIANO",
     "provincia": "NA",
     "cap": "80047",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 40.8374366,
+    "lng": 14.5044648,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-704544",
@@ -6391,9 +6923,10 @@
     "citta": "ARCO",
     "provincia": "TN",
     "cap": "38062",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.9165269,
+    "lng": 10.8856814,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-704678",
@@ -6403,9 +6936,10 @@
     "citta": "MANERBIO",
     "provincia": "BS",
     "cap": "25025",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "030/9380111"
+    "lat": 45.3463469,
+    "lng": 10.135130499999999,
+    "telefono": "030/9380111",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-704690",
@@ -6415,9 +6949,10 @@
     "citta": "GRANAROLO DELL'EMILIA",
     "provincia": "BO",
     "cap": "40057",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "051-767746"
+    "lat": 44.5296837,
+    "lng": 11.4206851,
+    "telefono": "051-767746",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-704768",
@@ -6427,9 +6962,10 @@
     "citta": "MARSALA",
     "provincia": "TP",
     "cap": "91025",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 37.7978711,
+    "lng": 12.4372297,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-704906",
@@ -6439,9 +6975,10 @@
     "citta": "ODERZO",
     "provincia": "TV",
     "cap": "31046",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.7931356,
+    "lng": 12.486071299999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-705001",
@@ -6451,9 +6988,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80135",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081 5440542 5"
+    "lat": 40.8508406,
+    "lng": 14.242043299999999,
+    "telefono": "081 5440542 5",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-705007",
@@ -6463,9 +7001,10 @@
     "citta": "MONTICHIARI",
     "provincia": "BS",
     "cap": "25018",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "030/9658346"
+    "lat": 45.419613000000005,
+    "lng": 10.403244299999999,
+    "telefono": "030/9658346",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-705051",
@@ -6475,9 +7014,10 @@
     "citta": "QUALIANO",
     "provincia": "NA",
     "cap": "80019",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081/8181653"
+    "lat": 40.9184627,
+    "lng": 14.151924,
+    "telefono": "081/8181653",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-705406",
@@ -6487,9 +7027,10 @@
     "citta": "SAN MINIATO",
     "provincia": "PI",
     "cap": "56028",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "057143445"
+    "lat": 43.695580799999995,
+    "lng": 10.8357972,
+    "telefono": "057143445",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-705516",
@@ -6499,9 +7040,10 @@
     "citta": "VITTORIO VENETO",
     "provincia": "TV",
     "cap": "31029",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 45.987344199999995,
+    "lng": 12.3078837,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-706008",
@@ -6511,9 +7053,10 @@
     "citta": "CASERTA",
     "provincia": "CE",
     "cap": "81100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0823326147"
+    "lat": 41.0709478,
+    "lng": 14.331510100000001,
+    "telefono": "0823326147",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-706074",
@@ -6523,9 +7066,10 @@
     "citta": "NAPOLI",
     "provincia": "NA",
     "cap": "80125",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-7627528"
+    "lat": 40.820983,
+    "lng": 14.1874706,
+    "telefono": "081-7627528",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-706191",
@@ -6535,9 +7079,10 @@
     "citta": "PONTENURE",
     "provincia": "PC",
     "cap": "29010",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 44.999229799999995,
+    "lng": 9.7879688,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-706270",
@@ -6547,9 +7092,10 @@
     "citta": "AVERSA",
     "provincia": "CE",
     "cap": "81031",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "081-8111680"
+    "lat": 40.9843097,
+    "lng": 14.2081252,
+    "telefono": "081-8111680",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-706329",
@@ -6559,9 +7105,10 @@
     "citta": "LECCE",
     "provincia": "LE",
     "cap": "73100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0832309181"
+    "lat": 40.3529119,
+    "lng": 18.1731466,
+    "telefono": "0832309181",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-706367",
@@ -6571,9 +7118,10 @@
     "citta": "VARCATURO GIUGLIANO",
     "provincia": "NA",
     "cap": "80014",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0815096788"
+    "lat": 40.9049439,
+    "lng": 14.061410400000002,
+    "telefono": "0815096788",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-706475",
@@ -6583,9 +7131,10 @@
     "citta": "FIRENZE",
     "provincia": "FI",
     "cap": "50134",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 43.804038299999995,
+    "lng": 11.2460379,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-706674",
@@ -6595,9 +7144,10 @@
     "citta": "ROCCA PRIORA",
     "provincia": "RM",
     "cap": "00079",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "069470123"
+    "lat": 41.7856538,
+    "lng": 12.741344199999999,
+    "telefono": "069470123",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-707091",
@@ -6607,9 +7157,10 @@
     "citta": "MONOPOLI",
     "provincia": "BA",
     "cap": "70043",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "080-9376058"
+    "lat": 40.9461483,
+    "lng": 17.293485699999998,
+    "telefono": "080-9376058",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-707278",
@@ -6619,9 +7170,10 @@
     "citta": "CASTELLO DI GODEGO",
     "provincia": "TV",
     "cap": "31030",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "049-9303333"
+    "lat": 45.6905532,
+    "lng": 11.8792244,
+    "telefono": "049-9303333",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-707500",
@@ -6631,9 +7183,10 @@
     "citta": "POTENZA",
     "provincia": "PZ",
     "cap": "85100",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0971-1940057-..."
+    "lat": 40.638941599999995,
+    "lng": 15.783677800000001,
+    "telefono": "0971-1940057-...",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-707518",
@@ -6643,9 +7196,10 @@
     "citta": "PIACENZA",
     "provincia": "PC",
     "cap": "29122",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": "0523-321662"
+    "lat": 45.0384435,
+    "lng": 9.721545899999999,
+    "telefono": "0523-321662",
+    "note": "Coordinate da Google Places API"
   },
   {
     "id": "xl-707614",
@@ -6655,8 +7209,9 @@
     "citta": "CAMPI BISENZIO",
     "provincia": "FI",
     "cap": "50013",
-    "lat": 41.9,
-    "lng": 12.5,
-    "telefono": ""
+    "lat": 43.8104383,
+    "lng": 11.142714999999999,
+    "telefono": "",
+    "note": "Coordinate da Google Places API"
   }
 ]

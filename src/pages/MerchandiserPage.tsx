@@ -15,10 +15,10 @@ import {
 
 // Colori corporate per stati
 const statoConfig: Record<StatoFarmacia, { dot: string; bg: string; text: string; border: string }> = {
-  da_fare: { dot: '#d64545', bg: 'bg-danger-50', text: 'text-danger-600', border: 'border-danger-100' },
-  in_corso: { dot: '#de911d', bg: 'bg-warning-50', text: 'text-warning-600', border: 'border-warning-100' },
-  completata: { dot: '#3f9142', bg: 'bg-success-50', text: 'text-success-600', border: 'border-success-100' },
-  in_attesa: { dot: '#6366f1', bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100' },
+  da_fare: { dot: '#8da4b8', bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100' },
+  in_corso: { dot: '#5d8a82', bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100' },
+  completata: { dot: '#2b7268', bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100' },
+  in_attesa: { dot: '#4a6fa5', bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100' },
 }
 
 export default function MerchandiserPage() {
@@ -85,7 +85,7 @@ export default function MerchandiserPage() {
       {/* In attesa count */}
       {mieFarmacie.some(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa') && (
         <div className="card p-3 flex items-center gap-3">
-          <span className="w-2.5 h-2.5 rounded-full bg-indigo-600" />
+          <span className="w-2.5 h-2.5 rounded-full bg-status-waiting-500" />
           <span className="text-sm text-brand-700">
             <b>{mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa').length}</b> in attesa di materiale
           </span>
@@ -120,7 +120,7 @@ export default function MerchandiserPage() {
                     </p>
                   )}
                   {stato === 'in_attesa' && (
-                    <p className="text-[11px] text-indigo-600 font-medium mt-1.5 flex items-center gap-1">
+                    <p className="text-[11px] text-status-waiting-600 font-medium mt-1.5 flex items-center gap-1">
                       <Pause size={10} /> In attesa di materiale
                     </p>
                   )}
@@ -139,7 +139,7 @@ export default function MerchandiserPage() {
                   const done = rilievi.some(r => r.farmaciaId === f.id && r.fase === fase && r.completata)
                   return (
                     <div key={fase} className="flex-1">
-                      <div className={`h-1.5 rounded-full ${done ? 'bg-success-500' : 'bg-brand-100'}`} />
+                      <div className={`h-1.5 rounded-full ${done ? 'bg-status-done-500' : 'bg-brand-100'}`} />
                     </div>
                   )
                 })}
@@ -302,7 +302,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
               onClick={toggleInAttesa}
               className={`text-xs font-medium flex items-center gap-1.5 px-3 py-1.5 rounded-sm border transition-colors ${
                 stato === 'in_attesa'
-                  ? 'bg-indigo-50 text-indigo-600 border-indigo-200'
+                  ? 'bg-status-waiting-50 text-status-waiting-600 border-status-waiting-100'
                   : 'bg-brand-50 text-brand-500 border-brand-100 hover:bg-brand-100'
               }`}
             >
@@ -317,7 +317,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
       {stato === 'completata' && (
         <div className="card p-4">
           <h3 className="text-[13px] font-semibold text-brand-800 flex items-center gap-2 mb-3">
-            <Send size={14} className="text-success-500" /> Invia risultati
+            <Send size={14} className="text-status-done-500" /> Invia risultati
           </h3>
           <a href={buildMailtoLink()} className="btn-primary w-full py-2.5 text-center inline-flex items-center justify-center gap-2">
             <Mail size={15} /> Invia riepilogo via email
@@ -335,7 +335,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
             return (
               <div key={fase} className="flex-1 flex items-center">
                 <div className={`w-8 h-8 rounded-sm flex items-center justify-center text-xs font-semibold transition-colors ${
-                  done ? 'bg-success-500 text-white' :
+                  done ? 'bg-status-done-500 text-white' :
                   unlocked ? 'bg-accent-100 text-accent-700 ring-1 ring-accent-300' :
                   'bg-brand-50 text-brand-400'
                 }`}>
@@ -343,7 +343,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                 </div>
                 {i < 2 && (
                   <div className={`flex-1 h-px mx-2 ${
-                    getRilievoFase(fase)?.completata ? 'bg-success-300' : 'bg-brand-100'
+                    getRilievoFase(fase)?.completata ? 'bg-status-done-100' : 'bg-brand-100'
                   }`} />
                 )}
               </div>
@@ -364,21 +364,21 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
             <div
               key={fase}
               className={`card overflow-hidden transition-all ${
-                done ? 'border-success-100' :
+                done ? 'border-status-done-100' :
                 unlocked ? 'border-accent-200' :
                 'opacity-50'
               }`}
             >
               {/* Header */}
               <div className={`px-4 py-3 border-b ${
-                done ? 'bg-success-50/50 border-success-100' :
+                done ? 'bg-status-done-50/50 border-status-done-100' :
                 unlocked ? 'bg-accent-50/30 border-accent-100' :
                 'bg-brand-50/50 border-brand-50'
               }`}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className={`w-9 h-9 rounded-sm flex items-center justify-center ${
-                      done ? 'bg-success-500 text-white' :
+                      done ? 'bg-status-done-500 text-white' :
                       unlocked ? 'bg-accent-600 text-white' :
                       'bg-brand-200 text-brand-400'
                     }`}>
@@ -398,8 +398,8 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                 {/* Sbloccata ma non fatta */}
                 {!done && unlocked && (
                   <div className="space-y-3">
-                    <div className="bg-warning-50 border border-warning-100 rounded-sm p-3">
-                      <p className="text-[11px] font-semibold text-warning-600 uppercase tracking-wider flex items-center gap-1 mb-2">
+                    <div className="bg-status-waiting-50 border border-status-waiting-100 rounded-sm p-3">
+                      <p className="text-[11px] font-semibold text-status-waiting-600 uppercase tracking-wider flex items-center gap-1 mb-2">
                         <Info size={11} /> Istruzioni
                       </p>
                       {fase === 1 && (
@@ -448,7 +448,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                 {/* Completata */}
                 {done && rilievo && (
                   <div className="space-y-2.5">
-                    <div className="flex items-center gap-2 text-success-600 text-xs">
+                    <div className="flex items-center gap-2 text-status-done-600 text-xs">
                       <CheckCircle2 size={13} />
                       <span>Completata il {rilievo.dataCompletamento}{rilievo.oraCompletamento ? ` alle ${rilievo.oraCompletamento}` : ''}</span>
                     </div>
@@ -462,8 +462,8 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                         <CheckItem checked={rilievo.scaricamentoCompleto} label="Scaricamento materiale (svuotamento scaffale)" />
                         <CheckItem checked={rilievo.montaggioCompleto} label="Montaggio materiale completato" />
                         {rilievo.problemaKit && (
-                          <div className="bg-danger-50 border border-danger-100 rounded-sm p-2 mt-1">
-                            <p className="text-[11px] font-medium text-danger-600 flex items-center gap-1">
+                          <div className="bg-brand-50 border border-brand-200 rounded-sm p-2 mt-1">
+                            <p className="text-[11px] font-medium text-brand-700 flex items-center gap-1">
                               <AlertTriangle size={11} /> Problema segnalato
                             </p>
                             {rilievo.descrizioneProblema && (
@@ -541,10 +541,10 @@ function CheckItem({ checked, label }: { checked?: boolean; label: string }) {
   return (
     <div className="flex items-center gap-2 text-xs">
       {checked
-        ? <CheckCircle2 size={14} className="text-success-500 shrink-0" />
-        : <AlertTriangle size={14} className="text-warning-500 shrink-0" />
+        ? <CheckCircle2 size={14} className="text-status-done-500 shrink-0" />
+        : <AlertTriangle size={14} className="text-status-waiting-500 shrink-0" />
       }
-      <span className={checked ? 'text-brand-700' : 'text-warning-600'}>{label}</span>
+      <span className={checked ? 'text-brand-700' : 'text-status-waiting-600'}>{label}</span>
     </div>
   )
 }
@@ -688,7 +688,7 @@ function FaseForm({
   const faseColors = {
     1: { bg: 'bg-accent-600', light: 'bg-accent-50 border-accent-100', ring: 'ring-accent-200' },
     2: { bg: 'bg-brand-700', light: 'bg-brand-50 border-brand-100', ring: 'ring-brand-200' },
-    3: { bg: 'bg-warning-500', light: 'bg-warning-50 border-warning-100', ring: 'ring-warning-200' },
+    3: { bg: 'bg-status-waiting-500', light: 'bg-status-waiting-50 border-status-waiting-100', ring: 'ring-brand-200' },
   }[fase]
 
   // Example images for vertical layout (Task 6)
@@ -707,8 +707,8 @@ function FaseForm({
     return (
       <div className="max-w-2xl mx-auto space-y-4">
         <div className="card p-6 text-center">
-          <div className="w-14 h-14 rounded-sm bg-success-50 border border-success-100 flex items-center justify-center mx-auto mb-4">
-            <CheckCircle2 size={28} className="text-success-500" />
+          <div className="w-14 h-14 rounded-sm bg-status-done-50 border border-status-done-100 flex items-center justify-center mx-auto mb-4">
+            <CheckCircle2 size={28} className="text-status-done-500" />
           </div>
           <h2 className="text-lg font-heading font-bold text-brand-900 mb-1">Conferma completamento</h2>
           <p className="text-sm text-brand-500 mb-5">
@@ -722,14 +722,14 @@ function FaseForm({
                 <p><b>Kit ricevuto:</b> {kitRicevuto ? 'Si' : 'No'}</p>
                 <p><b>Scaricamento materiale:</b> {scaricamentoCompleto ? 'completato' : 'da verificare'}</p>
                 <p><b>Montaggio materiale:</b> {montaggioCompleto ? 'completato' : 'da verificare'}</p>
-                {problemaKit && <p className="text-danger-600"><b>Problema segnalato:</b> {descrizioneProblema || 'Si'}</p>}
+                {problemaKit && <p className="text-brand-700"><b>Problema segnalato:</b> {descrizioneProblema || 'Si'}</p>}
               </>
             )}
             {fase === 3 && <p><b>Prodotti:</b> {prodottiPosizionati ? 'posizionati' : 'da verificare'}</p>}
           </div>
           <div className="flex gap-3">
             <button onClick={() => setShowConfirm(false)} className="btn-secondary flex-1 py-3">Torna indietro</button>
-            <button onClick={confirmSave} className="btn-primary flex-1 py-3 bg-success-600 hover:bg-success-700">
+            <button onClick={confirmSave} className="btn-primary flex-1 py-3 bg-status-done-500 hover:bg-status-done-700">
               <Check size={16} /> Conferma
             </button>
           </div>
@@ -847,16 +847,16 @@ function FaseForm({
                   </label>
                   <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
                     <input type="checkbox" checked={problemaKit} onChange={e => setProblemaKit(e.target.checked)}
-                      className="mt-0.5 w-4 h-4 rounded border-brand-300 text-danger-500 focus:ring-danger-200" />
+                      className="mt-0.5 w-4 h-4 rounded border-brand-300 text-brand-600 focus:ring-brand-200" />
                     <div>
                       <p className="text-xs font-medium text-brand-800">Segnala un problema</p>
                       <p className="text-[11px] text-brand-400">Pezzi mancanti, danneggiati o errati</p>
                     </div>
                   </label>
                   {problemaKit && (
-                    <div className="space-y-3 pl-2 border-l-2 border-danger-200 ml-2">
+                    <div className="space-y-3 pl-2 border-l-2 border-brand-200 ml-2">
                       <div>
-                        <label className="label text-danger-600">Descrizione problema</label>
+                        <label className="label text-brand-700">Descrizione problema</label>
                         <textarea
                           value={descrizioneProblema}
                           onChange={e => setDescrizioneProblema(e.target.value)}
@@ -866,18 +866,18 @@ function FaseForm({
                         />
                       </div>
                       <div>
-                        <label className="label text-danger-600">Foto problema</label>
+                        <label className="label text-brand-700">Foto problema</label>
                         {fotoProblema.length > 0 && (
                           <div className="flex gap-1.5 mb-2">
                             {fotoProblema.map((f, i) => (
-                              <img key={i} src={f} alt="" className="w-12 h-12 object-cover rounded border border-danger-100" />
+                              <img key={i} src={f} alt="" className="w-12 h-12 object-cover rounded border border-brand-200" />
                             ))}
                           </div>
                         )}
                         <label className="block cursor-pointer">
-                          <div className="border border-dashed border-danger-200 rounded-sm p-3 text-center hover:bg-danger-50 transition-colors">
-                            <Camera size={16} className="mx-auto text-danger-400 mb-1" />
-                            <p className="text-[11px] text-danger-500">Scatta foto del problema</p>
+                          <div className="border border-dashed border-brand-200 rounded-sm p-3 text-center hover:bg-brand-50 transition-colors">
+                            <Camera size={16} className="mx-auto text-brand-500 mb-1" />
+                            <p className="text-[11px] text-brand-600">Scatta foto del problema</p>
                           </div>
                           <input type="file" accept="image/*" capture="environment" multiple className="hidden" onChange={handleProblemaPhoto} />
                         </label>
@@ -927,7 +927,7 @@ function FaseForm({
             {fase === 3 && (
               <div className="card p-4 space-y-3">
                 <h3 className="text-[13px] font-semibold text-brand-800 flex items-center gap-2">
-                  <Package size={14} className="text-warning-500" /> Caricamento prodotti
+                  <Package size={14} className="text-status-waiting-500" /> Caricamento prodotti
                 </h3>
                 <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
                   <input type="checkbox" checked={prodottiPosizionati} onChange={e => setProdottiPosizionati(e.target.checked)}
@@ -999,7 +999,7 @@ function FaseForm({
                 <div key={i} className="relative aspect-square">
                   <img src={f} alt="" className="w-full h-full object-cover rounded-sm border border-brand-100" />
                   <button type="button" onClick={() => removePhoto(i)}
-                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-danger-500 text-white rounded-full flex items-center justify-center shadow-sm">
+                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-brand-500 text-white rounded-full flex items-center justify-center shadow-sm">
                     <X size={10} />
                   </button>
                 </div>
@@ -1135,20 +1135,20 @@ function ReportView({
 
       <div className="grid grid-cols-2 gap-3">
         <div className="card p-3 text-center">
-          <p className="text-xl font-heading font-bold text-success-600">{completate}</p>
+          <p className="text-xl font-heading font-bold text-status-done-600">{completate}</p>
           <p className="text-[11px] text-brand-500">Completate</p>
         </div>
         <div className="card p-3 text-center">
-          <p className="text-xl font-heading font-bold text-warning-500">{inCorso}</p>
+          <p className="text-xl font-heading font-bold text-status-waiting-500">{inCorso}</p>
           <p className="text-[11px] text-brand-500">In corso</p>
         </div>
         <div className="card p-3 text-center">
-          <p className="text-xl font-heading font-bold text-danger-500">{daFare}</p>
+          <p className="text-xl font-heading font-bold text-brand-600">{daFare}</p>
           <p className="text-[11px] text-brand-500">Da fare</p>
         </div>
         {inAttesa > 0 && (
           <div className="card p-3 text-center">
-            <p className="text-xl font-heading font-bold text-indigo-600">{inAttesa}</p>
+            <p className="text-xl font-heading font-bold text-status-waiting-600">{inAttesa}</p>
             <p className="text-[11px] text-brand-500">In attesa</p>
           </div>
         )}
@@ -1162,7 +1162,7 @@ function ReportView({
               const farm = farmacie.find(f => f.id === r.farmaciaId)
               return (
                 <div key={r.id} className="flex items-center gap-2 text-xs">
-                  <CheckCircle2 size={13} className="text-success-500 shrink-0" />
+                  <CheckCircle2 size={13} className="text-status-done-500 shrink-0" />
                   <span className="text-brand-700">{farm?.nome}</span>
                   <span className="text-brand-400">Fase {r.fase} — {r.oraCompletamento}</span>
                 </div>

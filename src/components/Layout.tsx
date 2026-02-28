@@ -90,7 +90,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             </div>
             <button
               onClick={logout}
-              className="p-2 text-brand-400 hover:text-danger-500 hover:bg-danger-50 rounded-md transition-colors duration-150"
+              className="p-2 text-brand-400 hover:text-brand-700 hover:bg-brand-50 rounded-md transition-colors duration-150"
               title="Esci"
             >
               <LogOut size={16} />

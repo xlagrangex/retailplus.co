@@ -11,10 +11,10 @@ interface Props {
 
 function getMapColor(stato: string): string {
   switch (stato) {
-    case 'da_fare': return '#d64545'
-    case 'in_corso': return '#de911d'
-    case 'completata': return '#3f9142'
-    case 'in_attesa': return '#6366f1'
+    case 'da_fare': return '#8da4b8'
+    case 'in_corso': return '#5d8a82'
+    case 'completata': return '#2b7268'
+    case 'in_attesa': return '#4a6fa5'
     default: return '#627d98'
   }
 }

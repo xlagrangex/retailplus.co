@@ -29,10 +29,10 @@ export default function BrandDashboard() {
 function Legend() {
   return (
     <div className="flex items-center gap-4 flex-wrap">
-      <LegendItem color="#d64545" label="Da fare" />
-      <LegendItem color="#de911d" label="In corso" />
-      <LegendItem color="#3f9142" label="Completata" />
-      <LegendItem color="#6366f1" label="In attesa" />
+      <LegendItem color="#8da4b8" label="Da fare" />
+      <LegendItem color="#5d8a82" label="In corso" />
+      <LegendItem color="#2b7268" label="Completata" />
+      <LegendItem color="#4a6fa5" label="In attesa" />
     </div>
   )
 }
@@ -154,7 +154,7 @@ export function BrandFarmaciePage() {
                             <span
                               key={fase}
                               className={`w-6 h-6 rounded flex items-center justify-center text-[10px] font-semibold ${
-                                done ? 'bg-success-50 text-success-700 border border-success-100' : 'bg-brand-50 text-brand-400 border border-brand-100'
+                                done ? 'bg-status-done-50 text-status-done-700 border border-status-done-100' : 'bg-brand-50 text-brand-400 border border-brand-100'
                               }`}
                             >
                               {fase}
@@ -179,10 +179,10 @@ export function BrandFarmaciePage() {
 
 function StatoBadge({ stato }: { stato: StatoFarmacia }) {
   const config = {
-    da_fare: { bg: 'bg-danger-50', text: 'text-danger-600', border: 'border-danger-100', dot: '#d64545' },
-    in_corso: { bg: 'bg-warning-50', text: 'text-warning-600', border: 'border-warning-100', dot: '#de911d' },
-    completata: { bg: 'bg-success-50', text: 'text-success-600', border: 'border-success-100', dot: '#3f9142' },
-    in_attesa: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', dot: '#6366f1' },
+    da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
+    in_corso: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#5d8a82' },
+    completata: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
+    in_attesa: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
   }[stato] || { bg: 'bg-brand-50', text: 'text-brand-600', border: 'border-brand-100', dot: '#627d98' }
 
   return (

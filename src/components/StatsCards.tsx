@@ -16,10 +16,10 @@ export default function StatsCards({ farmacie, rilievi }: Props) {
 
   const cards = [
     { label: 'Totale farmacie', value: totale, icon: Store, color: 'text-accent-700', bg: 'bg-accent-50', border: 'border-accent-100' },
-    { label: 'Completate', value: completate, icon: CheckCircle2, color: 'text-success-600', bg: 'bg-success-50', border: 'border-success-100' },
-    { label: 'In corso', value: inCorso, icon: Clock, color: 'text-warning-500', bg: 'bg-warning-50', border: 'border-warning-100' },
-    { label: 'Da fare', value: daFare, icon: AlertCircle, color: 'text-danger-500', bg: 'bg-danger-50', border: 'border-danger-100' },
-    ...(inAttesa > 0 ? [{ label: 'In attesa materiale', value: inAttesa, icon: Pause, color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-100' }] : []),
+    { label: 'Completate', value: completate, icon: CheckCircle2, color: 'text-status-done-500', bg: 'bg-status-done-50', border: 'border-status-done-100' },
+    { label: 'In corso', value: inCorso, icon: Clock, color: 'text-status-progress-500', bg: 'bg-status-progress-50', border: 'border-status-progress-100' },
+    { label: 'Da fare', value: daFare, icon: AlertCircle, color: 'text-status-todo-600', bg: 'bg-status-todo-50', border: 'border-status-todo-100' },
+    ...(inAttesa > 0 ? [{ label: 'In attesa materiale', value: inAttesa, icon: Pause, color: 'text-status-waiting-500', bg: 'bg-status-waiting-50', border: 'border-status-waiting-100' }] : []),
   ]
 
   return (
