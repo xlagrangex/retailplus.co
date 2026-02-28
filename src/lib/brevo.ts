@@ -9,7 +9,7 @@ const LOGO_URL = 'https://retailplus.co/Retaillogo.png'
 const LOGO_WHITE_URL = 'https://retailplus.co/Retaillogobianco.png'
 
 const emailHeader = `
-  <div style="text-align: center; background: #273E3A; padding: 28px 24px; border-radius: 6px 6px 0 0;">
+  <div style="text-align: center; background-color: #273E3A; padding: 28px 24px; border-radius: 6px 6px 0 0;">
     <img src="${LOGO_WHITE_URL}" alt="Retail+ Pharma" style="height: 52px; max-width: 200px;" />
   </div>
 `
