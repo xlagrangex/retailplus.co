@@ -66,7 +66,7 @@ export function AdminFarmaciePage() {
   const selectedFarmacia = selectedFarmaciaId ? farmacie.find(f => f.id === selectedFarmaciaId) || null : null
 
   const filtered = farmacie.filter(f =>
-    (f.nome + f.citta + f.indirizzo + f.provincia + (f.codiceCliente || '') + (f.regione || '')).toLowerCase().includes(search.toLowerCase())
+    (f.nome + f.citta + f.indirizzo + f.provincia + f.cap + (f.codiceCliente || '') + (f.telefono || '')).toLowerCase().includes(search.toLowerCase())
   )
 
   function handleCSVImport(e: React.ChangeEvent<HTMLInputElement>) {
@@ -193,20 +193,21 @@ export function AdminFarmaciePage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-brand-100">
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Farmacia</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden md:table-cell">Codice</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden sm:table-cell">Localita</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden lg:table-cell">Ripiani</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Stato</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden lg:table-cell">Ultimo sopralluogo</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Merchandiser</th>
-                <th className="text-right px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider w-24"></th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Codice</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Farmacia</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Indirizzo</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Citta</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">CAP</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Prov.</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Telefono</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Stato</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Merchandiser</th>
+                <th className="text-right px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider w-20"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-brand-50">
               {filtered.map(f => {
                 const stato = getStatoFarmacia(rilievi, f.id)
-                const ultimoRilievo = rilievi.filter(r => r.farmaciaId === f.id && r.completata).sort((a, b) => (b.dataCompletamento || '').localeCompare(a.dataCompletamento || ''))[0]
                 const assegnazione = assegnazioni.find(a => a.farmaciaId === f.id)
                 const merch = assegnazione ? users.find(u => u.id === assegnazione.merchandiserId) : null
                 const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
@@ -219,30 +220,22 @@ export function AdminFarmaciePage() {
 
                 return (
                   <tr key={f.id} className="hover:bg-brand-50/50 transition-colors cursor-pointer" onClick={() => setSelectedFarmaciaId(f.id)}>
-                    <td className="px-4 py-3.5">
+                    <td className="px-3 py-3 text-[13px] text-brand-500 font-mono">{f.codiceCliente || '—'}</td>
+                    <td className="px-3 py-3">
                       <p className="font-medium text-brand-900 text-[13px]">{f.nome}</p>
-                      <p className="text-xs text-brand-400">{f.indirizzo || f.regione || ''}</p>
                     </td>
-                    <td className="px-4 py-3.5 text-[13px] text-brand-500 hidden md:table-cell font-mono">{f.codiceCliente || '—'}</td>
-                    <td className="px-4 py-3.5 text-[13px] text-brand-600 hidden sm:table-cell">{f.citta}{f.regione ? ` (${f.regione})` : ''}</td>
-                    <td className="px-4 py-3.5 text-[13px] text-brand-600 hidden lg:table-cell text-center">{f.rippianiCategory ?? '—'}</td>
-                    <td className="px-4 py-3.5">
+                    <td className="px-3 py-3 text-[13px] text-brand-600">{f.indirizzo || '—'}</td>
+                    <td className="px-3 py-3 text-[13px] text-brand-600">{f.citta || '—'}</td>
+                    <td className="px-3 py-3 text-[13px] text-brand-500">{f.cap || '—'}</td>
+                    <td className="px-3 py-3 text-[13px] text-brand-500">{f.provincia || '—'}</td>
+                    <td className="px-3 py-3 text-[13px] text-brand-500">{f.telefono || '—'}</td>
+                    <td className="px-3 py-3">
                       <span className={`badge ${sc.bg} ${sc.text} border ${sc.border}`}>
                         <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: sc.dot }} />
                         {getLabelStato(stato)}
                       </span>
                     </td>
-                    <td className="px-4 py-3.5 hidden lg:table-cell">
-                      {ultimoRilievo ? (
-                        <div>
-                          <p className="text-[13px] text-brand-700">{ultimoRilievo.dataCompletamento}</p>
-                          <p className="text-[11px] text-brand-400">{ultimoRilievo.oraCompletamento} — Fase {ultimoRilievo.fase}</p>
-                        </div>
-                      ) : (
-                        <span className="text-[13px] text-brand-300">—</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3.5" onClick={e => e.stopPropagation()}>
+                    <td className="px-3 py-3" onClick={e => e.stopPropagation()}>
                       {assigning === f.id ? (
                         <select
                           className="input py-1.5 text-xs"
@@ -272,9 +265,8 @@ export function AdminFarmaciePage() {
                         </button>
                       )}
                     </td>
-                    <td className="px-4 py-3.5 text-right" onClick={e => e.stopPropagation()}>
+                    <td className="px-3 py-3 text-right" onClick={e => e.stopPropagation()}>
                       <div className="flex items-center gap-1 justify-end">
-                        {/* Task 8: Planogramma upload */}
                         <label className="text-brand-300 hover:text-accent-500 transition-colors cursor-pointer p-1" title="Carica planogramma">
                           {uploadingPlanogramma === f.id ? (
                             <div className="w-4 h-4 border-2 border-accent-400 border-t-transparent rounded-full animate-spin" />

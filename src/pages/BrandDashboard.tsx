@@ -71,7 +71,7 @@ export function BrandFarmaciePage() {
   const [filtroStato, setFiltroStato] = useState<string>('tutti')
 
   const filtered = farmacie.filter(f => {
-    const matchSearch = (f.nome + f.citta + f.indirizzo).toLowerCase().includes(search.toLowerCase())
+    const matchSearch = (f.nome + f.citta + f.indirizzo + f.provincia + f.cap + (f.codiceCliente || '') + (f.telefono || '')).toLowerCase().includes(search.toLowerCase())
     const stato = getStatoFarmacia(rilievi, f.id)
     const matchStato = filtroStato === 'tutti' || stato === filtroStato
     return matchSearch && matchStato
@@ -118,42 +118,35 @@ export function BrandFarmaciePage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-brand-100">
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Farmacia</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden sm:table-cell">Localita</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Stato</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden lg:table-cell">Ultimo sopralluogo</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden md:table-cell">Fasi</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Codice</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Farmacia</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Indirizzo</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Citta</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">CAP</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Prov.</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Telefono</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Stato</th>
+                <th className="text-left px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Fasi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-brand-50">
               {filtered.map(f => {
                 const stato = getStatoFarmacia(rilievi, f.id)
-                const ultimoRilievo = rilievi.filter(r => r.farmaciaId === f.id && r.completata).sort((a, b) => (b.dataCompletamento || '').localeCompare(a.dataCompletamento || ''))[0]
                 return (
                   <tr key={f.id} className="hover:bg-brand-50/50 transition-colors">
-                    <td className="px-4 py-3.5">
+                    <td className="px-3 py-3 text-[13px] text-brand-500 font-mono">{f.codiceCliente || '—'}</td>
+                    <td className="px-3 py-3">
                       <p className="font-medium text-brand-900 text-[13px]">{f.nome}</p>
-                      <p className="text-xs text-brand-400 flex items-center gap-1 mt-0.5">
-                        <MapPin size={11} /> {f.indirizzo}
-                      </p>
                     </td>
-                    <td className="px-4 py-3.5 text-[13px] text-brand-600 hidden sm:table-cell">
-                      {f.citta} <span className="text-brand-400">({f.provincia})</span>
-                    </td>
-                    <td className="px-4 py-3.5">
+                    <td className="px-3 py-3 text-[13px] text-brand-600">{f.indirizzo || '—'}</td>
+                    <td className="px-3 py-3 text-[13px] text-brand-600">{f.citta || '—'}</td>
+                    <td className="px-3 py-3 text-[13px] text-brand-500">{f.cap || '—'}</td>
+                    <td className="px-3 py-3 text-[13px] text-brand-500">{f.provincia || '—'}</td>
+                    <td className="px-3 py-3 text-[13px] text-brand-500">{f.telefono || '—'}</td>
+                    <td className="px-3 py-3">
                       <StatoBadge stato={stato} />
                     </td>
-                    <td className="px-4 py-3.5 hidden lg:table-cell">
-                      {ultimoRilievo ? (
-                        <div>
-                          <p className="text-[13px] text-brand-700">{ultimoRilievo.dataCompletamento}</p>
-                          <p className="text-[11px] text-brand-400">{ultimoRilievo.oraCompletamento} — Fase {ultimoRilievo.fase}</p>
-                        </div>
-                      ) : (
-                        <span className="text-[13px] text-brand-300">—</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3.5 hidden md:table-cell">
+                    <td className="px-3 py-3">
                       <div className="flex gap-1">
                         {[1, 2, 3].map(fase => {
                           const done = rilievi.some(r => r.farmaciaId === f.id && r.fase === fase && r.completata)
