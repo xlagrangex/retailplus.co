@@ -174,6 +174,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const removeUser = useCallback((id: string) => {
+    const user = users.find(u => u.id === id)
+
     if (isSupabaseConfigured) {
       deleteUserDb(id).then(() => {
         fetchUsers().then(setUsers).catch(console.error)
@@ -183,7 +185,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
       saveUsers(updated)
       setUsers(updated)
     }
-  }, [])
+
+    // Send account removal notification (async, non-blocking)
+    if (user && user.ruolo === 'merchandiser') {
+      import('../lib/brevo').then(({ sendAccountRemovedEmail }) => {
+        sendAccountRemovedEmail({ email: user.email, nome: user.nome }).catch(console.error)
+      }).catch(console.error)
+    }
+  }, [users])
 
   const assignFarmacia = useCallback((farmaciaId: string, merchandiserId: string) => {
     if (isSupabaseConfigured) {
@@ -327,6 +336,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [registrazioniPending])
 
   const rejectRegistrazione = useCallback((id: string) => {
+    const reg = registrazioniPending.find(r => r.id === id)
+
     if (isSupabaseConfigured) {
       sbUpdateRegistrazioneStato(id, 'rejected').then(() => {
         fetchRegistrazioniPending().then(setRegistrazioniPending).catch(console.error)
@@ -336,7 +347,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
       saveRegistrazioni(allRegs)
       setRegistrazioniPending(prev => prev.filter(r => r.id !== id))
     }
-  }, [])
+
+    // Send rejection email (async, non-blocking)
+    if (reg) {
+      import('../lib/brevo').then(({ sendRejectionEmail }) => {
+        sendRejectionEmail({ email: reg.email, nome: reg.nome }).catch(console.error)
+      }).catch(console.error)
+    }
+  }, [registrazioniPending])
 
   return (
     <DataContext.Provider value={{

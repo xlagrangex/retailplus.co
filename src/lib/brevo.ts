@@ -113,3 +113,74 @@ export async function sendWelcomeEmail(to: { email: string; nome: string }) {
     console.error('Brevo email error:', err)
   }
 }
+
+export async function sendRejectionEmail(to: { email: string; nome: string }) {
+  if (!BREVO_API_KEY) {
+    console.warn('Brevo API key not configured, skipping rejection email')
+    return
+  }
+
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'accept': 'application/json',
+      'api-key': BREVO_API_KEY,
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      sender: { name: 'Retail+ Pharma', email: 'no-reply@retailplus.co' },
+      to: [{ email: to.email, name: to.nome }],
+      subject: 'Retail+ Pharma — Esito registrazione',
+      htmlContent: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; background-color: #ffffff;">
+          ${emailHeader}
+          <h2 style="color: #273E3A; margin-bottom: 8px; font-size: 20px;">Ciao ${to.nome},</h2>
+          <p style="color: #4a6360; line-height: 1.6;">Grazie per il tuo interesse verso <strong>Retail+ Pharma</strong>.</p>
+          <p style="color: #4a6360; line-height: 1.6;">Purtroppo, al momento non ci è possibile accogliere la tua candidatura come Merchandiser.</p>
+          <p style="color: #4a6360; line-height: 1.6;">Ti invitiamo a riprovare in futuro. Per qualsiasi domanda puoi contattarci rispondendo a questa email.</p>
+          ${emailFooter}
+        </div>
+      `,
+    }),
+  })
+
+  if (!res.ok) {
+    const err = await res.text()
+    console.error('Brevo rejection email error:', err)
+  }
+}
+
+export async function sendAccountRemovedEmail(to: { email: string; nome: string }) {
+  if (!BREVO_API_KEY) {
+    console.warn('Brevo API key not configured, skipping account removal email')
+    return
+  }
+
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'accept': 'application/json',
+      'api-key': BREVO_API_KEY,
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      sender: { name: 'Retail+ Pharma', email: 'no-reply@retailplus.co' },
+      to: [{ email: to.email, name: to.nome }],
+      subject: 'Retail+ Pharma — Account disattivato',
+      htmlContent: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; background-color: #ffffff;">
+          ${emailHeader}
+          <h2 style="color: #273E3A; margin-bottom: 8px; font-size: 20px;">Ciao ${to.nome},</h2>
+          <p style="color: #4a6360; line-height: 1.6;">Ti informiamo che il tuo account su <strong>Retail+ Pharma</strong> è stato disattivato.</p>
+          <p style="color: #4a6360; line-height: 1.6;">Se ritieni che si tratti di un errore, contattaci rispondendo a questa email.</p>
+          ${emailFooter}
+        </div>
+      `,
+    }),
+  })
+
+  if (!res.ok) {
+    const err = await res.text()
+    console.error('Brevo account removal email error:', err)
+  }
+}
