@@ -13,6 +13,7 @@ import {
   Building2, Calendar,
 } from 'lucide-react'
 import Papa from 'papaparse'
+import KanbanBoard from '../components/KanbanBoard'
 
 export default function AdminDashboard() {
   const { farmacie, rilievi, users, assegnazioni } = useData()
@@ -1281,6 +1282,41 @@ function _AssignmentKanbanView({
           </div>
         )
       })}
+    </div>
+  )
+}
+
+export function AdminKanbanPage() {
+  const { farmacie, rilievi, assegnazioni, users } = useData()
+  const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
+  const [selectedFarmaciaId, setSelectedFarmaciaId] = useState<string | null>(null)
+  const selectedFarmacia = selectedFarmaciaId ? farmacie.find(f => f.id === selectedFarmaciaId) || null : null
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h1 className="page-title">Kanban</h1>
+        <p className="page-subtitle">Vista avanzamento per stato di tutte le farmacie</p>
+      </div>
+      <KanbanBoard
+        farmacie={farmacie}
+        rilievi={rilievi}
+        assegnazioni={assegnazioni}
+        users={users}
+        showMerchandiserName
+        showFilters
+        onFarmaciaClick={f => setSelectedFarmaciaId(f.id)}
+      />
+      {selectedFarmacia && (
+        <FarmaciaDetailPanel
+          farmacia={selectedFarmacia}
+          rilievi={rilievi}
+          assegnazioni={assegnazioni}
+          users={users}
+          merchandisers={merchandisers}
+          onClose={() => setSelectedFarmaciaId(null)}
+        />
+      )}
     </div>
   )
 }

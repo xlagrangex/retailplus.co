@@ -10,8 +10,9 @@ import {
 import {
   ArrowLeft, Camera, Check, ChevronRight, Lock, MapPin, Phone, Mail,
   Ruler, X, AlertTriangle, CheckCircle2, Info, ImagePlus, Package, Wrench,
-  Pause, Play, FileText, Send, Download,
+  Pause, Play, FileText, Send, Download, LayoutList, Columns,
 } from 'lucide-react'
+import KanbanBoard from '../components/KanbanBoard'
 
 // Colori corporate per stati
 const statoConfig: Record<StatoFarmacia, { dot: string; bg: string; text: string; border: string }> = {
@@ -23,9 +24,10 @@ const statoConfig: Record<StatoFarmacia, { dot: string; bg: string; text: string
 
 export default function MerchandiserPage() {
   const { user } = useAuth()
-  const { farmacie, assegnazioni, rilievi } = useData()
+  const { farmacie, assegnazioni, rilievi, users } = useData()
   const [selectedFarmacia, setSelectedFarmacia] = useState<Farmacia | null>(null)
   const [showReport, setShowReport] = useState(false)
+  const [viewMode, setViewMode] = useState<'list' | 'kanban'>('list')
 
   if (!user) return null
 
@@ -56,105 +58,135 @@ export default function MerchandiserPage() {
   }
 
   return (
-    <div className="space-y-5 max-w-2xl mx-auto">
+    <div className={`space-y-5 mx-auto ${viewMode === 'kanban' ? 'max-w-6xl' : 'max-w-2xl'}`}>
       <div className="flex items-center justify-between">
         <div>
           <h1 className="page-title">Ciao, {user.nome}</h1>
           <p className="page-subtitle">{mieFarmacie.length} farmacie assegnate</p>
         </div>
-        <button onClick={() => setShowReport(true)} className="btn-secondary text-xs">
-          <FileText size={14} /> Report
-        </button>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-3">
-        {(['da_fare', 'in_corso', 'completata'] as StatoFarmacia[]).map(stato => {
-          const count = mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === stato).length
-          const cfg = statoConfig[stato]
-          return (
-            <div key={stato} className="card p-3 text-center">
-              <span className="inline-block w-2.5 h-2.5 rounded-full mb-1.5" style={{ backgroundColor: cfg.dot }} />
-              <p className="text-xl font-heading font-bold text-brand-900">{count}</p>
-              <p className="text-[11px] text-brand-500">{getLabelStato(stato)}</p>
-            </div>
-          )
-        })}
-      </div>
-
-      {/* In attesa count */}
-      {mieFarmacie.some(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa') && (
-        <div className="card p-3 flex items-center gap-3">
-          <span className="w-2.5 h-2.5 rounded-full bg-status-waiting-500" />
-          <span className="text-sm text-brand-700">
-            <b>{mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa').length}</b> in attesa di materiale
-          </span>
-        </div>
-      )}
-
-      {/* Lista farmacie */}
-      <div className="space-y-2">
-        {farmacieSorted.map(f => {
-          const stato = getStatoFarmacia(rilievi, f.id)
-          const fasiComplete = rilievi.filter(r => r.farmaciaId === f.id && r.completata).length
-          const faseCorrente = getFaseCorrente(rilievi, f.id)
-          const isCompletata = stato === 'completata'
-          const cfg = statoConfig[stato]
-
-          return (
+        <div className="flex items-center gap-2">
+          <div className="flex items-center bg-brand-50 rounded-md p-0.5">
             <button
-              key={f.id}
-              onClick={() => setSelectedFarmacia(f)}
-              className={`w-full card-hover p-4 text-left ${isCompletata ? 'opacity-60' : ''}`}
+              onClick={() => setViewMode('list')}
+              className={`p-1.5 rounded transition-colors ${viewMode === 'list' ? 'bg-white shadow-sm text-brand-800' : 'text-brand-400 hover:text-brand-600'}`}
+              title="Vista lista"
             >
-              <div className="flex items-start justify-between">
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-brand-900 text-[13px] truncate">{f.nome}</p>
-                  <p className="text-xs text-brand-400 flex items-center gap-1 mt-0.5">
-                    <MapPin size={12} className="shrink-0" />
-                    <span className="truncate">{f.indirizzo}, {f.citta}</span>
-                  </p>
-                  {!isCompletata && stato !== 'in_attesa' && (
-                    <p className="text-[11px] text-accent-600 font-medium mt-1.5">
-                      Prossimo: Fase {faseCorrente} — {getLabelFase(faseCorrente)}
-                    </p>
-                  )}
-                  {stato === 'in_attesa' && (
-                    <p className="text-[11px] text-status-waiting-600 font-medium mt-1.5 flex items-center gap-1">
-                      <Pause size={10} /> In attesa di materiale
-                    </p>
-                  )}
-                </div>
-                <div className="flex items-center gap-2 shrink-0 ml-3">
-                  <span className={`badge ${cfg.bg} ${cfg.text} border ${cfg.border}`}>
-                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: cfg.dot }} />
-                    {fasiComplete}/3
-                  </span>
-                  <ChevronRight size={14} className="text-brand-300" />
-                </div>
-              </div>
-              {/* Progress bar */}
-              <div className="flex gap-1 mt-3">
-                {([1, 2, 3] as FaseNumero[]).map(fase => {
-                  const done = rilievi.some(r => r.farmaciaId === f.id && r.fase === fase && r.completata)
-                  return (
-                    <div key={fase} className="flex-1">
-                      <div className={`h-1.5 rounded-full ${done ? 'bg-status-done-500' : 'bg-brand-100'}`} />
-                    </div>
-                  )
-                })}
-              </div>
+              <LayoutList size={16} />
             </button>
-          )
-        })}
+            <button
+              onClick={() => setViewMode('kanban')}
+              className={`p-1.5 rounded transition-colors ${viewMode === 'kanban' ? 'bg-white shadow-sm text-brand-800' : 'text-brand-400 hover:text-brand-600'}`}
+              title="Vista kanban"
+            >
+              <Columns size={16} />
+            </button>
+          </div>
+          <button onClick={() => setShowReport(true)} className="btn-secondary text-xs">
+            <FileText size={14} /> Report
+          </button>
+        </div>
       </div>
 
-      {mieFarmacie.length === 0 && (
-        <div className="text-center py-16">
-          <Package size={40} className="mx-auto mb-3 text-brand-300" />
-          <p className="text-brand-600 font-medium">Nessuna farmacia assegnata</p>
-          <p className="text-sm text-brand-400 mt-1">Contatta l'amministratore per ricevere le assegnazioni</p>
-        </div>
+      {viewMode === 'kanban' ? (
+        <KanbanBoard
+          farmacie={mieFarmacie}
+          rilievi={rilievi}
+          assegnazioni={assegnazioni}
+          users={users}
+          onFarmaciaClick={f => setSelectedFarmacia(f)}
+        />
+      ) : (
+        <>
+          {/* Stats */}
+          <div className="grid grid-cols-3 gap-3">
+            {(['da_fare', 'in_corso', 'completata'] as StatoFarmacia[]).map(stato => {
+              const count = mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === stato).length
+              const cfg = statoConfig[stato]
+              return (
+                <div key={stato} className="card p-3 text-center">
+                  <span className="inline-block w-2.5 h-2.5 rounded-full mb-1.5" style={{ backgroundColor: cfg.dot }} />
+                  <p className="text-xl font-heading font-bold text-brand-900">{count}</p>
+                  <p className="text-[11px] text-brand-500">{getLabelStato(stato)}</p>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* In attesa count */}
+          {mieFarmacie.some(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa') && (
+            <div className="card p-3 flex items-center gap-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-status-waiting-500" />
+              <span className="text-sm text-brand-700">
+                <b>{mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa').length}</b> in attesa di materiale
+              </span>
+            </div>
+          )}
+
+          {/* Lista farmacie */}
+          <div className="space-y-2">
+            {farmacieSorted.map(f => {
+              const stato = getStatoFarmacia(rilievi, f.id)
+              const fasiComplete = rilievi.filter(r => r.farmaciaId === f.id && r.completata).length
+              const faseCorrente = getFaseCorrente(rilievi, f.id)
+              const isCompletata = stato === 'completata'
+              const cfg = statoConfig[stato]
+
+              return (
+                <button
+                  key={f.id}
+                  onClick={() => setSelectedFarmacia(f)}
+                  className={`w-full card-hover p-4 text-left ${isCompletata ? 'opacity-60' : ''}`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-brand-900 text-[13px] truncate">{f.nome}</p>
+                      <p className="text-xs text-brand-400 flex items-center gap-1 mt-0.5">
+                        <MapPin size={12} className="shrink-0" />
+                        <span className="truncate">{f.indirizzo}, {f.citta}</span>
+                      </p>
+                      {!isCompletata && stato !== 'in_attesa' && (
+                        <p className="text-[11px] text-accent-600 font-medium mt-1.5">
+                          Prossimo: Fase {faseCorrente} — {getLabelFase(faseCorrente)}
+                        </p>
+                      )}
+                      {stato === 'in_attesa' && (
+                        <p className="text-[11px] text-status-waiting-600 font-medium mt-1.5 flex items-center gap-1">
+                          <Pause size={10} /> In attesa di materiale
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0 ml-3">
+                      <span className={`badge ${cfg.bg} ${cfg.text} border ${cfg.border}`}>
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: cfg.dot }} />
+                        {fasiComplete}/3
+                      </span>
+                      <ChevronRight size={14} className="text-brand-300" />
+                    </div>
+                  </div>
+                  {/* Progress bar */}
+                  <div className="flex gap-1 mt-3">
+                    {([1, 2, 3] as FaseNumero[]).map(fase => {
+                      const done = rilievi.some(r => r.farmaciaId === f.id && r.fase === fase && r.completata)
+                      return (
+                        <div key={fase} className="flex-1">
+                          <div className={`h-1.5 rounded-full ${done ? 'bg-status-done-500' : 'bg-brand-100'}`} />
+                        </div>
+                      )
+                    })}
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+
+          {mieFarmacie.length === 0 && (
+            <div className="text-center py-16">
+              <Package size={40} className="mx-auto mb-3 text-brand-300" />
+              <p className="text-brand-600 font-medium">Nessuna farmacia assegnata</p>
+              <p className="text-sm text-brand-400 mt-1">Contatta l'amministratore per ricevere le assegnazioni</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   )

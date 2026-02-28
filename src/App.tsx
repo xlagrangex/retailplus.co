@@ -7,7 +7,7 @@ import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import BrandDashboard, { BrandMapPage, BrandFarmaciePage } from './pages/BrandDashboard'
-import AdminDashboard, { AdminFarmaciePage, AdminMerchandiserPage, AdminMapPage, AdminConfigurazionePage } from './pages/AdminDashboard'
+import AdminDashboard, { AdminFarmaciePage, AdminMerchandiserPage, AdminMapPage, AdminKanbanPage, AdminConfigurazionePage } from './pages/AdminDashboard'
 import MerchandiserPage from './pages/MerchandiserPage'
 
 // Initialize mock data only if Supabase is not configured
@@ -23,6 +23,7 @@ function getRoutesForRole(ruolo: string) {
         <Route key="admin-farm" path="/admin/farmacie" element={<AdminFarmaciePage />} />,
         <Route key="admin-merch" path="/admin/merchandiser" element={<AdminMerchandiserPage />} />,
         <Route key="admin-map" path="/admin/mappa" element={<AdminMapPage />} />,
+        <Route key="admin-kanban" path="/admin/kanban" element={<AdminKanbanPage />} />,
         <Route key="admin-config" path="/admin/configurazione" element={<AdminConfigurazionePage />} />,
         <Route key="admin-catch" path="*" element={<Navigate to="/admin" replace />} />,
       ]

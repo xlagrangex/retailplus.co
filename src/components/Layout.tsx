@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import {
   LayoutDashboard, Map, Users, Store, ClipboardList,
-  LogOut, Menu, X, ChevronDown, Settings
+  LogOut, Menu, X, ChevronDown, Settings, Columns
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -13,6 +13,7 @@ const navItems = {
     { to: '/admin/farmacie', label: 'Farmacie', icon: Store },
     { to: '/admin/merchandiser', label: 'Merchandiser', icon: Users },
     { to: '/admin/mappa', label: 'Mappa', icon: Map },
+    { to: '/admin/kanban', label: 'Kanban', icon: Columns },
     { to: '/admin/configurazione', label: 'Configurazione', icon: Settings },
   ],
   brand: [

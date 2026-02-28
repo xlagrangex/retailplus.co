@@ -277,6 +277,18 @@ export function DataProvider({ children }: { children: ReactNode }) {
       saveRegistrazioni([...all, r])
       setRegistrazioniPending(prev => [...prev, r])
     }
+
+    // Notify admin (async, non-blocking)
+    import('../lib/brevo').then(({ sendNewRegistrationNotification }) => {
+      sendNewRegistrationNotification({
+        nome: r.nome,
+        cognome: r.cognome,
+        email: r.email,
+        telefono: r.telefono,
+        citta: r.citta,
+        provincia: r.provincia,
+      }).catch(console.error)
+    }).catch(console.error)
   }, [])
 
   const approveRegistrazione = useCallback((id: string) => {
