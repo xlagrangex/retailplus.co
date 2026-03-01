@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
-import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione, RegistrazionePending, Messaggio, RilievoEvento } from '../types'
+import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione, RegistrazionePending, Messaggio, RilievoEvento, Sopralluogo } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import {
   fetchUsers, fetchFarmacie, fetchAssegnazioni, fetchRilievi,
@@ -21,6 +21,8 @@ import {
   markMessaggiAsRead as sbMarkAsRead,
   fetchEventiByFarmacia as sbFetchEventi,
   insertEvento as sbInsertEvento,
+  fetchSopralluoghi,
+  insertSopralluogo as sbInsertSopralluogo,
 } from '../data/supabase'
 import {
   getFarmacie, saveFarmacie,
@@ -32,6 +34,7 @@ import {
   getMessaggi, saveMessaggi,
   getMessaggiLetti, saveMessaggiLetti,
   getEventi, saveEventi,
+  getSopralluoghi, saveSopralluoghi,
 } from '../data/mock'
 
 interface DataContextType {
@@ -68,6 +71,8 @@ interface DataContextType {
   eventi: RilievoEvento[]
   addEvento: (e: RilievoEvento) => void
   fetchEventiForFarmacia: (farmaciaId: string) => Promise<RilievoEvento[]>
+  sopralluoghi: Sopralluogo[]
+  addSopralluogo: (s: Sopralluogo) => Promise<void>
 }
 
 const DataContext = createContext<DataContextType | null>(null)
@@ -105,6 +110,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
     return byOthers
   })
   const [eventi, setEventi] = useState<RilievoEvento[]>(() => isSupabaseConfigured ? [] : getEventi())
+  const [sopralluoghi, setSopralluoghi] = useState<Sopralluogo[]>(() => isSupabaseConfigured ? [] : getSopralluoghi())
   const [isLoading, setIsLoading] = useState(isSupabaseConfigured)
 
   const currentUserId = (() => {
@@ -153,9 +159,12 @@ export function DataProvider({ children }: { children: ReactNode }) {
           setRilievi(r)
           setCampiConfigurazione(campi)
           setRegistrazioniPending(regs)
+          let sopr: Sopralluogo[] = []
+          try { sopr = await fetchSopralluoghi() } catch { /* table may not exist yet */ }
           setMessaggi(msgs)
           setMessaggiLettiIds(lettiIds)
           setMessaggiLettiByOthers(byOthers)
+          setSopralluoghi(sopr)
           setIsLoading(false)
         }
       } catch (err) {
@@ -511,6 +520,46 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }
   }, [currentUserId, messaggi])
 
+  const addSopralluogo = useCallback(async (s: Sopralluogo) => {
+    if (isSupabaseConfigured) {
+      await sbInsertSopralluogo(s)
+      const fresh = await fetchSopralluoghi()
+      setSopralluoghi(fresh)
+    } else {
+      const updated = [...getSopralluoghi(), s]
+      saveSopralluoghi(updated)
+      setSopralluoghi(updated)
+    }
+
+    // If nota is present, auto-send as chat message
+    if (s.nota) {
+      const saved = localStorage.getItem('logplus_current_user')
+      const user = saved ? JSON.parse(saved) : null
+      if (user) {
+        const testo = `[Sopralluogo Fase ${s.fase}] ${s.nota}`
+        const msg: Messaggio = {
+          id: crypto.randomUUID(),
+          testo,
+          autoreId: user.id,
+          autoreNome: `${user.nome} ${user.cognome}`,
+          autoreRuolo: user.ruolo,
+          merchandiserId: s.merchandiserId,
+          farmaciaId: s.farmaciaId,
+          createdAt: new Date().toISOString(),
+        }
+        if (isSupabaseConfigured) {
+          sbInsertMessaggio(msg).then(() => {
+            fetchMessaggi().then(setMessaggi).catch(console.error)
+          }).catch(console.error)
+        } else {
+          const updatedMsgs = [...getMessaggi(), msg]
+          saveMessaggi(updatedMsgs)
+          setMessaggi(updatedMsgs)
+        }
+      }
+    }
+  }, [])
+
   const addEvento = useCallback((e: RilievoEvento) => {
     if (isSupabaseConfigured) {
       sbInsertEvento(e).catch(console.error)
@@ -571,6 +620,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       registrazioniPending, submitRegistrazione, approveRegistrazione, rejectRegistrazione,
       messaggi, messaggiLettiIds, messaggiLettiByOthers, unreadCount, sendMessaggio, markAsRead,
       eventi, addEvento, fetchEventiForFarmacia,
+      sopralluoghi, addSopralluogo,
     }}>
       {children}
     </DataContext.Provider>

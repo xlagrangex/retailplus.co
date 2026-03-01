@@ -1,30 +1,33 @@
-import { Farmacia, Rilievo, getStatoFarmacia } from '../types'
-import { Store, CheckCircle2, Clock, AlertCircle, TrendingUp, Pause } from 'lucide-react'
+import { Farmacia, Rilievo, Sopralluogo, getStatoFarmacia } from '../types'
+import { Store, CheckCircle2, Clock, AlertCircle, TrendingUp, Play, Wrench, Package } from 'lucide-react'
 
 interface Props {
   farmacie: Farmacia[]
   rilievi: Rilievo[]
+  sopralluoghi?: Sopralluogo[]
 }
 
-export default function StatsCards({ farmacie, rilievi }: Props) {
+export default function StatsCards({ farmacie, rilievi, sopralluoghi = [] }: Props) {
   const totale = farmacie.length
-  const completate = farmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
-  const inCorso = farmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_corso').length
-  const daFare = farmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'da_fare').length
-  const inAttesa = farmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa').length
-  const percentuale = totale > 0 ? Math.round((completate / totale) * 100) : 0
+  const assegnati = farmacie.filter(f => getStatoFarmacia(rilievi, f.id, sopralluoghi) === 'assegnato').length
+  const fase1 = farmacie.filter(f => getStatoFarmacia(rilievi, f.id, sopralluoghi) === 'fase_1').length
+  const fase2 = farmacie.filter(f => getStatoFarmacia(rilievi, f.id, sopralluoghi) === 'fase_2').length
+  const fase3 = farmacie.filter(f => getStatoFarmacia(rilievi, f.id, sopralluoghi) === 'fase_3').length
+  const completati = farmacie.filter(f => getStatoFarmacia(rilievi, f.id, sopralluoghi) === 'completato').length
+  const percentuale = totale > 0 ? Math.round((completati / totale) * 100) : 0
 
   const cards = [
     { label: 'Totale farmacie', value: totale, icon: Store, color: 'text-accent-700', bg: 'bg-accent-50', border: 'border-accent-100' },
-    { label: 'Completate', value: completate, icon: CheckCircle2, color: 'text-status-done-500', bg: 'bg-status-done-50', border: 'border-status-done-100' },
-    { label: 'In corso', value: inCorso, icon: Clock, color: 'text-status-progress-500', bg: 'bg-status-progress-50', border: 'border-status-progress-100' },
-    { label: 'Da fare', value: daFare, icon: AlertCircle, color: 'text-status-todo-600', bg: 'bg-status-todo-50', border: 'border-status-todo-100' },
-    ...(inAttesa > 0 ? [{ label: 'In attesa materiale', value: inAttesa, icon: Pause, color: 'text-status-waiting-500', bg: 'bg-status-waiting-50', border: 'border-status-waiting-100' }] : []),
+    { label: 'Assegnato', value: assegnati, icon: AlertCircle, color: 'text-status-todo-600', bg: 'bg-status-todo-50', border: 'border-status-todo-100' },
+    { label: 'Fase 1', value: fase1, icon: Play, color: 'text-status-waiting-500', bg: 'bg-status-waiting-50', border: 'border-status-waiting-100' },
+    { label: 'Fase 2', value: fase2, icon: Wrench, color: 'text-status-progress-500', bg: 'bg-status-progress-50', border: 'border-status-progress-100' },
+    { label: 'Fase 3', value: fase3, icon: Package, color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
+    { label: 'Completato', value: completati, icon: CheckCircle2, color: 'text-status-done-500', bg: 'bg-status-done-50', border: 'border-status-done-100' },
   ]
 
   return (
     <div className="space-y-4">
-      <div className={`grid grid-cols-2 ${cards.length > 4 ? 'lg:grid-cols-5' : 'lg:grid-cols-4'} gap-3`}>
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
         {cards.map(c => {
           const Icon = c.icon
           return (
@@ -57,8 +60,8 @@ export default function StatsCards({ farmacie, rilievi }: Props) {
           />
         </div>
         <div className="flex items-center justify-between mt-2">
-          <p className="text-xs text-brand-400">{completate} di {totale} farmacie</p>
-          <p className="text-xs text-brand-400">{daFare + inAttesa} rimanenti</p>
+          <p className="text-xs text-brand-400">{completati} di {totale} farmacie</p>
+          <p className="text-xs text-brand-400">{assegnati + fase1 + fase2 + fase3} rimanenti</p>
         </div>
       </div>
     </div>

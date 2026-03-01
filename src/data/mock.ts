@@ -1,4 +1,4 @@
-import { User, Farmacia, Assegnazione, Rilievo, CampoConfigurazione, RegistrazionePending, Messaggio, MessaggioLetto, RilievoEvento } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, CampoConfigurazione, RegistrazionePending, Messaggio, MessaggioLetto, RilievoEvento, Sopralluogo } from '../types'
 import importedFarmacie from './farmacie-import.json'
 
 export const mockUsers: User[] = [
@@ -22,6 +22,7 @@ const STORAGE_KEYS = {
   farmacie: 'logplus_farmacie',
   assegnazioni: 'logplus_assegnazioni',
   rilievi: 'logplus_rilievi',
+  sopralluoghi: 'logplus_sopralluoghi',
 }
 
 // Bump this version when mock data changes to force localStorage reset
@@ -48,6 +49,9 @@ export function initMockData() {
   if (!localStorage.getItem(STORAGE_KEYS.rilievi)) {
     localStorage.setItem(STORAGE_KEYS.rilievi, JSON.stringify(mockRilievi))
   }
+  if (!localStorage.getItem(STORAGE_KEYS.sopralluoghi)) {
+    localStorage.setItem(STORAGE_KEYS.sopralluoghi, JSON.stringify([]))
+  }
 }
 
 export function resetMockData() {
@@ -55,6 +59,7 @@ export function resetMockData() {
   localStorage.setItem(STORAGE_KEYS.farmacie, JSON.stringify(mockFarmacie))
   localStorage.setItem(STORAGE_KEYS.assegnazioni, JSON.stringify(mockAssegnazioni))
   localStorage.setItem(STORAGE_KEYS.rilievi, JSON.stringify(mockRilievi))
+  localStorage.setItem(STORAGE_KEYS.sopralluoghi, JSON.stringify([]))
 }
 
 // CRUD helpers
@@ -131,4 +136,11 @@ export function getEventi(): RilievoEvento[] {
 }
 export function saveEventi(eventi: RilievoEvento[]) {
   localStorage.setItem('logplus_eventi', JSON.stringify(eventi))
+}
+
+export function getSopralluoghi(): Sopralluogo[] {
+  return JSON.parse(localStorage.getItem(STORAGE_KEYS.sopralluoghi) || '[]')
+}
+export function saveSopralluoghi(sopralluoghi: Sopralluogo[]) {
+  localStorage.setItem(STORAGE_KEYS.sopralluoghi, JSON.stringify(sopralluoghi))
 }

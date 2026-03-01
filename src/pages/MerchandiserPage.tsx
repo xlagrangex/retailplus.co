@@ -6,14 +6,14 @@ import OnboardingModal, { useOnboardingTrigger } from '../components/OnboardingM
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPhoto } from '../lib/supabase'
 import {
-  Farmacia, Rilievo, FaseNumero, StatoFarmacia, RilievoEvento,
+  Farmacia, Rilievo, FaseNumero, StatoFarmacia, RilievoEvento, Sopralluogo, EsitoSopralluogo,
   getStatoFarmacia, getColoreStato,
   getLabelStato, getLabelFase, getDescrizioneFase, getFaseCorrente,
 } from '../types'
 import {
   ArrowLeft, Camera, Check, ChevronRight, Lock, MapPin, Phone, Mail,
   Ruler, X, AlertTriangle, CheckCircle2, Info, ImagePlus, Package, Wrench,
-  Pause, Play, FileText, Send, Download, LayoutList, Columns, Navigation,
+  FileText, Send, Download, LayoutList, Columns, Navigation,
   Clock, ChevronDown, ChevronUp, MessageSquare,
 } from 'lucide-react'
 import KanbanBoard from '../components/KanbanBoard'
@@ -22,15 +22,16 @@ import Timeline from '../components/Timeline'
 
 // Colori corporate per stati
 const statoConfig: Record<StatoFarmacia, { dot: string; bg: string; text: string; border: string }> = {
-  da_fare: { dot: '#8da4b8', bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100' },
-  in_corso: { dot: '#5d8a82', bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100' },
-  completata: { dot: '#2b7268', bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100' },
-  in_attesa: { dot: '#4a6fa5', bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100' },
+  assegnato: { dot: '#8da4b8', bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100' },
+  fase_1: { dot: '#4a6fa5', bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100' },
+  fase_2: { dot: '#3d8b8b', bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100' },
+  fase_3: { dot: '#c08c3e', bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-100' },
+  completato: { dot: '#2b7268', bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100' },
 }
 
 export default function MerchandiserPage() {
   const { user } = useAuth()
-  const { farmacie, assegnazioni, rilievi, users } = useData()
+  const { farmacie, assegnazioni, rilievi, users, sopralluoghi } = useData()
   const [selectedFarmacia, setSelectedFarmacia] = useState<Farmacia | null>(null)
   const [showReport, setShowReport] = useState(false)
   const [viewMode, setViewMode] = useState<'list' | 'kanban'>('kanban')
@@ -42,10 +43,10 @@ export default function MerchandiserPage() {
   const mieAssegnazioni = assegnazioni.filter(a => a.merchandiserId === user.id)
   const mieFarmacie = farmacie.filter(f => mieAssegnazioni.some(a => a.farmaciaId === f.id))
 
-  const ordineStato: Record<StatoFarmacia, number> = { da_fare: 0, in_attesa: 1, in_corso: 2, completata: 3 }
+  const ordineStato: Record<StatoFarmacia, number> = { assegnato: 0, fase_1: 1, fase_2: 2, fase_3: 3, completato: 4 }
   const farmacieSorted = [...mieFarmacie].sort((a, b) => {
-    const sa = getStatoFarmacia(rilievi, a.id)
-    const sb = getStatoFarmacia(rilievi, b.id)
+    const sa = getStatoFarmacia(rilievi, a.id, sopralluoghi)
+    const sb = getStatoFarmacia(rilievi, b.id, sopralluoghi)
     return ordineStato[sa] - ordineStato[sb]
   })
 
@@ -107,6 +108,7 @@ export default function MerchandiserPage() {
               rilievi={rilievi}
               assegnazioni={assegnazioni}
               users={users}
+              sopralluoghi={sopralluoghi}
               onFarmaciaClick={f => {
                 setSelectedFarmacia(f)
               }}
@@ -132,9 +134,9 @@ export default function MerchandiserPage() {
           {/* Stats */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
             <div className="lg:col-span-3 space-y-4">
-              <div className="grid grid-cols-3 gap-3">
-                {(['da_fare', 'in_corso', 'completata'] as StatoFarmacia[]).map(stato => {
-                  const count = mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === stato).length
+              <div className="grid grid-cols-5 gap-3">
+                {(['assegnato', 'fase_1', 'fase_2', 'fase_3', 'completato'] as StatoFarmacia[]).map(stato => {
+                  const count = mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id, sopralluoghi) === stato).length
                   const cfg = statoConfig[stato]
                   return (
                     <div key={stato} className="card p-3 text-center">
@@ -146,23 +148,13 @@ export default function MerchandiserPage() {
                 })}
               </div>
 
-              {/* In attesa count */}
-              {mieFarmacie.some(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa') && (
-                <div className="card p-3 flex items-center gap-3">
-                  <span className="w-2.5 h-2.5 rounded-full bg-status-waiting-500" />
-                  <span className="text-sm text-brand-700">
-                    <b>{mieFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_attesa').length}</b> in attesa di materiale
-                  </span>
-                </div>
-              )}
-
               {/* Lista farmacie */}
               <div className="space-y-2">
                 {farmacieSorted.map(f => {
-                  const stato = getStatoFarmacia(rilievi, f.id)
+                  const stato = getStatoFarmacia(rilievi, f.id, sopralluoghi)
                   const fasiComplete = rilievi.filter(r => r.farmaciaId === f.id && r.completata).length
                   const faseCorrente = getFaseCorrente(rilievi, f.id)
-                  const isCompletata = stato === 'completata'
+                  const isCompletata = stato === 'completato'
                   const cfg = statoConfig[stato]
 
                   return (
@@ -178,14 +170,9 @@ export default function MerchandiserPage() {
                             <MapPin size={12} className="shrink-0" />
                             <span className="truncate">{f.indirizzo}, {f.citta}</span>
                           </p>
-                          {!isCompletata && stato !== 'in_attesa' && (
+                          {!isCompletata && (
                             <p className="text-[11px] text-accent-600 font-medium mt-1.5">
                               Prossimo: Fase {faseCorrente} — {getLabelFase(faseCorrente)}
-                            </p>
-                          )}
-                          {stato === 'in_attesa' && (
-                            <p className="text-[11px] text-status-waiting-600 font-medium mt-1.5 flex items-center gap-1">
-                              <Pause size={10} /> In attesa di materiale
                             </p>
                           )}
                         </div>
@@ -248,8 +235,9 @@ export default function MerchandiserPage() {
 
 function FarmaciaDetail({ farmacia, onBack, assignedFarmacie }: { farmacia: Farmacia; onBack: () => void; assignedFarmacie: Farmacia[] }) {
   const { user } = useAuth()
-  const { rilievi, saveRilievo, addEvento, fetchEventiForFarmacia, eventi } = useData()
+  const { rilievi, saveRilievo, addEvento, fetchEventiForFarmacia, eventi, sopralluoghi, addSopralluogo, sendMessaggio } = useData()
   const [activeFase, setActiveFase] = useState<FaseNumero | null>(null)
+  const [showSopralluogoForm, setShowSopralluogoForm] = useState<FaseNumero | null>(null)
   const [farmaciaEventi, setFarmaciaEventi] = useState<RilievoEvento[]>([])
   const [showChat, setShowChat] = useState(false)
 
@@ -272,39 +260,8 @@ function FarmaciaDetail({ farmacia, onBack, assignedFarmacie }: { farmacia: Farm
     return !!getRilievoFase((fase - 1) as FaseNumero)?.completata
   }
 
-  const stato = getStatoFarmacia(rilievi, farmacia.id)
+  const stato = getStatoFarmacia(rilievi, farmacia.id, sopralluoghi)
   const cfg = statoConfig[stato]
-
-  // Toggle in_attesa (Task 10)
-  function toggleInAttesa() {
-    const isCurrentlyInAttesa = stato === 'in_attesa'
-    // Find the latest rilievo or create a marker
-    const existingRilievi = rilievi.filter(r => r.farmaciaId === farmacia.id)
-    if (existingRilievi.length > 0) {
-      // Update the last rilievo
-      const lastRilievo = existingRilievi[existingRilievi.length - 1]
-      saveRilievo({ ...lastRilievo, inAttesaMateriale: !isCurrentlyInAttesa })
-    } else {
-      // Create a placeholder rilievo for phase 1
-      saveRilievo({
-        id: `wait-${Date.now()}`,
-        farmaciaId: farmacia.id,
-        merchandiserId: user!.id,
-        fase: 1,
-        foto: [],
-        completata: false,
-        inAttesaMateriale: true,
-      })
-    }
-    addEvento({
-      id: crypto.randomUUID(),
-      farmaciaId: farmacia.id,
-      merchandiserId: user!.id,
-      fase: getFaseCorrente(rilievi, farmacia.id),
-      tipo: isCurrentlyInAttesa ? 'in_attesa_rimossa' : 'in_attesa_attivata',
-      createdAt: new Date().toISOString(),
-    })
-  }
 
   // Email results (Task 11)
   function buildMailtoLink(): string {
@@ -339,6 +296,25 @@ function FarmaciaDetail({ farmacia, onBack, assignedFarmacie }: { farmacia: Farm
     const encodedBody = encodeURIComponent(body)
     const to = farmacia.email || ''
     return `mailto:${to}?subject=${subject}&body=${encodedBody}`
+  }
+
+  if (showSopralluogoForm) {
+    return (
+      <SopralluogoForm
+        farmacia={farmacia}
+        fase={showSopralluogoForm}
+        userId={user.id}
+        sopralluoghi={sopralluoghi.filter(s => s.farmaciaId === farmacia.id && s.fase === showSopralluogoForm)}
+        onSuccess={() => {
+          setShowSopralluogoForm(null)
+          setActiveFase(showSopralluogoForm)
+        }}
+        onFailed={() => setShowSopralluogoForm(null)}
+        onBack={() => setShowSopralluogoForm(null)}
+        addSopralluogo={addSopralluogo}
+        addEvento={addEvento}
+      />
+    )
   }
 
   if (activeFase) {
@@ -403,24 +379,10 @@ function FarmaciaDetail({ farmacia, onBack, assignedFarmacie }: { farmacia: Farm
         >
           <Navigation size={13} /> Indicazioni
         </a>
-        {/* Toggle in attesa materiale */}
-        {stato !== 'completata' && (
-          <button
-            onClick={toggleInAttesa}
-            className={`text-xs font-medium flex items-center gap-1.5 px-3 py-2 rounded-lg border transition-colors ${
-              stato === 'in_attesa'
-                ? 'bg-status-waiting-50 text-status-waiting-600 border-status-waiting-100'
-                : 'bg-brand-50 text-brand-500 border-brand-100 hover:bg-brand-100'
-            }`}
-          >
-            {stato === 'in_attesa' ? <Play size={12} /> : <Pause size={12} />}
-            {stato === 'in_attesa' ? 'Rimuovi attesa' : 'In attesa materiale'}
-          </button>
-        )}
       </div>
 
-      {/* ── Email results (only when completata) ── */}
-      {stato === 'completata' && (
+      {/* ── Email results (only when completato) ── */}
+      {stato === 'completato' && (
         <div className="card p-4">
           <h3 className="text-[13px] font-semibold text-brand-800 flex items-center gap-2 mb-3">
             <Send size={14} className="text-status-done-500" /> Invia risultati
@@ -563,9 +525,26 @@ function FarmaciaDetail({ farmacia, onBack, assignedFarmacie }: { farmacia: Farm
                           </ol>
                         )}
                       </div>
-                      <button onClick={() => setActiveFase(fase)} className="btn-primary w-full py-3">
-                        <Camera size={16} /> {hasPartialData ? 'Continua' : 'Inizia'} Fase {fase}
+                      <button onClick={() => setShowSopralluogoForm(fase)} className="btn-primary w-full py-3">
+                        <MapPin size={16} /> {hasPartialData ? 'Continua' : 'Inizia'} Fase {fase}
                       </button>
+                      {/* Sopralluoghi history for this fase */}
+                      {(() => {
+                        const faseSopralluoghi = sopralluoghi.filter(s => s.farmaciaId === farmacia.id && s.fase === fase)
+                        if (faseSopralluoghi.length === 0) return null
+                        return (
+                          <div className="mt-2 space-y-1">
+                            <p className="text-[10px] font-semibold text-brand-400 uppercase tracking-wider">Sopralluoghi precedenti</p>
+                            {faseSopralluoghi.map(s => (
+                              <div key={s.id} className={`text-xs flex items-center gap-2 px-2 py-1.5 rounded border ${s.esito === 'riuscito' ? 'bg-status-done-50 border-status-done-100 text-status-done-700' : 'bg-red-50 border-red-100 text-red-600'}`}>
+                                <span>{s.data} {s.ora}</span>
+                                <span>{s.durata} min</span>
+                                <span className="font-medium">{s.esito === 'riuscito' ? 'Riuscito' : 'Non riuscito'}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )
+                      })()}
                     </div>
                   )}
 
@@ -723,6 +702,200 @@ function CheckItem({ checked, label }: { checked?: boolean; label: string }) {
         : <AlertTriangle size={14} className="text-status-waiting-500 shrink-0" />
       }
       <span className={checked ? 'text-brand-700' : 'text-status-waiting-600'}>{label}</span>
+    </div>
+  )
+}
+
+// ============================================================
+// SOPRALLUOGO FORM
+// ============================================================
+
+function SopralluogoForm({
+  farmacia, fase, userId, sopralluoghi, onSuccess, onFailed, onBack, addSopralluogo, addEvento,
+}: {
+  farmacia: Farmacia; fase: FaseNumero; userId: string
+  sopralluoghi: Sopralluogo[]
+  onSuccess: () => void; onFailed: () => void; onBack: () => void
+  addSopralluogo: (s: Sopralluogo) => Promise<void>
+  addEvento: (e: RilievoEvento) => void
+}) {
+  const now = new Date()
+  const [data, setData] = useState(now.toISOString().split('T')[0])
+  const [ora, setOra] = useState(now.toTimeString().slice(0, 5))
+  const [durata, setDurata] = useState(30)
+  const [esito, setEsito] = useState<EsitoSopralluogo>('riuscito')
+  const [nota, setNota] = useState('')
+  const [saving, setSaving] = useState(false)
+  const { showToast } = useToast()
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setSaving(true)
+
+    const sopralluogo: Sopralluogo = {
+      id: crypto.randomUUID(),
+      farmaciaId: farmacia.id,
+      merchandiserId: userId,
+      fase,
+      data,
+      ora,
+      durata,
+      esito,
+      nota: nota.trim() || undefined,
+      createdAt: new Date().toISOString(),
+    }
+
+    try {
+      await addSopralluogo(sopralluogo)
+      addEvento({
+        id: crypto.randomUUID(),
+        farmaciaId: farmacia.id,
+        merchandiserId: userId,
+        fase,
+        tipo: 'sopralluogo_registrato',
+        dettaglio: esito === 'riuscito' ? 'Riuscito' : 'Non riuscito',
+        createdAt: new Date().toISOString(),
+      })
+
+      if (esito === 'riuscito') {
+        showToast('Sopralluogo registrato. Procedi con la fase.', 'success')
+        onSuccess()
+      } else {
+        showToast('Sopralluogo non riuscito registrato.', 'info')
+        onFailed()
+      }
+    } catch (err) {
+      console.error('Errore salvataggio sopralluogo:', err)
+      showToast('Errore durante il salvataggio. Riprova.', 'error')
+      setSaving(false)
+    }
+  }
+
+  return (
+    <div className="space-y-4 max-w-2xl mx-auto">
+      <button onClick={onBack} className="btn-ghost -ml-3 text-brand-500">
+        <ArrowLeft size={15} /> Torna alla scheda
+      </button>
+
+      <div className="card p-4 bg-status-waiting-50 border border-status-waiting-100">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded flex items-center justify-center bg-status-waiting-500 text-white">
+            <MapPin size={20} />
+          </div>
+          <div>
+            <h2 className="text-base font-heading font-bold text-brand-900">Sopralluogo — Fase {fase}</h2>
+            <p className="text-xs text-brand-500">{farmacia.nome} — {farmacia.citta}</p>
+          </div>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="card p-5 space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="label">Data *</label>
+              <input type="date" value={data} onChange={e => setData(e.target.value)} required className="input" />
+            </div>
+            <div>
+              <label className="label">Ora *</label>
+              <input type="time" value={ora} onChange={e => setOra(e.target.value)} required className="input" />
+            </div>
+          </div>
+
+          <div>
+            <label className="label">Durata (minuti) *</label>
+            <input type="number" value={durata} onChange={e => setDurata(parseInt(e.target.value) || 0)} required min={1} className="input" />
+          </div>
+
+          <div>
+            <label className="label">Esito *</label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setEsito('riuscito')}
+                className={`p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
+                  esito === 'riuscito'
+                    ? 'border-status-done-500 bg-status-done-50 text-status-done-700'
+                    : 'border-brand-200 text-brand-500 hover:border-brand-300'
+                }`}
+              >
+                <CheckCircle2 size={18} className="mx-auto mb-1" />
+                Riuscito
+              </button>
+              <button
+                type="button"
+                onClick={() => setEsito('non_riuscito')}
+                className={`p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
+                  esito === 'non_riuscito'
+                    ? 'border-red-500 bg-red-50 text-red-700'
+                    : 'border-brand-200 text-brand-500 hover:border-brand-300'
+                }`}
+              >
+                <X size={18} className="mx-auto mb-1" />
+                Non riuscito
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label className="label">Note (opzionale)</label>
+            <textarea
+              value={nota}
+              onChange={e => setNota(e.target.value)}
+              rows={3}
+              className="input"
+              placeholder="Eventuali note sul sopralluogo..."
+            />
+            {nota.trim() && (
+              <p className="text-[10px] text-accent-500 mt-1">La nota verra inviata automaticamente in chat.</p>
+            )}
+          </div>
+        </div>
+
+        <button type="submit" disabled={saving} className={`w-full py-3 rounded-lg font-medium text-white transition-colors ${
+          esito === 'riuscito' ? 'bg-status-done-500 hover:bg-status-done-600' : 'bg-red-500 hover:bg-red-600'
+        }`}>
+          {saving ? (
+            <span className="flex items-center justify-center gap-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Salvataggio...
+            </span>
+          ) : (
+            <span className="flex items-center justify-center gap-2">
+              <Check size={16} />
+              {esito === 'riuscito' ? 'Registra e procedi alla fase' : 'Registra tentativo non riuscito'}
+            </span>
+          )}
+        </button>
+      </form>
+
+      {/* Previous attempts */}
+      {sopralluoghi.length > 0 && (
+        <div className="card p-4">
+          <h3 className="text-[13px] font-semibold text-brand-800 mb-3">Tentativi precedenti ({sopralluoghi.length})</h3>
+          <div className="space-y-2">
+            {sopralluoghi.map(s => (
+              <div key={s.id} className={`flex items-center gap-3 p-3 rounded-lg border ${
+                s.esito === 'riuscito' ? 'bg-status-done-50 border-status-done-100' : 'bg-red-50 border-red-100'
+              }`}>
+                {s.esito === 'riuscito'
+                  ? <CheckCircle2 size={14} className="text-status-done-500 shrink-0" />
+                  : <X size={14} className="text-red-500 shrink-0" />
+                }
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-brand-800">{s.data} alle {s.ora} — {s.durata} min</p>
+                  {s.nota && <p className="text-[11px] text-brand-500 mt-0.5 truncate">{s.nota}</p>}
+                </div>
+                <span className={`text-[10px] font-medium px-2 py-0.5 rounded ${
+                  s.esito === 'riuscito' ? 'bg-status-done-100 text-status-done-700' : 'bg-red-100 text-red-700'
+                }`}>
+                  {s.esito === 'riuscito' ? 'Riuscito' : 'Non riuscito'}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione, RegistrazionePending, RegistrazioneStato, Messaggio, MessaggioLetto, RilievoEvento } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione, RegistrazionePending, RegistrazioneStato, Messaggio, MessaggioLetto, RilievoEvento, Sopralluogo } from '../types'
 
 // ── Mapping helpers (snake_case DB ↔ camelCase TS) ──
 
@@ -73,7 +73,6 @@ function rilievoFromDb(row: any): Rilievo {
     completata: row.completata ?? false,
     dataCompletamento: row.data_completamento || undefined,
     oraCompletamento: row.ora_completamento || undefined,
-    inAttesaMateriale: row.in_attesa_materiale ?? undefined,
     valoriDinamici: row.valori_dinamici || undefined,
   }
 }
@@ -102,7 +101,6 @@ function rilievoToDb(r: Rilievo): any {
     completata: r.completata,
     data_completamento: r.dataCompletamento || null,
     ora_completamento: r.oraCompletamento || null,
-    in_attesa_materiale: r.inAttesaMateriale ?? false,
     valori_dinamici: r.valoriDinamici || {},
   }
 }
@@ -490,5 +488,54 @@ export async function fetchEventiByFarmacia(farmaciaId: string): Promise<Rilievo
 
 export async function insertEvento(e: RilievoEvento): Promise<void> {
   const { error } = await supabase.from('rilievi_eventi').insert(eventoToDb(e))
+  if (error) throw error
+}
+
+// ── Sopralluoghi CRUD ──
+
+function sopralluogoFromDb(row: any): Sopralluogo {
+  return {
+    id: row.id,
+    farmaciaId: row.farmacia_id,
+    merchandiserId: row.merchandiser_id,
+    fase: row.fase as FaseNumero,
+    data: row.data,
+    ora: row.ora,
+    durata: row.durata,
+    esito: row.esito,
+    nota: row.nota || undefined,
+    createdAt: row.created_at,
+  }
+}
+
+function sopralluogoToDb(s: Sopralluogo): any {
+  return {
+    id: s.id,
+    farmacia_id: s.farmaciaId,
+    merchandiser_id: s.merchandiserId,
+    fase: s.fase,
+    data: s.data,
+    ora: s.ora,
+    durata: s.durata,
+    esito: s.esito,
+    nota: s.nota || null,
+    created_at: s.createdAt,
+  }
+}
+
+export async function fetchSopralluoghi(): Promise<Sopralluogo[]> {
+  const { data, error } = await supabase.from('sopralluoghi').select('*').order('created_at', { ascending: true })
+  if (error) throw error
+  return (data || []).map(sopralluogoFromDb)
+}
+
+export async function fetchSopralluoghiByFarmacia(farmaciaId: string): Promise<Sopralluogo[]> {
+  const { data, error } = await supabase.from('sopralluoghi').select('*').eq('farmacia_id', farmaciaId).order('created_at', { ascending: true })
+  if (error) throw error
+  return (data || []).map(sopralluogoFromDb)
+}
+
+export async function insertSopralluogo(s: Sopralluogo): Promise<void> {
+  const { error } = await supabase.from('sopralluoghi').insert(sopralluogoToDb(s))
   if (error) throw error
 }

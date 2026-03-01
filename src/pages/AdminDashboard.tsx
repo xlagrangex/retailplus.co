@@ -6,7 +6,7 @@ import { useToast } from '../components/Toast'
 import StatsCards from '../components/StatsCards'
 import FarmaciaMap from '../components/FarmaciaMap'
 import OnboardingModal, { useOnboardingTrigger } from '../components/OnboardingModal'
-import { getStatoFarmacia, getLabelStato, getColoreStato, getLabelFase, getDescrizioneFase, getFaseCorrente, User, Farmacia, Rilievo, Assegnazione, StatoFarmacia, CampoConfigurazione, FaseNumero } from '../types'
+import { getStatoFarmacia, getLabelStato, getColoreStato, getLabelFase, getDescrizioneFase, getFaseCorrente, User, Farmacia, Rilievo, Assegnazione, StatoFarmacia, CampoConfigurazione, FaseNumero, Sopralluogo } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPlanogramma } from '../lib/supabase'
 import {
@@ -22,7 +22,7 @@ import MessageThread from '../components/MessageThread'
 
 export default function AdminDashboard() {
   const { user } = useAuth()
-  const { farmacie, rilievi, users, assegnazioni } = useData()
+  const { farmacie, rilievi, users, assegnazioni, sopralluoghi } = useData()
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
   const [showOnboarding, setShowOnboarding] = useOnboardingTrigger(user?.id)
 
@@ -35,7 +35,7 @@ export default function AdminDashboard() {
         <h1 className="page-title">Pannello di controllo</h1>
         <p className="page-subtitle">Gestione completa farmacie, merchandiser e merchandising</p>
       </div>
-      <StatsCards farmacie={farmacie} rilievi={rilievi} />
+      <StatsCards farmacie={farmacie} rilievi={rilievi} sopralluoghi={sopralluoghi} />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         <div className="card p-4">
           <div className="flex items-center gap-2 mb-1">
@@ -60,14 +60,14 @@ export default function AdminDashboard() {
       </div>
       <div className="card p-5">
         <h2 className="text-sm font-heading font-bold text-brand-700 mb-3">Distribuzione nazionale</h2>
-        <FarmaciaMap farmacie={farmacie} rilievi={rilievi} height="350px" />
+        <FarmaciaMap farmacie={farmacie} rilievi={rilievi} sopralluoghi={sopralluoghi} height="350px" />
       </div>
     </div>
   )
 }
 
 export function AdminFarmaciePage() {
-  const { farmacie, rilievi, assegnazioni, users, addFarmacia, removeFarmacia, importFarmacie, assignFarmacia, unassignFarmacia, updateFarmacia } = useData()
+  const { farmacie, rilievi, assegnazioni, users, sopralluoghi, addFarmacia, removeFarmacia, importFarmacie, assignFarmacia, unassignFarmacia, updateFarmacia } = useData()
   const [search, setSearch] = useState('')
   const [showAdd, setShowAdd] = useState(false)
   const [assigning, setAssigning] = useState<string | null>(null)
@@ -218,14 +218,15 @@ export function AdminFarmaciePage() {
             </thead>
             <tbody className="divide-y divide-brand-50">
               {filtered.map(f => {
-                const stato = getStatoFarmacia(rilievi, f.id)
+                const stato = getStatoFarmacia(rilievi, f.id, sopralluoghi)
                 const assegnazione = assegnazioni.find(a => a.farmaciaId === f.id)
                 const merch = assegnazione ? users.find(u => u.id === assegnazione.merchandiserId) : null
                 const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
-                  da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
-                  in_corso: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#5d8a82' },
-                  completata: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
-                  in_attesa: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
+                  assegnato: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
+                  fase_1: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
+                  fase_2: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#3d8b8b' },
+                  fase_3: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-100', dot: '#c08c3e' },
+                  completato: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
                 }
                 const sc = statoColors[stato]
 
@@ -310,6 +311,7 @@ export function AdminFarmaciePage() {
           assegnazioni={assegnazioni}
           users={users}
           merchandisers={merchandisers}
+          sopralluoghi={sopralluoghi}
           onClose={() => setSelectedFarmaciaId(null)}
           assignFarmacia={assignFarmacia}
           unassignFarmacia={unassignFarmacia}
@@ -324,7 +326,7 @@ export function AdminFarmaciePage() {
 // ============================================================
 
 function FarmaciaDetailPanel({
-  farmacia, rilievi, assegnazioni, users, merchandisers, onClose,
+  farmacia, rilievi, assegnazioni, users, merchandisers, sopralluoghi, onClose,
   assignFarmacia, unassignFarmacia,
 }: {
   farmacia: Farmacia
@@ -332,22 +334,24 @@ function FarmaciaDetailPanel({
   assegnazioni: Assegnazione[]
   users: User[]
   merchandisers: User[]
+  sopralluoghi: Sopralluogo[]
   onClose: () => void
   assignFarmacia: (farmaciaId: string, merchandiserId: string) => void
   unassignFarmacia: (farmaciaId: string) => void
 }) {
   const { showToast } = useToast()
   const [showAssignDropdown, setShowAssignDropdown] = useState(false)
-  const stato = getStatoFarmacia(rilievi, farmacia.id)
+  const stato = getStatoFarmacia(rilievi, farmacia.id, sopralluoghi)
   const assegnazione = assegnazioni.find(a => a.farmaciaId === farmacia.id)
   const merch = assegnazione ? users.find(u => u.id === assegnazione.merchandiserId) : null
   const rilieviFarmacia = rilievi.filter(r => r.farmaciaId === farmacia.id)
 
   const statoColorsLocal: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
-    da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
-    in_corso: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#5d8a82' },
-    completata: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
-    in_attesa: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
+    assegnato: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
+    fase_1: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
+    fase_2: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#3d8b8b' },
+    fase_3: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-100', dot: '#c08c3e' },
+    completato: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
   }
   const sc = statoColorsLocal[stato]
 
@@ -583,15 +587,16 @@ function FarmaciaDetailPanel({
 // ============================================================
 
 const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
-  da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
-  in_corso: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#5d8a82' },
-  completata: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
-  in_attesa: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
+  assegnato: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
+  fase_1: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
+  fase_2: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#3d8b8b' },
+  fase_3: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-100', dot: '#c08c3e' },
+  completato: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
 }
 
 export function AdminMerchandiserPage() {
   const navigate = useNavigate()
-  const { users, assegnazioni, farmacie, rilievi, addUser, removeUser, assignFarmacia, unassignFarmacia, registrazioniPending, approveRegistrazione, rejectRegistrazione } = useData()
+  const { users, assegnazioni, farmacie, rilievi, sopralluoghi, addUser, removeUser, assignFarmacia, unassignFarmacia, registrazioniPending, approveRegistrazione, rejectRegistrazione } = useData()
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
   const [showAdd, setShowAdd] = useState(false)
   const [expandedReg, setExpandedReg] = useState<string | null>(null)
@@ -837,7 +842,7 @@ export function AdminMerchandiserPage() {
                     {filteredMerchandisers.map(m => {
                       const assigned = assegnazioni.filter(a => a.merchandiserId === m.id)
                       const assignedFarmacie = farmacie.filter(f => assigned.some(a => a.farmaciaId === f.id))
-                      const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
+                      const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id, sopralluoghi) === 'completato').length
                       const pct = assignedFarmacie.length > 0 ? Math.round((completate / assignedFarmacie.length) * 100) : 0
 
                       return (
@@ -906,9 +911,12 @@ export function AdminMerchandiserPage() {
             {filteredMerchandisers.map(m => {
               const assigned = assegnazioni.filter(a => a.merchandiserId === m.id)
               const assignedFarmacie = farmacie.filter(f => assigned.some(a => a.farmaciaId === f.id))
-              const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
-              const inCorso = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_corso').length
-              const daFare = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'da_fare').length
+              const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id, sopralluoghi) === 'completato').length
+              const inFase = assignedFarmacie.filter(f => {
+                const s = getStatoFarmacia(rilievi, f.id, sopralluoghi)
+                return s === 'fase_1' || s === 'fase_2' || s === 'fase_3'
+              }).length
+              const assegnati = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id, sopralluoghi) === 'assegnato').length
               const pct = assignedFarmacie.length > 0 ? Math.round((completate / assignedFarmacie.length) * 100) : 0
 
               return (
@@ -944,12 +952,12 @@ export function AdminMerchandiserPage() {
                       <p className="text-[10px] text-brand-400">Completate</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-lg font-heading font-bold text-status-progress-500">{inCorso}</p>
+                      <p className="text-lg font-heading font-bold text-status-progress-500">{inFase}</p>
                       <p className="text-[10px] text-brand-400">In corso</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-lg font-heading font-bold text-status-todo-600">{daFare}</p>
-                      <p className="text-[10px] text-brand-400">Da fare</p>
+                      <p className="text-lg font-heading font-bold text-status-todo-600">{assegnati}</p>
+                      <p className="text-[10px] text-brand-400">Assegnato</p>
                     </div>
                   </div>
 
@@ -998,7 +1006,7 @@ function _AssignmentTableView({
 
   const filtered = farmacie.filter(f => {
     const matchSearch = (f.nome + f.citta + f.indirizzo + f.provincia).toLowerCase().includes(search.toLowerCase())
-    const stato = getStatoFarmacia(rilievi, f.id)
+    const stato = getStatoFarmacia(rilievi, f.id, sopralluoghi)
     const matchStato = filterStato === 'tutti' || stato === filterStato
     const assegnazione = assegnazioni.find((a: any) => a.farmaciaId === f.id)
     const matchMerch = filterMerch === 'tutti' ||
@@ -1029,10 +1037,11 @@ function _AssignmentTableView({
             className="input py-2 text-xs w-auto pr-8"
           >
             <option value="tutti">Tutti gli stati</option>
-            <option value="da_fare">Da fare</option>
-            <option value="in_corso">In corso</option>
-            <option value="completata">Completata</option>
-            <option value="in_attesa">In attesa</option>
+            <option value="assegnato">Assegnato</option>
+            <option value="fase_1">Fase 1</option>
+            <option value="fase_2">Fase 2</option>
+            <option value="fase_3">Fase 3</option>
+            <option value="completato">Completato</option>
           </select>
         </div>
         <select
@@ -1064,7 +1073,7 @@ function _AssignmentTableView({
             </thead>
             <tbody className="divide-y divide-brand-50">
               {filtered.map(f => {
-                const stato = getStatoFarmacia(rilievi, f.id)
+                const stato = getStatoFarmacia(rilievi, f.id, sopralluoghi)
                 const ultimoRilievo = rilievi.filter((r: any) => r.farmaciaId === f.id && r.completata).sort((a: any, b: any) => (b.dataCompletamento || '').localeCompare(a.dataCompletamento || ''))[0]
                 const assegnazione = assegnazioni.find((a: any) => a.farmaciaId === f.id)
                 const merch = assegnazione ? users.find(u => u.id === assegnazione.merchandiserId) : null
@@ -1227,7 +1236,7 @@ function _AssignmentKanbanView({
   return (
     <div className="flex gap-3 overflow-x-auto pb-4" style={{ minHeight: '400px' }}>
       {columns.map(col => {
-        const completate = col.farmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
+        const completate = col.farmacie.filter(f => getStatoFarmacia(rilievi, f.id, sopralluoghi) === 'completato').length
         const pct = col.farmacie.length > 0 ? Math.round((completate / col.farmacie.length) * 100) : 0
 
         return (
@@ -1269,7 +1278,7 @@ function _AssignmentKanbanView({
             {/* Cards */}
             <div className="space-y-2">
               {col.farmacie.map(f => {
-                const stato = getStatoFarmacia(rilievi, f.id)
+                const stato = getStatoFarmacia(rilievi, f.id, sopralluoghi)
                 const sc = statoColors[stato]
                 const lastRil = rilievi.filter((r: any) => r.farmaciaId === f.id && r.completata).sort((a: any, b: any) => (b.dataCompletamento || '').localeCompare(a.dataCompletamento || ''))[0]
 
@@ -1329,7 +1338,7 @@ function _AssignmentKanbanView({
 }
 
 export function AdminKanbanPage() {
-  const { farmacie, rilievi, assegnazioni, users } = useData()
+  const { farmacie, rilievi, assegnazioni, users, sopralluoghi } = useData()
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
   const [selectedFarmaciaId, setSelectedFarmaciaId] = useState<string | null>(null)
   const selectedFarmacia = selectedFarmaciaId ? farmacie.find(f => f.id === selectedFarmaciaId) || null : null
@@ -1345,6 +1354,7 @@ export function AdminKanbanPage() {
         rilievi={rilievi}
         assegnazioni={assegnazioni}
         users={users}
+        sopralluoghi={sopralluoghi}
         showMerchandiserName
         showFilters
         onFarmaciaClick={f => setSelectedFarmaciaId(f.id)}
@@ -1356,6 +1366,7 @@ export function AdminKanbanPage() {
           assegnazioni={assegnazioni}
           users={users}
           merchandisers={merchandisers}
+          sopralluoghi={sopralluoghi}
           onClose={() => setSelectedFarmaciaId(null)}
         />
       )}
@@ -1364,7 +1375,7 @@ export function AdminKanbanPage() {
 }
 
 export function AdminMapPage() {
-  const { farmacie, rilievi } = useData()
+  const { farmacie, rilievi, sopralluoghi } = useData()
   return (
     <div className="space-y-4">
       <div>
@@ -1372,7 +1383,7 @@ export function AdminMapPage() {
         <p className="page-subtitle">Distribuzione geografica dei punti vendita</p>
       </div>
       <div className="card p-4">
-        <FarmaciaMap farmacie={farmacie} rilievi={rilievi} height="calc(100vh - 220px)" />
+        <FarmaciaMap farmacie={farmacie} rilievi={rilievi} sopralluoghi={sopralluoghi} height="calc(100vh - 220px)" />
       </div>
     </div>
   )

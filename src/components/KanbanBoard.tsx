@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Farmacia, Rilievo, Assegnazione, User, StatoFarmacia, FaseNumero, getStatoFarmacia, getLabelStato } from '../types'
+import { Farmacia, Rilievo, Assegnazione, User, StatoFarmacia, FaseNumero, Sopralluogo, getStatoFarmacia, getLabelStato } from '../types'
 import { MapPin, Search, Package, Users } from 'lucide-react'
 
 interface KanbanBoardProps {
@@ -7,16 +7,18 @@ interface KanbanBoardProps {
   rilievi: Rilievo[]
   assegnazioni: Assegnazione[]
   users: User[]
+  sopralluoghi?: Sopralluogo[]
   showMerchandiserName?: boolean
   showFilters?: boolean
   onFarmaciaClick?: (farmacia: Farmacia) => void
 }
 
 const columns: { stato: StatoFarmacia; label: string; dot: string; bg: string; headerBg: string; border: string }[] = [
-  { stato: 'da_fare', label: 'Da fare', dot: '#8da4b8', bg: 'bg-status-todo-50', headerBg: 'bg-status-todo-50', border: 'border-status-todo-100' },
-  { stato: 'in_attesa', label: 'In attesa', dot: '#4a6fa5', bg: 'bg-status-waiting-50', headerBg: 'bg-status-waiting-50', border: 'border-status-waiting-100' },
-  { stato: 'in_corso', label: 'In corso', dot: '#5d8a82', bg: 'bg-status-progress-50', headerBg: 'bg-status-progress-50', border: 'border-status-progress-100' },
-  { stato: 'completata', label: 'Completata', dot: '#2b7268', bg: 'bg-status-done-50', headerBg: 'bg-status-done-50', border: 'border-status-done-100' },
+  { stato: 'assegnato', label: 'Assegnato', dot: '#8da4b8', bg: 'bg-status-todo-50', headerBg: 'bg-status-todo-50', border: 'border-status-todo-100' },
+  { stato: 'fase_1', label: 'Fase 1', dot: '#4a6fa5', bg: 'bg-status-waiting-50', headerBg: 'bg-status-waiting-50', border: 'border-status-waiting-100' },
+  { stato: 'fase_2', label: 'Fase 2', dot: '#3d8b8b', bg: 'bg-status-progress-50', headerBg: 'bg-status-progress-50', border: 'border-status-progress-100' },
+  { stato: 'fase_3', label: 'Fase 3', dot: '#c08c3e', bg: 'bg-amber-50', headerBg: 'bg-amber-50', border: 'border-amber-100' },
+  { stato: 'completato', label: 'Completato', dot: '#2b7268', bg: 'bg-status-done-50', headerBg: 'bg-status-done-50', border: 'border-status-done-100' },
 ]
 
 export default function KanbanBoard({
@@ -24,6 +26,7 @@ export default function KanbanBoard({
   rilievi,
   assegnazioni,
   users,
+  sopralluoghi = [],
   showMerchandiserName = false,
   showFilters = false,
   onFarmaciaClick,
@@ -48,17 +51,17 @@ export default function KanbanBoard({
   }, [farmacie, search, filterProvincia, filterMerchandiser, assegnazioni])
 
   const grouped = useMemo(() => {
-    const map: Record<StatoFarmacia, Farmacia[]> = { da_fare: [], in_attesa: [], in_corso: [], completata: [] }
+    const map: Record<StatoFarmacia, Farmacia[]> = { assegnato: [], fase_1: [], fase_2: [], fase_3: [], completato: [] }
     filtered.forEach(f => {
-      const stato = getStatoFarmacia(rilievi, f.id)
+      const stato = getStatoFarmacia(rilievi, f.id, sopralluoghi)
       map[stato].push(f)
     })
     return map
-  }, [filtered, rilievi])
+  }, [filtered, rilievi, sopralluoghi])
 
   // Stats
   const total = filtered.length
-  const completate = grouped.completata.length
+  const completate = grouped.completato.length
   const percentuale = total > 0 ? Math.round((completate / total) * 100) : 0
 
   return (
@@ -125,7 +128,7 @@ export default function KanbanBoard({
       </div>
 
       {/* Kanban columns */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-3">
         {columns.map(col => (
           <div key={col.stato} className={`rounded-lg border ${col.border} ${col.bg} min-h-[200px] flex flex-col`}>
             {/* Column header */}

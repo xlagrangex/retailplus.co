@@ -1,20 +1,22 @@
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from 'react-leaflet'
-import { Farmacia, Rilievo, getStatoFarmacia, getLabelStato } from '../types'
+import { Farmacia, Rilievo, Sopralluogo, getStatoFarmacia, getLabelStato } from '../types'
 import { useEffect } from 'react'
 
 interface Props {
   farmacie: Farmacia[]
   rilievi: Rilievo[]
+  sopralluoghi?: Sopralluogo[]
   onFarmaciaClick?: (f: Farmacia) => void
   height?: string
 }
 
 function getMapColor(stato: string): string {
   switch (stato) {
-    case 'da_fare': return '#8da4b8'
-    case 'in_corso': return '#5d8a82'
-    case 'completata': return '#2b7268'
-    case 'in_attesa': return '#4a6fa5'
+    case 'assegnato': return '#8da4b8'
+    case 'fase_1': return '#4a6fa5'
+    case 'fase_2': return '#3d8b8b'
+    case 'fase_3': return '#c08c3e'
+    case 'completato': return '#2b7268'
     default: return '#627d98'
   }
 }
@@ -30,7 +32,7 @@ function FitBounds({ farmacie }: { farmacie: Farmacia[] }) {
   return null
 }
 
-export default function FarmaciaMap({ farmacie, rilievi, onFarmaciaClick, height = '500px' }: Props) {
+export default function FarmaciaMap({ farmacie, rilievi, sopralluoghi = [], onFarmaciaClick, height = '500px' }: Props) {
   const center: [number, number] = [42.0, 12.5]
 
   return (
@@ -46,7 +48,7 @@ export default function FarmaciaMap({ farmacie, rilievi, onFarmaciaClick, height
       />
       <FitBounds farmacie={farmacie} />
       {farmacie.map(f => {
-        const stato = getStatoFarmacia(rilievi, f.id)
+        const stato = getStatoFarmacia(rilievi, f.id, sopralluoghi)
         const colore = getMapColor(stato)
         const fasiComplete = rilievi.filter(r => r.farmaciaId === f.id && r.completata).length
 

@@ -89,7 +89,6 @@ export interface Rilievo {
   completata: boolean
   dataCompletamento?: string
   oraCompletamento?: string
-  inAttesaMateriale?: boolean
   valoriDinamici?: Record<string, string | number | boolean>
 }
 
@@ -126,16 +125,34 @@ export interface CampoConfigurazione {
   attivo: boolean
 }
 
-export type StatoFarmacia = 'da_fare' | 'in_corso' | 'completata' | 'in_attesa'
+export type EsitoSopralluogo = 'riuscito' | 'non_riuscito'
 
-export function getStatoFarmacia(rilievi: Rilievo[], farmaciaId: string): StatoFarmacia {
+export interface Sopralluogo {
+  id: string
+  farmaciaId: string
+  merchandiserId: string
+  fase: FaseNumero
+  data: string        // YYYY-MM-DD
+  ora: string         // HH:MM
+  durata: number      // minuti
+  esito: EsitoSopralluogo
+  nota?: string
+  createdAt: string
+}
+
+export type StatoFarmacia = 'assegnato' | 'fase_1' | 'fase_2' | 'fase_3' | 'completato'
+
+export function getStatoFarmacia(rilievi: Rilievo[], farmaciaId: string, sopralluoghi?: Sopralluogo[]): StatoFarmacia {
   const rilieviFarmacia = rilievi.filter(r => r.farmaciaId === farmaciaId)
-  // Check if any rilievo has inAttesaMateriale flag
-  if (rilieviFarmacia.some(r => r.inAttesaMateriale)) return 'in_attesa'
   const fasiComplete = rilieviFarmacia.filter(r => r.completata).length
-  if (fasiComplete === 0) return 'da_fare'
-  if (fasiComplete >= 3) return 'completata'
-  return 'in_corso'
+  if (fasiComplete >= 3) return 'completato'
+  if (fasiComplete >= 2) return 'fase_3'
+  if (fasiComplete >= 1) return 'fase_2'
+  // Check if there are partial rilievi or sopralluoghi
+  const hasParziali = rilieviFarmacia.length > 0
+  const hasSopralluoghi = sopralluoghi?.some(s => s.farmaciaId === farmaciaId)
+  if (hasParziali || hasSopralluoghi) return 'fase_1'
+  return 'assegnato'
 }
 
 export function getFaseCorrente(rilievi: Rilievo[], farmaciaId: string): FaseNumero {
@@ -147,19 +164,21 @@ export function getFaseCorrente(rilievi: Rilievo[], farmaciaId: string): FaseNum
 
 export function getColoreStato(stato: StatoFarmacia): string {
   switch (stato) {
-    case 'da_fare': return '#8da4b8'
-    case 'in_corso': return '#5d8a82'
-    case 'completata': return '#2b7268'
-    case 'in_attesa': return '#4a6fa5'
+    case 'assegnato': return '#8da4b8'
+    case 'fase_1': return '#4a6fa5'
+    case 'fase_2': return '#3d8b8b'
+    case 'fase_3': return '#c08c3e'
+    case 'completato': return '#2b7268'
   }
 }
 
 export function getLabelStato(stato: StatoFarmacia): string {
   switch (stato) {
-    case 'da_fare': return 'Da fare'
-    case 'in_corso': return 'In corso'
-    case 'completata': return 'Completata'
-    case 'in_attesa': return 'In attesa materiale'
+    case 'assegnato': return 'Assegnato'
+    case 'fase_1': return 'Fase 1'
+    case 'fase_2': return 'Fase 2'
+    case 'fase_3': return 'Fase 3'
+    case 'completato': return 'Completato'
   }
 }
 
@@ -184,7 +203,7 @@ export function getDescrizioneFase(fase: FaseNumero): string {
 export type EventoTipo =
   | 'fase_iniziata' | 'substep_completato' | 'substep_annullato'
   | 'problema_segnalato' | 'problema_rimosso' | 'foto_caricata'
-  | 'fase_completata' | 'in_attesa_attivata' | 'in_attesa_rimossa'
+  | 'fase_completata' | 'sopralluogo_registrato'
   | 'misure_salvate'
 
 export interface RilievoEvento {
@@ -214,8 +233,7 @@ export function getLabelEvento(tipo: EventoTipo, dettaglio?: string): string {
     case 'problema_rimosso': return 'Problema rimosso'
     case 'foto_caricata': return 'Foto caricata'
     case 'fase_completata': return 'Fase completata'
-    case 'in_attesa_attivata': return 'In attesa materiale attivata'
-    case 'in_attesa_rimossa': return 'In attesa materiale rimossa'
+    case 'sopralluogo_registrato': return 'Sopralluogo registrato' + (dettaglio ? ` — ${dettaglio}` : '')
     case 'misure_salvate': return 'Misure salvate'
   }
 }

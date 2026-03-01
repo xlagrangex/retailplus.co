@@ -1,6 +1,6 @@
 import { RilievoEvento, Rilievo, EventoTipo, getLabelEvento } from '../types'
 import {
-  Play, CheckCircle2, Camera, AlertTriangle, Ruler, Pause, XCircle, Check,
+  Play, CheckCircle2, Camera, AlertTriangle, Ruler, XCircle, Check, MapPin,
 } from 'lucide-react'
 
 // ── Icon + color mapping per tipo evento ──
@@ -23,10 +23,8 @@ function getEventoStyle(tipo: EventoTipo): { icon: typeof Play; color: string; b
       return { icon: AlertTriangle, color: 'text-brand-400', bg: 'bg-brand-50' }
     case 'misure_salvate':
       return { icon: Ruler, color: 'text-accent-600', bg: 'bg-accent-50' }
-    case 'in_attesa_attivata':
-      return { icon: Pause, color: 'text-status-waiting-600', bg: 'bg-status-waiting-50' }
-    case 'in_attesa_rimossa':
-      return { icon: Play, color: 'text-status-done-500', bg: 'bg-status-done-50' }
+    case 'sopralluogo_registrato':
+      return { icon: MapPin, color: 'text-status-waiting-600', bg: 'bg-status-waiting-50' }
   }
 }
 

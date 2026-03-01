@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { Search, MapPin, Filter } from 'lucide-react'
 
 export default function BrandDashboard() {
-  const { farmacie, rilievi } = useData()
+  const { farmacie, rilievi, sopralluoghi } = useData()
 
   return (
     <div className="space-y-6">
@@ -14,13 +14,13 @@ export default function BrandDashboard() {
         <h1 className="page-title">Dashboard</h1>
         <p className="page-subtitle">Panoramica avanzamento merchandising</p>
       </div>
-      <StatsCards farmacie={farmacie} rilievi={rilievi} />
+      <StatsCards farmacie={farmacie} rilievi={rilievi} sopralluoghi={sopralluoghi} />
       <div className="card p-5">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-heading font-bold text-brand-700">Mappa nazionale</h2>
           <Legend />
         </div>
-        <FarmaciaMap farmacie={farmacie} rilievi={rilievi} height="450px" />
+        <FarmaciaMap farmacie={farmacie} rilievi={rilievi} sopralluoghi={sopralluoghi} height="450px" />
       </div>
     </div>
   )
@@ -29,10 +29,11 @@ export default function BrandDashboard() {
 function Legend() {
   return (
     <div className="flex items-center gap-4 flex-wrap">
-      <LegendItem color="#8da4b8" label="Da fare" />
-      <LegendItem color="#5d8a82" label="In corso" />
-      <LegendItem color="#2b7268" label="Completata" />
-      <LegendItem color="#4a6fa5" label="In attesa" />
+      <LegendItem color="#8da4b8" label="Assegnato" />
+      <LegendItem color="#4a6fa5" label="Fase 1" />
+      <LegendItem color="#3d8b8b" label="Fase 2" />
+      <LegendItem color="#c08c3e" label="Fase 3" />
+      <LegendItem color="#2b7268" label="Completato" />
     </div>
   )
 }
@@ -47,7 +48,7 @@ function LegendItem({ color, label }: { color: string; label: string }) {
 }
 
 export function BrandMapPage() {
-  const { farmacie, rilievi } = useData()
+  const { farmacie, rilievi, sopralluoghi } = useData()
 
   return (
     <div className="space-y-4">
@@ -59,20 +60,20 @@ export function BrandMapPage() {
         <Legend />
       </div>
       <div className="card p-4">
-        <FarmaciaMap farmacie={farmacie} rilievi={rilievi} height="calc(100vh - 220px)" />
+        <FarmaciaMap farmacie={farmacie} rilievi={rilievi} sopralluoghi={sopralluoghi} height="calc(100vh - 220px)" />
       </div>
     </div>
   )
 }
 
 export function BrandFarmaciePage() {
-  const { farmacie, rilievi } = useData()
+  const { farmacie, rilievi, sopralluoghi } = useData()
   const [search, setSearch] = useState('')
   const [filtroStato, setFiltroStato] = useState<string>('tutti')
 
   const filtered = farmacie.filter(f => {
     const matchSearch = (f.nome + f.citta + f.indirizzo + f.provincia + f.cap + (f.codiceCliente || '') + (f.telefono || '')).toLowerCase().includes(search.toLowerCase())
-    const stato = getStatoFarmacia(rilievi, f.id)
+    const stato = getStatoFarmacia(rilievi, f.id, sopralluoghi)
     const matchStato = filtroStato === 'tutti' || stato === filtroStato
     return matchSearch && matchStato
   })
@@ -104,10 +105,11 @@ export function BrandFarmaciePage() {
             className="input pl-9 pr-8 appearance-none cursor-pointer"
           >
             <option value="tutti">Tutti gli stati</option>
-            <option value="da_fare">Da fare</option>
-            <option value="in_corso">In corso</option>
-            <option value="completata">Completate</option>
-            <option value="in_attesa">In attesa materiale</option>
+            <option value="assegnato">Assegnato</option>
+            <option value="fase_1">Fase 1</option>
+            <option value="fase_2">Fase 2</option>
+            <option value="fase_3">Fase 3</option>
+            <option value="completato">Completato</option>
           </select>
         </div>
       </div>
@@ -131,7 +133,7 @@ export function BrandFarmaciePage() {
             </thead>
             <tbody className="divide-y divide-brand-50">
               {filtered.map(f => {
-                const stato = getStatoFarmacia(rilievi, f.id)
+                const stato = getStatoFarmacia(rilievi, f.id, sopralluoghi)
                 return (
                   <tr key={f.id} className="hover:bg-brand-50/50 transition-colors">
                     <td className="px-3 py-3 text-[13px] text-brand-500 font-mono">{f.codiceCliente || '—'}</td>
@@ -179,10 +181,11 @@ export function BrandFarmaciePage() {
 
 function StatoBadge({ stato }: { stato: StatoFarmacia }) {
   const config = {
-    da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
-    in_corso: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#5d8a82' },
-    completata: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
-    in_attesa: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
+    assegnato: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
+    fase_1: { bg: 'bg-accent-50', text: 'text-accent-700', border: 'border-accent-100', dot: '#4a6fa5' },
+    fase_2: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#3d8b8b' },
+    fase_3: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#c08c3e' },
+    completato: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
   }[stato] || { bg: 'bg-brand-50', text: 'text-brand-600', border: 'border-brand-100', dot: '#627d98' }
 
   return (
