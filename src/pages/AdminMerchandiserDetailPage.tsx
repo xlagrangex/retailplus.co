@@ -12,7 +12,9 @@ import {
   ArrowLeft, Mail, Phone, Trash2, Plus, Search, MapPin, X, Unlink,
   LayoutList, Columns, MessageSquare, ChevronDown, ChevronUp, CheckCircle2,
   AlertTriangle, Ruler, Wrench, Package, Navigation, Image as ImageIcon,
+  Download, Filter,
 } from 'lucide-react'
+import JSZip from 'jszip'
 
 const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
   da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
@@ -53,7 +55,11 @@ export default function AdminMerchandiserDetailPage() {
 
   function handleFarmaciaClick(f: Farmacia) {
     setDetailFarmaciaId(f.id)
-    setSelectedFarmaciaForChat(f.id)
+  }
+
+  function handleFilterChat(farmaciaId: string) {
+    setSelectedFarmaciaForChat(farmaciaId)
+    setShowChat(true)
   }
 
   if (!merchandiser) {
@@ -179,7 +185,7 @@ export default function AdminMerchandiserDetailPage() {
                     <th className="text-center px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Fase 2<br /><span className="normal-case font-normal text-[10px]">Plexiglass</span></th>
                     <th className="text-center px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Fase 3<br /><span className="normal-case font-normal text-[10px]">Prodotti</span></th>
                     <th className="text-center px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Stato</th>
-                    <th className="text-right px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider w-16"></th>
+                    <th className="text-center px-3 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Azioni</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-brand-50">
@@ -231,17 +237,30 @@ export default function AdminMerchandiserDetailPage() {
                             {getLabelStato(stato)}
                           </span>
                         </td>
-                        <td className="px-4 py-3.5 text-right" onClick={e => e.stopPropagation()}>
-                          <button
-                            onClick={() => {
-                              unassignFarmacia(f.id)
-                              showToast(`Assegnazione rimossa: ${f.nome}`)
-                            }}
-                            className="text-brand-300 hover:text-brand-600 transition-colors p-1"
-                            title="Rimuovi assegnazione"
-                          >
-                            <Unlink size={14} />
-                          </button>
+                        <td className="px-3 py-3.5 text-center" onClick={e => e.stopPropagation()}>
+                          <div className="flex items-center justify-center gap-1">
+                            <button
+                              onClick={() => handleFilterChat(f.id)}
+                              className={`p-1.5 rounded transition-colors ${
+                                selectedFarmaciaForChat === f.id
+                                  ? 'text-accent-600 bg-accent-50'
+                                  : 'text-brand-300 hover:text-accent-600 hover:bg-accent-50'
+                              }`}
+                              title="Filtra chat per questa farmacia"
+                            >
+                              <Filter size={13} />
+                            </button>
+                            <button
+                              onClick={() => {
+                                unassignFarmacia(f.id)
+                                showToast(`Assegnazione rimossa: ${f.nome}`)
+                              }}
+                              className="text-brand-300 hover:text-red-500 transition-colors p-1.5 rounded"
+                              title="Rimuovi assegnazione"
+                            >
+                              <Unlink size={13} />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     )
@@ -265,6 +284,10 @@ export default function AdminMerchandiserDetailPage() {
           rilievi={rilievi}
           campiConfigurazione={campiConfigurazione}
           onClose={() => setDetailFarmaciaId(null)}
+          onFilterChat={(farmaciaId) => {
+            handleFilterChat(farmaciaId)
+            setDetailFarmaciaId(null)
+          }}
         />
       )}
 
@@ -363,20 +386,115 @@ export default function AdminMerchandiserDetailPage() {
 // ============================================================
 
 function FarmaciaRilievoModal({
-  farmacia, rilievi, campiConfigurazione, onClose,
+  farmacia, rilievi, campiConfigurazione, onClose, onFilterChat,
 }: {
   farmacia: Farmacia
   rilievi: Rilievo[]
   campiConfigurazione: { id: string; fase: FaseNumero; nome: string; label: string; tipo: string; unita?: string; attivo: boolean; ordine: number }[]
   onClose: () => void
+  onFilterChat?: (farmaciaId: string) => void
 }) {
   const [zoomedImage, setZoomedImage] = useState<string | null>(null)
+  const [downloading, setDownloading] = useState(false)
   const stato = getStatoFarmacia(rilievi, farmacia.id)
   const sc = statoColors[stato]
   const faseIcons = { 1: Ruler, 2: Wrench, 3: Package }
 
   const getRilievoFase = (fase: FaseNumero) =>
     rilievi.find(r => r.farmaciaId === farmacia.id && r.fase === fase)
+
+  async function handleDownloadAll() {
+    setDownloading(true)
+    try {
+      const zip = new JSZip()
+      const campiFase1 = campiConfigurazione.filter(c => c.fase === 1 && c.attivo).sort((a, b) => a.ordine - b.ordine)
+
+      // Build text report
+      let report = `REPORT RILIEVO — ${farmacia.nome}\n`
+      report += `${'='.repeat(50)}\n\n`
+      report += `Indirizzo: ${farmacia.indirizzo}, ${farmacia.citta} (${farmacia.provincia})\n`
+      if (farmacia.codiceCliente) report += `Codice cliente: ${farmacia.codiceCliente}\n`
+      if (farmacia.telefono) report += `Telefono: ${farmacia.telefono}\n`
+      if (farmacia.referente) report += `Referente: ${farmacia.referente}\n`
+      if (farmacia.email) report += `Email: ${farmacia.email}\n`
+      report += `Stato: ${getLabelStato(stato)}\n\n`
+
+      for (const fase of [1, 2, 3] as FaseNumero[]) {
+        const rilievo = getRilievoFase(fase)
+        report += `--- FASE ${fase}: ${getLabelFase(fase).toUpperCase()} ---\n`
+        if (!rilievo?.completata) {
+          report += `Non completata\n\n`
+          continue
+        }
+        report += `Completata il ${rilievo.dataCompletamento || '—'}${rilievo.oraCompletamento ? ` alle ${rilievo.oraCompletamento}` : ''}\n`
+
+        if (fase === 1) {
+          if (campiFase1.length > 0) {
+            campiFase1.forEach(campo => {
+              const val = rilievo.valoriDinamici?.[campo.nome] ?? (rilievo as any)?.[campo.nome]
+              report += `  ${campo.label}: ${val != null ? `${val}${campo.unita ? ` ${campo.unita}` : ''}` : '—'}\n`
+            })
+          } else {
+            if (rilievo.profonditaScaffale != null) report += `  Profondita scaffale: ${rilievo.profonditaScaffale} cm\n`
+            if (rilievo.profonditaMensola != null) report += `  Profondita mensola: ${rilievo.profonditaMensola} cm\n`
+            if (rilievo.larghezza != null) report += `  Larghezza: ${rilievo.larghezza} cm\n`
+            if (rilievo.altezza != null) report += `  Altezza: ${rilievo.altezza} cm\n`
+            if (rilievo.numScaffali != null) report += `  N. scaffali: ${rilievo.numScaffali}\n`
+          }
+        }
+        if (fase === 2) {
+          report += `  Kit ricevuto: ${rilievo.kitRicevuto ? 'Si' : 'No'}\n`
+          report += `  Pezzi ricevuti: ${rilievo.pezziRicevuti ? 'Si' : 'No'}\n`
+          report += `  Scaricamento completato: ${rilievo.scaricamentoCompleto ? 'Si' : 'No'}\n`
+          report += `  Montaggio completato: ${rilievo.montaggioCompleto ? 'Si' : 'No'}\n`
+          if (rilievo.problemaKit) {
+            report += `  PROBLEMA: ${rilievo.descrizioneProblema || 'Si'}\n`
+          }
+        }
+        if (fase === 3) {
+          report += `  Prodotti posizionati: ${rilievo.prodottiPosizionati ? 'Si' : 'No'}\n`
+        }
+        if (rilievo.note) report += `  Note: ${rilievo.note}\n`
+        report += `  Foto: ${rilievo.foto?.length || 0}\n\n`
+
+        // Download photos
+        const faseFolder = zip.folder(`fase-${fase}`)
+        if (rilievo.foto && rilievo.foto.length > 0 && faseFolder) {
+          for (let i = 0; i < rilievo.foto.length; i++) {
+            try {
+              const resp = await fetch(rilievo.foto[i])
+              const blob = await resp.blob()
+              const ext = blob.type.includes('png') ? 'png' : 'jpg'
+              faseFolder.file(`foto-${i + 1}.${ext}`, blob)
+            } catch { /* skip failed downloads */ }
+          }
+        }
+        // Problem photos
+        if (fase === 2 && rilievo.fotoProblema && rilievo.fotoProblema.length > 0 && faseFolder) {
+          for (let i = 0; i < rilievo.fotoProblema.length; i++) {
+            try {
+              const resp = await fetch(rilievo.fotoProblema[i])
+              const blob = await resp.blob()
+              const ext = blob.type.includes('png') ? 'png' : 'jpg'
+              faseFolder.file(`problema-${i + 1}.${ext}`, blob)
+            } catch { /* skip */ }
+          }
+        }
+      }
+
+      zip.file('report.txt', report)
+      const content = await zip.generateAsync({ type: 'blob' })
+      const url = URL.createObjectURL(content)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `rilievo-${farmacia.nome.replace(/[^a-zA-Z0-9]/g, '_')}.zip`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Download failed:', err)
+    }
+    setDownloading(false)
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -393,13 +511,36 @@ function FarmaciaRilievoModal({
                 {farmacia.codiceCliente && <span className="font-mono">#{farmacia.codiceCliente}</span>}
               </div>
             </div>
-            <span className={`badge ${sc.bg} ${sc.text} border ${sc.border}`}>
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: sc.dot }} />
-              {getLabelStato(stato)}
-            </span>
-            <button onClick={onClose} className="text-brand-400 hover:text-brand-700 transition-colors p-1.5">
-              <X size={20} />
-            </button>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={handleDownloadAll}
+                disabled={downloading}
+                className="btn-secondary text-xs py-2"
+                title="Scarica report + foto"
+              >
+                {downloading ? (
+                  <><div className="w-3.5 h-3.5 border-2 border-accent-400 border-t-transparent rounded-full animate-spin" /> Scaricando...</>
+                ) : (
+                  <><Download size={13} /> Scarica tutto</>
+                )}
+              </button>
+              {onFilterChat && (
+                <button
+                  onClick={() => onFilterChat(farmacia.id)}
+                  className="btn-secondary text-xs py-2"
+                  title="Filtra chat per questa farmacia"
+                >
+                  <Filter size={13} /> Chat
+                </button>
+              )}
+              <span className={`badge ${sc.bg} ${sc.text} border ${sc.border}`}>
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: sc.dot }} />
+                {getLabelStato(stato)}
+              </span>
+              <button onClick={onClose} className="text-brand-400 hover:text-brand-700 transition-colors p-1.5">
+                <X size={20} />
+              </button>
+            </div>
           </div>
         </div>
 

@@ -105,12 +105,9 @@ export default function MerchandiserPage() {
               assegnazioni={assegnazioni}
               users={users}
               onFarmaciaClick={f => {
-                setSelectedFarmaciaForChat(f.id)
+                setSelectedFarmacia(f)
               }}
             />
-            <p className="text-[10px] text-brand-400 mt-2 text-center">
-              Clicca una farmacia per filtrare la chat. Per aprire il dettaglio, usa la vista lista.
-            </p>
           </div>
 
           {/* Right: Chat */}
