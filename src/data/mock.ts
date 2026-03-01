@@ -1,4 +1,4 @@
-import { User, Farmacia, Assegnazione, Rilievo, CampoConfigurazione, RegistrazionePending } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, CampoConfigurazione, RegistrazionePending, Messaggio, MessaggioLetto } from '../types'
 import importedFarmacie from './farmacie-import.json'
 
 export const mockUsers: User[] = [
@@ -110,4 +110,18 @@ export function getRegistrazioni(): RegistrazionePending[] {
 }
 export function saveRegistrazioni(registrazioni: RegistrazionePending[]) {
   localStorage.setItem('logplus_registrazioni', JSON.stringify(registrazioni))
+}
+
+export function getMessaggi(): Messaggio[] {
+  return JSON.parse(localStorage.getItem('logplus_messaggi') || '[]')
+}
+export function saveMessaggi(messaggi: Messaggio[]) {
+  localStorage.setItem('logplus_messaggi', JSON.stringify(messaggi))
+}
+
+export function getMessaggiLetti(): MessaggioLetto[] {
+  return JSON.parse(localStorage.getItem('logplus_messaggi_letti') || '[]')
+}
+export function saveMessaggiLetti(letti: MessaggioLetto[]) {
+  localStorage.setItem('logplus_messaggi_letti', JSON.stringify(letti))
 }

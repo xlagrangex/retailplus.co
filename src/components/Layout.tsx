@@ -4,8 +4,9 @@ import { useAuth } from '../context/AuthContext'
 import { resetOnboarding } from './OnboardingModal'
 import {
   LayoutDashboard, Map, Users, Store, ClipboardList,
-  LogOut, Menu, X, ChevronDown, Settings, Columns, HelpCircle
+  LogOut, Menu, X, ChevronDown, Settings, Columns, HelpCircle, MessageSquare
 } from 'lucide-react'
+import { useData } from '../context/DataContext'
 import { useState } from 'react'
 
 const navItems = {
@@ -16,14 +17,17 @@ const navItems = {
     { to: '/admin/mappa', label: 'Mappa', icon: Map },
     { to: '/admin/kanban', label: 'Kanban', icon: Columns },
     { to: '/admin/configurazione', label: 'Configurazione', icon: Settings },
+    { to: '/admin/messaggi', label: 'Messaggi', icon: MessageSquare },
   ],
   brand: [
     { to: '/brand', label: 'Dashboard', icon: LayoutDashboard },
     { to: '/brand/mappa', label: 'Mappa', icon: Map },
     { to: '/brand/farmacie', label: 'Farmacie', icon: Store },
+    { to: '/brand/messaggi', label: 'Messaggi', icon: MessageSquare },
   ],
   merchandiser: [
     { to: '/merchandiser', label: 'Le mie farmacie', icon: ClipboardList },
+    { to: '/merchandiser/messaggi', label: 'Messaggi', icon: MessageSquare },
   ],
 }
 
@@ -41,6 +45,7 @@ const roleHome = {
 
 export default function Layout({ children }: { children: ReactNode }) {
   const { user, logout } = useAuth()
+  const { unreadCount } = useData()
   const location = useLocation()
   const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -93,6 +98,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               {items.map(item => {
                 const Icon = item.icon
                 const active = location.pathname === item.to
+                const isMessaggi = item.label === 'Messaggi'
                 return (
                   <Link
                     key={item.to}
@@ -105,6 +111,11 @@ export default function Layout({ children }: { children: ReactNode }) {
                   >
                     <Icon size={15} />
                     {item.label}
+                    {isMessaggi && unreadCount > 0 && (
+                      <span className="ml-0.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-red-500 text-white text-[10px] font-bold px-1">
+                        {unreadCount > 99 ? '99+' : unreadCount}
+                      </span>
+                    )}
                   </Link>
                 )
               })}
@@ -159,6 +170,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           {items.map(item => {
             const Icon = item.icon
             const active = location.pathname === item.to
+            const isMessaggi = item.label === 'Messaggi'
             return (
               <Link
                 key={item.to}
@@ -170,6 +182,11 @@ export default function Layout({ children }: { children: ReactNode }) {
               >
                 <Icon size={16} />
                 {item.label}
+                {isMessaggi && unreadCount > 0 && (
+                  <span className="ml-auto min-w-[20px] h-[20px] flex items-center justify-center rounded-full bg-red-500 text-white text-[11px] font-bold px-1">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                )}
               </Link>
             )
           })}

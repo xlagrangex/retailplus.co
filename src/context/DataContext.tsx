@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
-import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione, RegistrazionePending } from '../types'
+import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione, RegistrazionePending, Messaggio } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import {
   fetchUsers, fetchFarmacie, fetchAssegnazioni, fetchRilievi,
@@ -14,6 +14,10 @@ import {
   fetchRegistrazioniPending,
   insertRegistrazione as sbInsertRegistrazione,
   updateRegistrazioneStato as sbUpdateRegistrazioneStato,
+  fetchMessaggi,
+  fetchMessaggiLetti,
+  insertMessaggio as sbInsertMessaggio,
+  markMessaggiAsRead as sbMarkAsRead,
 } from '../data/supabase'
 import {
   getFarmacie, saveFarmacie,
@@ -22,6 +26,8 @@ import {
   getUsers, saveUsers,
   getCampiConfigurazione, saveCampiConfigurazione, defaultCampiConfigurazione,
   getRegistrazioni, saveRegistrazioni,
+  getMessaggi, saveMessaggi,
+  getMessaggiLetti, saveMessaggiLetti,
 } from '../data/mock'
 
 interface DataContextType {
@@ -48,6 +54,11 @@ interface DataContextType {
   submitRegistrazione: (r: RegistrazionePending) => void
   approveRegistrazione: (id: string) => void
   rejectRegistrazione: (id: string) => void
+  messaggi: Messaggio[]
+  messaggiLettiIds: Set<string>
+  unreadCount: number
+  sendMessaggio: (testo: string, farmaciaId?: string) => void
+  markAsRead: (ids: string[]) => void
 }
 
 const DataContext = createContext<DataContextType | null>(null)
@@ -63,7 +74,22 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [registrazioniPending, setRegistrazioniPending] = useState<RegistrazionePending[]>(
     () => isSupabaseConfigured ? [] : getRegistrazioni().filter(r => r.stato === 'pending')
   )
+  const [messaggi, setMessaggi] = useState<Messaggio[]>(() => isSupabaseConfigured ? [] : getMessaggi())
+  const [messaggiLettiIds, setMessaggiLettiIds] = useState<Set<string>>(
+    () => {
+      if (isSupabaseConfigured) return new Set<string>()
+      const saved = localStorage.getItem('logplus_current_user')
+      const userId = saved ? JSON.parse(saved).id : null
+      if (!userId) return new Set<string>()
+      return new Set(getMessaggiLetti().filter(l => l.userId === userId).map(l => l.messaggioId))
+    }
+  )
   const [isLoading, setIsLoading] = useState(isSupabaseConfigured)
+
+  const currentUserId = (() => {
+    const saved = localStorage.getItem('logplus_current_user')
+    return saved ? JSON.parse(saved).id : null
+  })()
 
   // Initial fetch from Supabase
   useEffect(() => {
@@ -79,6 +105,17 @@ export function DataProvider({ children }: { children: ReactNode }) {
         try { campi = await fetchCampiConfigurazione(); if (campi.length === 0) campi = defaultCampiConfigurazione } catch { /* fallback */ }
         let regs: RegistrazionePending[] = []
         try { regs = await fetchRegistrazioniPending() } catch { /* table may not exist yet */ }
+        let msgs: Messaggio[] = []
+        let lettiIds = new Set<string>()
+        try {
+          msgs = await fetchMessaggi()
+          const uid = localStorage.getItem('logplus_current_user')
+          const userId = uid ? JSON.parse(uid).id : null
+          if (userId) {
+            const letti = await fetchMessaggiLetti(userId)
+            lettiIds = new Set(letti.map(l => l.messaggioId))
+          }
+        } catch { /* table may not exist yet */ }
         if (!cancelled) {
           setUsers(u)
           setFarmacie(f)
@@ -86,6 +123,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
           setRilievi(r)
           setCampiConfigurazione(campi)
           setRegistrazioniPending(regs)
+          setMessaggi(msgs)
+          setMessaggiLettiIds(lettiIds)
           setIsLoading(false)
         }
       } catch (err) {
@@ -335,6 +374,59 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }).catch(console.error)
   }, [registrazioniPending])
 
+  const unreadCount = messaggi.filter(m => !messaggiLettiIds.has(m.id) && m.autoreId !== currentUserId).length
+
+  const sendMessaggio = useCallback((testo: string, farmaciaId?: string) => {
+    const saved = localStorage.getItem('logplus_current_user')
+    const user = saved ? JSON.parse(saved) : null
+    if (!user) return
+
+    const msg: Messaggio = {
+      id: crypto.randomUUID(),
+      testo,
+      autoreId: user.id,
+      autoreNome: `${user.nome} ${user.cognome}`,
+      autoreRuolo: user.ruolo,
+      farmaciaId,
+      createdAt: new Date().toISOString(),
+    }
+
+    if (isSupabaseConfigured) {
+      sbInsertMessaggio(msg).then(() => {
+        fetchMessaggi().then(setMessaggi).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const updated = [...getMessaggi(), msg]
+      saveMessaggi(updated)
+      setMessaggi(updated)
+    }
+  }, [])
+
+  const markAsRead = useCallback((ids: string[]) => {
+    if (!currentUserId || ids.length === 0) return
+
+    if (isSupabaseConfigured) {
+      sbMarkAsRead(ids, currentUserId).then(() => {
+        setMessaggiLettiIds(prev => {
+          const next = new Set(prev)
+          ids.forEach(id => next.add(id))
+          return next
+        })
+      }).catch(console.error)
+    } else {
+      const existing = getMessaggiLetti()
+      const newEntries = ids
+        .filter(id => !existing.some(l => l.messaggioId === id && l.userId === currentUserId))
+        .map(id => ({ messaggioId: id, userId: currentUserId, lettoAt: new Date().toISOString() }))
+      saveMessaggiLetti([...existing, ...newEntries])
+      setMessaggiLettiIds(prev => {
+        const next = new Set(prev)
+        ids.forEach(id => next.add(id))
+        return next
+      })
+    }
+  }, [currentUserId])
+
   const rejectRegistrazione = useCallback((id: string) => {
     const reg = registrazioniPending.find(r => r.id === id)
 
@@ -365,6 +457,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       saveRilievo: saveRilievoFn,
       campiConfigurazione, addCampo, updateCampo, removeCampo,
       registrazioniPending, submitRegistrazione, approveRegistrazione, rejectRegistrazione,
+      messaggi, messaggiLettiIds, unreadCount, sendMessaggio, markAsRead,
     }}>
       {children}
     </DataContext.Provider>

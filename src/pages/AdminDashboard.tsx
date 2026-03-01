@@ -17,6 +17,7 @@ import {
 } from 'lucide-react'
 import Papa from 'papaparse'
 import KanbanBoard from '../components/KanbanBoard'
+import MessageThread from '../components/MessageThread'
 
 export default function AdminDashboard() {
   const { user } = useAuth()
@@ -569,6 +570,14 @@ function FarmaciaDetailPanel({
               <p className="text-xs text-brand-600">{farmacia.note}</p>
             </div>
           )}
+
+          {/* Comunicazioni */}
+          <div className="space-y-2">
+            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Comunicazioni</h3>
+            <div className="border border-brand-100 rounded-md overflow-hidden">
+              <MessageThread farmaciaId={farmacia.id} maxHeight="300px" compact />
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione, RegistrazionePending, RegistrazioneStato } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione, RegistrazionePending, RegistrazioneStato, Messaggio, MessaggioLetto } from '../types'
 
 // ── Mapping helpers (snake_case DB ↔ camelCase TS) ──
 
@@ -348,5 +348,66 @@ export async function updateRegistrazioneStato(id: string, stato: RegistrazioneS
     .from('registrazioni_pending')
     .update({ stato })
     .eq('id', id)
+  if (error) throw error
+}
+
+// ── Messaggi CRUD ──
+
+function messaggioFromDb(row: any): Messaggio {
+  return {
+    id: row.id,
+    testo: row.testo,
+    autoreId: row.autore_id,
+    autoreNome: row.autore_nome,
+    autoreRuolo: row.autore_ruolo,
+    farmaciaId: row.farmacia_id || undefined,
+    createdAt: row.created_at,
+  }
+}
+
+function messaggioLettoFromDb(row: any): MessaggioLetto {
+  return {
+    messaggioId: row.messaggio_id,
+    userId: row.user_id,
+    lettoAt: row.letto_at,
+  }
+}
+
+export async function fetchMessaggi(): Promise<Messaggio[]> {
+  const { data, error } = await supabase
+    .from('messaggi')
+    .select('*')
+    .order('created_at', { ascending: true })
+  if (error) throw error
+  return (data || []).map(messaggioFromDb)
+}
+
+export async function fetchMessaggiLetti(userId: string): Promise<MessaggioLetto[]> {
+  const { data, error } = await supabase
+    .from('messaggi_letti')
+    .select('*')
+    .eq('user_id', userId)
+  if (error) throw error
+  return (data || []).map(messaggioLettoFromDb)
+}
+
+export async function insertMessaggio(m: Messaggio): Promise<void> {
+  const { error } = await supabase.from('messaggi').insert({
+    id: m.id,
+    testo: m.testo,
+    autore_id: m.autoreId,
+    autore_nome: m.autoreNome,
+    autore_ruolo: m.autoreRuolo,
+    farmacia_id: m.farmaciaId || null,
+    created_at: m.createdAt,
+  })
+  if (error) throw error
+}
+
+export async function markMessaggiAsRead(ids: string[], userId: string): Promise<void> {
+  const rows = ids.map(id => ({ messaggio_id: id, user_id: userId }))
+  const { error } = await supabase.from('messaggi_letti').upsert(rows, {
+    onConflict: 'messaggio_id,user_id',
+  })
   if (error) throw error
 }

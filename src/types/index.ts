@@ -86,6 +86,22 @@ export interface Rilievo {
   valoriDinamici?: Record<string, string | number | boolean>
 }
 
+export interface Messaggio {
+  id: string
+  testo: string
+  autoreId: string
+  autoreNome: string
+  autoreRuolo: UserRole
+  farmaciaId?: string
+  createdAt: string
+}
+
+export interface MessaggioLetto {
+  messaggioId: string
+  userId: string
+  lettoAt: string
+}
+
 export type CampoTipo = 'number' | 'text' | 'checkbox' | 'select'
 
 export interface CampoConfigurazione {
