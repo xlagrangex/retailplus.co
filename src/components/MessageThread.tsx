@@ -32,10 +32,12 @@ function formatTime(iso: string): string {
 
 export default function MessageThread({
   farmaciaId,
+  farmaciIds,
   maxHeight = '400px',
   compact = false,
 }: {
   farmaciaId?: string
+  farmaciIds?: string[]
   maxHeight?: string
   compact?: boolean
 }) {
@@ -47,8 +49,12 @@ export default function MessageThread({
 
   const filtered = useMemo(() => {
     if (farmaciaId) return messaggi.filter(m => m.farmaciaId === farmaciaId)
+    if (farmaciIds && farmaciIds.length > 0) {
+      const idSet = new Set(farmaciIds)
+      return messaggi.filter(m => m.farmaciaId && idSet.has(m.farmaciaId))
+    }
     return messaggi
-  }, [messaggi, farmaciaId])
+  }, [messaggi, farmaciaId, farmaciIds])
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {

@@ -12,7 +12,7 @@ import {
   Upload, Plus, Trash2, UserPlus, Link2, Unlink, Search, MapPin, Users,
   AlertTriangle, ImagePlus, ArrowRightLeft, X, LayoutList, Columns, Filter,
   Settings, ChevronUp, ChevronDown, GripVertical, CheckCircle, XCircle,
-  Clock, ChevronRight, Mail, Phone, FileText, MapPinIcon, ArrowLeft,
+  Clock, ChevronRight, Mail, Phone, FileText, MapPinIcon,
   Building2, Calendar, LayoutGrid, Navigation,
 } from 'lucide-react'
 import Papa from 'papaparse'
@@ -351,15 +351,12 @@ function FarmaciaDetailPanel({
   const sc = statoColorsLocal[stato]
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
-      <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" onClick={onClose} />
-      <div className="relative w-full max-w-md bg-white shadow-2xl overflow-y-auto" onClick={e => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" onClick={onClose} />
+      <div className="relative w-full max-w-2xl max-h-[90vh] bg-white shadow-2xl rounded-xl overflow-y-auto" onClick={e => e.stopPropagation()}>
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-brand-100 px-5 py-4 z-10">
+        <div className="sticky top-0 bg-white border-b border-brand-100 px-5 py-4 z-10 rounded-t-xl">
           <div className="flex items-center gap-3">
-            <button type="button" onClick={onClose} className="text-brand-400 hover:text-brand-700 transition-colors p-1 -ml-1">
-              <ArrowLeft size={18} />
-            </button>
             <div className="flex-1 min-w-0">
               <h2 className="text-base font-heading font-bold text-brand-900 truncate">{farmacia.nome}</h2>
               {farmacia.codiceCliente && (
@@ -370,6 +367,9 @@ function FarmaciaDetailPanel({
               <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: sc.dot }} />
               {getLabelStato(stato)}
             </span>
+            <button type="button" onClick={onClose} className="text-brand-400 hover:text-brand-700 transition-colors p-1">
+              <X size={18} />
+            </button>
           </div>
         </div>
 
@@ -1042,15 +1042,12 @@ function MerchandiserDetailPanel({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
-      <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" onClick={onClose} />
-      <div className="relative w-full max-w-md bg-white shadow-2xl overflow-y-auto" onClick={e => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" onClick={onClose} />
+      <div className="relative w-full max-w-2xl max-h-[90vh] bg-white shadow-2xl rounded-xl overflow-y-auto" onClick={e => e.stopPropagation()}>
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-brand-100 px-5 py-4 z-10">
+        <div className="sticky top-0 bg-white border-b border-brand-100 px-5 py-4 z-10 rounded-t-xl">
           <div className="flex items-center gap-3">
-            <button type="button" onClick={onClose} className="text-brand-400 hover:text-brand-700 transition-colors p-1 -ml-1">
-              <ArrowLeft size={18} />
-            </button>
             <div className="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center">
               <span className="text-sm font-bold text-brand-600">{merchandiser.nome[0]}{merchandiser.cognome[0]}</span>
             </div>
@@ -1058,6 +1055,9 @@ function MerchandiserDetailPanel({
               <h2 className="text-base font-heading font-bold text-brand-900 truncate">{merchandiser.nome} {merchandiser.cognome}</h2>
               <p className="text-[11px] text-brand-400">{merchandiser.email}</p>
             </div>
+            <button type="button" onClick={onClose} className="text-brand-400 hover:text-brand-700 transition-colors p-1">
+              <X size={18} />
+            </button>
           </div>
         </div>
 
@@ -1219,6 +1219,16 @@ function MerchandiserDetailPanel({
               </div>
             )}
           </div>
+
+          {/* Comunicazioni */}
+          {assignedFarmacie.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Comunicazioni</h3>
+              <div className="border border-brand-100 rounded-lg overflow-hidden">
+                <MessageThread farmaciIds={assignedFarmacie.map(f => f.id)} maxHeight="250px" compact />
+              </div>
+            </div>
+          )}
 
           {/* Actions */}
           <div className="pt-3 border-t border-brand-100">
