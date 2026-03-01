@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useData } from '../context/DataContext'
+import { useToast } from '../components/Toast'
 import OnboardingModal, { useOnboardingTrigger } from '../components/OnboardingModal'
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPhoto } from '../lib/supabase'
@@ -328,7 +329,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
         fase={activeFase}
         existing={getRilievoFase(activeFase)}
         onBack={() => setActiveFase(null)}
-        onSave={(r) => { saveRilievo(r); setActiveFase(null) }}
+        onSave={async (r) => { await saveRilievo(r); setActiveFase(null) }}
         userId={user.id}
       />
     )
@@ -647,7 +648,7 @@ function FaseForm({
   farmacia, fase, existing, onBack, onSave, userId
 }: {
   farmacia: Farmacia; fase: FaseNumero; existing?: Rilievo
-  onBack: () => void; onSave: (r: Rilievo) => void; userId: string
+  onBack: () => void; onSave: (r: Rilievo) => Promise<void>; userId: string
 }) {
   const { campiConfigurazione } = useData()
   const campiFase = campiConfigurazione.filter(c => c.fase === fase && c.attivo).sort((a, b) => a.ordine - b.ordine)
@@ -662,7 +663,10 @@ function FaseForm({
   const [descrizioneProblema, setDescrizioneProblema] = useState(existing?.descrizioneProblema || '')
   const [fotoProblema, setFotoProblema] = useState<string[]>(existing?.fotoProblema || [])
   const [showConfirm, setShowConfirm] = useState(false)
+  const [savedFormData, setSavedFormData] = useState<Record<string, string>>({})
   const [uploading, setUploading] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const { showToast } = useToast()
 
   async function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files
@@ -723,11 +727,16 @@ function FaseForm({
     if (fase === 2 && !kitRicevuto) { alert('Conferma la ricezione del kit materiale.'); return }
     if (fase === 2 && (!pezziRicevuti || !scaricamentoCompleto || !montaggioCompleto)) { alert('Completa la checklist (scaricamento e montaggio).'); return }
     if (fase === 3 && !prodottiPosizionati) { alert('Conferma il posizionamento prodotti.'); return }
+    // Capture form data now while the form is still in the DOM
+    const fd = new FormData(e.currentTarget)
+    const captured: Record<string, string> = {}
+    fd.forEach((value, key) => { captured[key] = value as string })
+    setSavedFormData(captured)
     setShowConfirm(true)
   }
 
-  function confirmSave() {
-    const fd = new FormData(document.getElementById('fase-form') as HTMLFormElement)
+  async function confirmSave() {
+    setSaving(true)
     const now = new Date()
     const rilievo: Rilievo = {
       id: existing?.id || `ril-${Date.now()}`,
@@ -738,18 +747,18 @@ function FaseForm({
       dataCompletamento: now.toISOString().split('T')[0],
       oraCompletamento: now.toTimeString().slice(0, 5),
       foto,
-      note: fd.get('note') as string || '',
+      note: savedFormData['note'] || '',
     }
     if (fase === 1) {
       // Dynamic fields
       const valoriDinamici: Record<string, string | number | boolean> = {}
       campiFase.forEach(campo => {
         if (campo.tipo === 'number') {
-          valoriDinamici[campo.nome] = parseFloat(fd.get(campo.nome) as string) || 0
+          valoriDinamici[campo.nome] = parseFloat(savedFormData[campo.nome] || '0') || 0
         } else if (campo.tipo === 'checkbox') {
-          valoriDinamici[campo.nome] = fd.get(campo.nome) === 'on'
+          valoriDinamici[campo.nome] = savedFormData[campo.nome] === 'on'
         } else {
-          valoriDinamici[campo.nome] = (fd.get(campo.nome) as string) || ''
+          valoriDinamici[campo.nome] = savedFormData[campo.nome] || ''
         }
       })
       rilievo.valoriDinamici = valoriDinamici
@@ -770,7 +779,14 @@ function FaseForm({
       rilievo.fotoProblema = problemaKit ? fotoProblema : undefined
     }
     if (fase === 3) { rilievo.prodottiPosizionati = prodottiPosizionati }
-    onSave(rilievo)
+    try {
+      await onSave(rilievo)
+      showToast('Fase ' + fase + ' completata con successo!', 'success')
+    } catch (err) {
+      console.error('Errore salvataggio:', err)
+      showToast('Errore durante il salvataggio. Riprova.', 'error')
+      setSaving(false)
+    }
   }
 
   const faseIcons = { 1: Ruler, 2: Wrench, 3: Package }
@@ -818,9 +834,13 @@ function FaseForm({
             {fase === 3 && <p><b>Prodotti:</b> {prodottiPosizionati ? 'posizionati' : 'da verificare'}</p>}
           </div>
           <div className="flex gap-3">
-            <button onClick={() => setShowConfirm(false)} className="btn-secondary flex-1 py-3">Torna indietro</button>
-            <button onClick={confirmSave} className="btn-primary flex-1 py-3 bg-status-done-500 hover:bg-status-done-700">
-              <Check size={16} /> Conferma
+            <button onClick={() => setShowConfirm(false)} disabled={saving} className="btn-secondary flex-1 py-3">Torna indietro</button>
+            <button onClick={confirmSave} disabled={saving} className="btn-primary flex-1 py-3 bg-status-done-500 hover:bg-status-done-700">
+              {saving ? (
+                <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Salvataggio...</>
+              ) : (
+                <><Check size={16} /> Conferma</>
+              )}
             </button>
           </div>
         </div>

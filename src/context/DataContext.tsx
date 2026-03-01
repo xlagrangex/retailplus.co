@@ -46,7 +46,7 @@ interface DataContextType {
   updateUser: (id: string, updates: Partial<User>) => void
   assignFarmacia: (farmaciaId: string, merchandiserId: string) => void
   unassignFarmacia: (farmaciaId: string) => void
-  saveRilievo: (r: Rilievo) => void
+  saveRilievo: (r: Rilievo) => Promise<void>
   campiConfigurazione: CampoConfigurazione[]
   addCampo: (c: CampoConfigurazione) => void
   updateCampo: (c: CampoConfigurazione) => void
@@ -272,11 +272,11 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const saveRilievoFn = useCallback((r: Rilievo) => {
+  const saveRilievoFn = useCallback(async (r: Rilievo): Promise<void> => {
     if (isSupabaseConfigured) {
-      upsertRilievo(r).then(() => {
-        fetchRilievi().then(setRilievi).catch(console.error)
-      }).catch(console.error)
+      await upsertRilievo(r)
+      const fresh = await fetchRilievi()
+      setRilievi(fresh)
     } else {
       const current = getRilievi()
       const existing = current.findIndex(x => x.farmaciaId === r.farmaciaId && x.fase === r.fase)
