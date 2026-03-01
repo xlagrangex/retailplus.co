@@ -11,7 +11,7 @@ import {
 import {
   ArrowLeft, Camera, Check, ChevronRight, Lock, MapPin, Phone, Mail,
   Ruler, X, AlertTriangle, CheckCircle2, Info, ImagePlus, Package, Wrench,
-  Pause, Play, FileText, Send, Download, LayoutList, Columns,
+  Pause, Play, FileText, Send, Download, LayoutList, Columns, Navigation,
 } from 'lucide-react'
 import KanbanBoard from '../components/KanbanBoard'
 
@@ -330,6 +330,14 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
               <Mail size={13} /> {farmacia.email}
             </a>
           )}
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&destination=${farmacia.lat},${farmacia.lng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary text-xs py-1.5"
+          >
+            <Navigation size={13} /> Indicazioni
+          </a>
         </div>
 
         {/* Toggle in attesa materiale (Task 10) */}

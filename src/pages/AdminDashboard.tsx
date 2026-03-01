@@ -13,7 +13,7 @@ import {
   AlertTriangle, ImagePlus, ArrowRightLeft, X, LayoutList, Columns, Filter,
   Settings, ChevronUp, ChevronDown, GripVertical, CheckCircle, XCircle,
   Clock, ChevronRight, Mail, Phone, FileText, MapPinIcon, ArrowLeft,
-  Building2, Calendar,
+  Building2, Calendar, LayoutGrid, Navigation,
 } from 'lucide-react'
 import Papa from 'papaparse'
 import KanbanBoard from '../components/KanbanBoard'
@@ -403,7 +403,9 @@ function FarmaciaDetailPanel({
                   <Phone size={13} className="text-brand-400 mt-0.5 shrink-0" />
                   <div>
                     <p className="text-[10px] text-brand-400">Telefono</p>
-                    <p className="text-xs text-brand-700">{farmacia.telefono}</p>
+                    <a href={`tel:${farmacia.telefono}`} className="text-xs text-accent-600 hover:text-accent-700 hover:underline">
+                      {farmacia.telefono}
+                    </a>
                   </div>
                 </div>
               )}
@@ -421,6 +423,16 @@ function FarmaciaDetailPanel({
               )}
             </div>
           </div>
+
+          {/* Indicazioni stradali */}
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&destination=${farmacia.lat},${farmacia.lng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary w-full py-2.5 text-center inline-flex items-center justify-center gap-2"
+          >
+            <Navigation size={14} /> Indicazioni stradali
+          </a>
 
           {/* Merchandiser assegnata */}
           <div className="space-y-2">
@@ -580,6 +592,8 @@ export function AdminMerchandiserPage() {
   const [showAdd, setShowAdd] = useState(false)
   const [expandedReg, setExpandedReg] = useState<string | null>(null)
   const [selectedMerchId, setSelectedMerchId] = useState<string | null>(null)
+  const [viewMode, setViewMode] = useState<'table' | 'grid'>('table')
+  const [merchSearch, setMerchSearch] = useState('')
   const selectedMerch = selectedMerchId ? merchandisers.find(m => m.id === selectedMerchId) || null : null
 
   function handleAdd(e: React.FormEvent<HTMLFormElement>) {
@@ -608,9 +622,27 @@ export function AdminMerchandiserPage() {
           <h1 className="page-title">Merchandiser e assegnazioni</h1>
           <p className="page-subtitle">{merchandisers.length} operatrici — {farmacie.length} farmacie</p>
         </div>
-        <button type="button" onClick={() => setShowAdd(!showAdd)} className="btn-primary">
-          <UserPlus size={15} /> Aggiungi
-        </button>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center bg-brand-50 rounded-md p-0.5">
+            <button
+              onClick={() => setViewMode('table')}
+              className={`p-1.5 rounded transition-colors ${viewMode === 'table' ? 'bg-white shadow-sm text-brand-800' : 'text-brand-400 hover:text-brand-600'}`}
+              title="Vista tabella"
+            >
+              <LayoutList size={16} />
+            </button>
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`p-1.5 rounded transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm text-brand-800' : 'text-brand-400 hover:text-brand-600'}`}
+              title="Vista griglia"
+            >
+              <LayoutGrid size={16} />
+            </button>
+          </div>
+          <button type="button" onClick={() => setShowAdd(!showAdd)} className="btn-primary">
+            <UserPlus size={15} /> Aggiungi
+          </button>
+        </div>
       </div>
 
       {/* Stats */}
@@ -752,78 +784,187 @@ export function AdminMerchandiserPage() {
         </form>
       )}
 
-      {/* Merchandiser cards */}
-      {merchandisers.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {merchandisers.map(m => {
-            const assigned = assegnazioni.filter(a => a.merchandiserId === m.id)
-            const assignedFarmacie = farmacie.filter(f => assigned.some(a => a.farmaciaId === f.id))
-            const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
-            const inCorso = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_corso').length
-            const daFare = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'da_fare').length
-            const pct = assignedFarmacie.length > 0 ? Math.round((completate / assignedFarmacie.length) * 100) : 0
+      {/* Search */}
+      <div className="relative">
+        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-400" />
+        <input
+          type="text"
+          placeholder="Cerca merchandiser per nome, email o telefono..."
+          value={merchSearch}
+          onChange={e => setMerchSearch(e.target.value)}
+          className="input pl-9"
+        />
+      </div>
 
-            return (
-              <div
-                key={m.id}
-                onClick={() => setSelectedMerchId(m.id)}
-                className="card p-4 cursor-pointer hover:shadow-md hover:border-brand-200 transition-all group"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center">
-                    <span className="text-sm font-bold text-brand-600">{m.nome[0]}{m.cognome[0]}</span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-heading font-bold text-brand-900 truncate">{m.nome} {m.cognome}</p>
-                    <p className="text-[11px] text-brand-400 truncate">{m.email}</p>
-                  </div>
-                  <ChevronRight size={14} className="text-brand-300 group-hover:text-brand-500 transition-colors shrink-0" />
-                </div>
+      {/* Merchandiser list */}
+      {(() => {
+        const filteredMerchandisers = merchandisers.filter(m =>
+          (m.nome + ' ' + m.cognome + ' ' + m.email + ' ' + (m.telefono || '')).toLowerCase().includes(merchSearch.toLowerCase())
+        )
 
-                {m.telefono && (
-                  <p className="text-[11px] text-brand-400 mb-3 flex items-center gap-1.5">
-                    <Phone size={11} /> {m.telefono}
-                  </p>
-                )}
+        if (filteredMerchandisers.length === 0) {
+          return (
+            <div className="card p-8 text-center">
+              <Users size={28} className="mx-auto text-brand-300 mb-2" />
+              <p className="text-sm text-brand-500 font-medium">
+                {merchandisers.length === 0 ? 'Nessuna merchandiser registrata' : 'Nessun risultato'}
+              </p>
+              <p className="text-xs text-brand-400 mt-1">
+                {merchandisers.length === 0 ? 'Aggiungi una merchandiser o aspetta le richieste di registrazione' : 'Prova a modificare la ricerca'}
+              </p>
+            </div>
+          )
+        }
 
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="text-center">
-                    <p className="text-lg font-heading font-bold text-brand-900">{assignedFarmacie.length}</p>
-                    <p className="text-[10px] text-brand-400">Farmacie</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-lg font-heading font-bold text-status-done-500">{completate}</p>
-                    <p className="text-[10px] text-brand-400">Completate</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-lg font-heading font-bold text-status-progress-500">{inCorso}</p>
-                    <p className="text-[10px] text-brand-400">In corso</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-lg font-heading font-bold text-status-todo-600">{daFare}</p>
-                    <p className="text-[10px] text-brand-400">Da fare</p>
-                  </div>
-                </div>
+        if (viewMode === 'table') {
+          return (
+            <div className="card overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-brand-100">
+                      <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Merchandiser</th>
+                      <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden sm:table-cell">Email</th>
+                      <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden sm:table-cell">Telefono</th>
+                      <th className="text-center px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Farmacie</th>
+                      <th className="text-center px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider hidden md:table-cell">Completate</th>
+                      <th className="text-left px-4 py-3 text-xs font-semibold text-brand-500 uppercase tracking-wider">Progresso</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-brand-50">
+                    {filteredMerchandisers.map(m => {
+                      const assigned = assegnazioni.filter(a => a.merchandiserId === m.id)
+                      const assignedFarmacie = farmacie.filter(f => assigned.some(a => a.farmaciaId === f.id))
+                      const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
+                      const pct = assignedFarmacie.length > 0 ? Math.round((completate / assignedFarmacie.length) * 100) : 0
 
-                {assignedFarmacie.length > 0 && (
-                  <div>
-                    <div className="w-full bg-brand-100 rounded-full h-1.5">
-                      <div className="h-1.5 rounded-full bg-accent-500 transition-all" style={{ width: `${pct}%` }} />
-                    </div>
-                    <p className="text-[10px] text-brand-400 mt-1 text-right">{pct}% completato</p>
-                  </div>
-                )}
+                      return (
+                        <tr
+                          key={m.id}
+                          onClick={() => setSelectedMerchId(m.id)}
+                          className="hover:bg-brand-50/50 cursor-pointer transition-colors"
+                        >
+                          <td className="px-4 py-3">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-lg bg-brand-100 flex items-center justify-center shrink-0">
+                                <span className="text-xs font-bold text-brand-600">{m.nome[0]}{m.cognome[0]}</span>
+                              </div>
+                              <span className="text-[13px] font-medium text-brand-900 truncate">{m.nome} {m.cognome}</span>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3 hidden sm:table-cell">
+                            <a
+                              href={`mailto:${m.email}`}
+                              onClick={e => e.stopPropagation()}
+                              className="text-xs text-accent-600 hover:text-accent-700 hover:underline"
+                            >
+                              {m.email}
+                            </a>
+                          </td>
+                          <td className="px-4 py-3 hidden sm:table-cell">
+                            {m.telefono ? (
+                              <a
+                                href={`tel:${m.telefono}`}
+                                onClick={e => e.stopPropagation()}
+                                className="text-xs text-accent-600 hover:text-accent-700 hover:underline"
+                              >
+                                {m.telefono}
+                              </a>
+                            ) : (
+                              <span className="text-xs text-brand-300">—</span>
+                            )}
+                          </td>
+                          <td className="px-4 py-3 text-center">
+                            <span className="text-[13px] font-bold text-brand-900">{assignedFarmacie.length}</span>
+                          </td>
+                          <td className="px-4 py-3 text-center hidden md:table-cell">
+                            <span className="text-[13px] font-bold text-status-done-500">{completate}</span>
+                          </td>
+                          <td className="px-4 py-3">
+                            <div className="flex items-center gap-2 min-w-[100px]">
+                              <div className="flex-1 bg-brand-100 rounded-full h-1.5">
+                                <div className="h-1.5 rounded-full bg-accent-500 transition-all" style={{ width: `${pct}%` }} />
+                              </div>
+                              <span className="text-[10px] text-brand-400 w-8 text-right">{pct}%</span>
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
               </div>
-            )
-          })}
-        </div>
-      ) : (
-        <div className="card p-8 text-center">
-          <Users size={28} className="mx-auto text-brand-300 mb-2" />
-          <p className="text-sm text-brand-500 font-medium">Nessuna merchandiser registrata</p>
-          <p className="text-xs text-brand-400 mt-1">Aggiungi una merchandiser o aspetta le richieste di registrazione</p>
-        </div>
-      )}
+            </div>
+          )
+        }
+
+        // Grid view
+        return (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {filteredMerchandisers.map(m => {
+              const assigned = assegnazioni.filter(a => a.merchandiserId === m.id)
+              const assignedFarmacie = farmacie.filter(f => assigned.some(a => a.farmaciaId === f.id))
+              const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
+              const inCorso = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'in_corso').length
+              const daFare = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'da_fare').length
+              const pct = assignedFarmacie.length > 0 ? Math.round((completate / assignedFarmacie.length) * 100) : 0
+
+              return (
+                <div
+                  key={m.id}
+                  onClick={() => setSelectedMerchId(m.id)}
+                  className="card p-4 cursor-pointer hover:shadow-md hover:border-brand-200 transition-all group"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center">
+                      <span className="text-sm font-bold text-brand-600">{m.nome[0]}{m.cognome[0]}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-heading font-bold text-brand-900 truncate">{m.nome} {m.cognome}</p>
+                      <p className="text-[11px] text-brand-400 truncate">{m.email}</p>
+                    </div>
+                    <ChevronRight size={14} className="text-brand-300 group-hover:text-brand-500 transition-colors shrink-0" />
+                  </div>
+
+                  {m.telefono && (
+                    <p className="text-[11px] text-brand-400 mb-3 flex items-center gap-1.5">
+                      <Phone size={11} /> {m.telefono}
+                    </p>
+                  )}
+
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="text-center">
+                      <p className="text-lg font-heading font-bold text-brand-900">{assignedFarmacie.length}</p>
+                      <p className="text-[10px] text-brand-400">Farmacie</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-lg font-heading font-bold text-status-done-500">{completate}</p>
+                      <p className="text-[10px] text-brand-400">Completate</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-lg font-heading font-bold text-status-progress-500">{inCorso}</p>
+                      <p className="text-[10px] text-brand-400">In corso</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-lg font-heading font-bold text-status-todo-600">{daFare}</p>
+                      <p className="text-[10px] text-brand-400">Da fare</p>
+                    </div>
+                  </div>
+
+                  {assignedFarmacie.length > 0 && (
+                    <div>
+                      <div className="w-full bg-brand-100 rounded-full h-1.5">
+                        <div className="h-1.5 rounded-full bg-accent-500 transition-all" style={{ width: `${pct}%` }} />
+                      </div>
+                      <p className="text-[10px] text-brand-400 mt-1 text-right">{pct}% completato</p>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        )
+      })()}
 
       {/* Farmacie non assegnate info */}
       {farmacie.length - new Set(assegnazioni.map(a => a.farmaciaId)).size > 0 && (
@@ -920,7 +1061,9 @@ function MerchandiserDetailPanel({
                 <Mail size={13} className="text-brand-400" />
                 <div>
                   <p className="text-[10px] text-brand-400">Email</p>
-                  <p className="text-xs text-brand-700">{merchandiser.email}</p>
+                  <a href={`mailto:${merchandiser.email}`} className="text-xs text-accent-600 hover:text-accent-700 hover:underline">
+                    {merchandiser.email}
+                  </a>
                 </div>
               </div>
               {merchandiser.telefono && (
@@ -928,7 +1071,9 @@ function MerchandiserDetailPanel({
                   <Phone size={13} className="text-brand-400" />
                   <div>
                     <p className="text-[10px] text-brand-400">Telefono</p>
-                    <p className="text-xs text-brand-700">{merchandiser.telefono}</p>
+                    <a href={`tel:${merchandiser.telefono}`} className="text-xs text-accent-600 hover:text-accent-700 hover:underline">
+                      {merchandiser.telefono}
+                    </a>
                   </div>
                 </div>
               )}
