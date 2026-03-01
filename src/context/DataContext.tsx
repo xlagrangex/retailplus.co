@@ -16,6 +16,7 @@ import {
   updateRegistrazioneStato as sbUpdateRegistrazioneStato,
   fetchMessaggi,
   fetchMessaggiLetti,
+  fetchAllMessaggiLetti,
   insertMessaggio as sbInsertMessaggio,
   markMessaggiAsRead as sbMarkAsRead,
 } from '../data/supabase'
@@ -57,6 +58,7 @@ interface DataContextType {
   rejectRegistrazione: (id: string) => void
   messaggi: Messaggio[]
   messaggiLettiIds: Set<string>
+  messaggiLettiByOthers: Set<string>
   unreadCount: number
   sendMessaggio: (testo: string, merchandiserId: string, farmaciaId?: string) => void
   markAsRead: (ids: string[]) => void
@@ -85,6 +87,17 @@ export function DataProvider({ children }: { children: ReactNode }) {
       return new Set(getMessaggiLetti().filter(l => l.userId === userId).map(l => l.messaggioId))
     }
   )
+  const [messaggiLettiByOthers, setMessaggiLettiByOthers] = useState<Set<string>>(() => {
+    if (isSupabaseConfigured) return new Set<string>()
+    const allLetti = getMessaggiLetti()
+    const msgs = getMessaggi()
+    const byOthers = new Set<string>()
+    allLetti.forEach(l => {
+      const msg = msgs.find(m => m.id === l.messaggioId)
+      if (msg && l.userId !== msg.autoreId) byOthers.add(l.messaggioId)
+    })
+    return byOthers
+  })
   const [isLoading, setIsLoading] = useState(isSupabaseConfigured)
 
   const currentUserId = (() => {
@@ -108,6 +121,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         try { regs = await fetchRegistrazioniPending() } catch { /* table may not exist yet */ }
         let msgs: Messaggio[] = []
         let lettiIds = new Set<string>()
+        let byOthers = new Set<string>()
         try {
           msgs = await fetchMessaggi()
           const uid = localStorage.getItem('logplus_current_user')
@@ -116,6 +130,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
             const letti = await fetchMessaggiLetti(userId)
             lettiIds = new Set(letti.map(l => l.messaggioId))
           }
+          // Build read-by-others set for read receipts
+          try {
+            const allLetti = await fetchAllMessaggiLetti()
+            allLetti.forEach(l => {
+              const msg = msgs.find(m => m.id === l.messaggioId)
+              if (msg && l.userId !== msg.autoreId) byOthers.add(l.messaggioId)
+            })
+          } catch { /* ignore */ }
         } catch { /* table may not exist yet */ }
         if (!cancelled) {
           setUsers(u)
@@ -126,6 +148,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
           setRegistrazioniPending(regs)
           setMessaggi(msgs)
           setMessaggiLettiIds(lettiIds)
+          setMessaggiLettiByOthers(byOthers)
           setIsLoading(false)
         }
       } catch (err) {
@@ -439,6 +462,12 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const markAsRead = useCallback((ids: string[]) => {
     if (!currentUserId || ids.length === 0) return
 
+    // Update messaggiLettiByOthers for messages where I'm not the author
+    const othersUpdate = ids.filter(id => {
+      const msg = messaggi.find(m => m.id === id)
+      return msg && msg.autoreId !== currentUserId
+    })
+
     if (isSupabaseConfigured) {
       sbMarkAsRead(ids, currentUserId).then(() => {
         setMessaggiLettiIds(prev => {
@@ -446,6 +475,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
           ids.forEach(id => next.add(id))
           return next
         })
+        if (othersUpdate.length > 0) {
+          setMessaggiLettiByOthers(prev => {
+            const next = new Set(prev)
+            othersUpdate.forEach(id => next.add(id))
+            return next
+          })
+        }
       }).catch(console.error)
     } else {
       const existing = getMessaggiLetti()
@@ -458,8 +494,15 @@ export function DataProvider({ children }: { children: ReactNode }) {
         ids.forEach(id => next.add(id))
         return next
       })
+      if (othersUpdate.length > 0) {
+        setMessaggiLettiByOthers(prev => {
+          const next = new Set(prev)
+          othersUpdate.forEach(id => next.add(id))
+          return next
+        })
+      }
     }
-  }, [currentUserId])
+  }, [currentUserId, messaggi])
 
   const rejectRegistrazione = useCallback((id: string) => {
     const reg = registrazioniPending.find(r => r.id === id)
@@ -491,7 +534,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       saveRilievo: saveRilievoFn,
       campiConfigurazione, addCampo, updateCampo, removeCampo,
       registrazioniPending, submitRegistrazione, approveRegistrazione, rejectRegistrazione,
-      messaggi, messaggiLettiIds, unreadCount, sendMessaggio, markAsRead,
+      messaggi, messaggiLettiIds, messaggiLettiByOthers, unreadCount, sendMessaggio, markAsRead,
     }}>
       {children}
     </DataContext.Provider>

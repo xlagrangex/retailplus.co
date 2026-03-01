@@ -424,6 +424,12 @@ export async function fetchMessaggiLetti(userId: string): Promise<MessaggioLetto
   return (data || []).map(messaggioLettoFromDb)
 }
 
+export async function fetchAllMessaggiLetti(): Promise<MessaggioLetto[]> {
+  const { data, error } = await supabase.from('messaggi_letti').select('*')
+  if (error) throw error
+  return (data || []).map(messaggioLettoFromDb)
+}
+
 export async function insertMessaggio(m: Messaggio): Promise<void> {
   const { error } = await supabase.from('messaggi').insert({
     id: m.id,

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { useData } from '../context/DataContext'
 import { useAuth } from '../context/AuthContext'
-import { Send, X, Store, ChevronDown } from 'lucide-react'
+import { Send, X, Store, ChevronDown, Check } from 'lucide-react'
 import { Messaggio, UserRole, Farmacia } from '../types'
 
 const roleColors: Record<UserRole, string> = {
@@ -46,7 +46,7 @@ export default function MessageThread({
   farmacie?: Farmacia[]
 }) {
   const { user } = useAuth()
-  const { messaggi, messaggiLettiIds, sendMessaggio, markAsRead } = useData()
+  const { messaggi, messaggiLettiIds, messaggiLettiByOthers, sendMessaggio, markAsRead } = useData()
   const [testo, setTesto] = useState('')
   const [sendFarmaciaId, setSendFarmaciaId] = useState<string | null>(null)
   const [showFarmaciaDropdown, setShowFarmaciaDropdown] = useState(false)
@@ -177,9 +177,21 @@ export default function MessageThread({
                 >
                   <p className="whitespace-pre-wrap break-words">{msg.testo}</p>
                 </div>
-                {/* Timestamp */}
-                <p className={`text-[10px] mt-0.5 px-1 ${isMine ? 'text-right text-brand-400' : 'text-brand-400'}`}>
+                {/* Timestamp + read receipts */}
+                <p className={`text-[10px] mt-0.5 px-1 flex items-center ${isMine ? 'justify-end text-brand-400' : 'text-brand-400'}`}>
                   {formatTime(msg.createdAt)}
+                  {isMine && (
+                    <span className="inline-flex items-center ml-1">
+                      {messaggiLettiByOthers.has(msg.id) ? (
+                        <>
+                          <Check size={12} className="text-blue-500 -mr-1.5" />
+                          <Check size={12} className="text-blue-500" />
+                        </>
+                      ) : (
+                        <Check size={12} className="text-brand-400" />
+                      )}
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
