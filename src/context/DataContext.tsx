@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
-import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione, RegistrazionePending, Messaggio } from '../types'
+import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione, RegistrazionePending, Messaggio, RilievoEvento } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import {
   fetchUsers, fetchFarmacie, fetchAssegnazioni, fetchRilievi,
@@ -19,6 +19,8 @@ import {
   fetchAllMessaggiLetti,
   insertMessaggio as sbInsertMessaggio,
   markMessaggiAsRead as sbMarkAsRead,
+  fetchEventiByFarmacia as sbFetchEventi,
+  insertEvento as sbInsertEvento,
 } from '../data/supabase'
 import {
   getFarmacie, saveFarmacie,
@@ -29,6 +31,7 @@ import {
   getRegistrazioni, saveRegistrazioni,
   getMessaggi, saveMessaggi,
   getMessaggiLetti, saveMessaggiLetti,
+  getEventi, saveEventi,
 } from '../data/mock'
 
 interface DataContextType {
@@ -62,6 +65,9 @@ interface DataContextType {
   unreadCount: number
   sendMessaggio: (testo: string, merchandiserId: string, farmaciaId?: string) => void
   markAsRead: (ids: string[]) => void
+  eventi: RilievoEvento[]
+  addEvento: (e: RilievoEvento) => void
+  fetchEventiForFarmacia: (farmaciaId: string) => Promise<RilievoEvento[]>
 }
 
 const DataContext = createContext<DataContextType | null>(null)
@@ -98,6 +104,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
     })
     return byOthers
   })
+  const [eventi, setEventi] = useState<RilievoEvento[]>(() => isSupabaseConfigured ? [] : getEventi())
   const [isLoading, setIsLoading] = useState(isSupabaseConfigured)
 
   const currentUserId = (() => {
@@ -504,6 +511,34 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }
   }, [currentUserId, messaggi])
 
+  const addEvento = useCallback((e: RilievoEvento) => {
+    if (isSupabaseConfigured) {
+      sbInsertEvento(e).catch(console.error)
+    } else {
+      const updated = [...getEventi(), e]
+      saveEventi(updated)
+    }
+    setEventi(prev => [...prev, e])
+  }, [])
+
+  const fetchEventiForFarmacia = useCallback(async (farmaciaId: string): Promise<RilievoEvento[]> => {
+    if (isSupabaseConfigured) {
+      try {
+        const fetched = await sbFetchEventi(farmaciaId)
+        setEventi(prev => {
+          const others = prev.filter(e => e.farmaciaId !== farmaciaId)
+          return [...others, ...fetched]
+        })
+        return fetched
+      } catch (err) {
+        console.error('Error fetching eventi:', err)
+        return eventi.filter(e => e.farmaciaId === farmaciaId)
+      }
+    } else {
+      return getEventi().filter(e => e.farmaciaId === farmaciaId)
+    }
+  }, [eventi])
+
   const rejectRegistrazione = useCallback((id: string) => {
     const reg = registrazioniPending.find(r => r.id === id)
 
@@ -535,6 +570,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       campiConfigurazione, addCampo, updateCampo, removeCampo,
       registrazioniPending, submitRegistrazione, approveRegistrazione, rejectRegistrazione,
       messaggi, messaggiLettiIds, messaggiLettiByOthers, unreadCount, sendMessaggio, markAsRead,
+      eventi, addEvento, fetchEventiForFarmacia,
     }}>
       {children}
     </DataContext.Provider>

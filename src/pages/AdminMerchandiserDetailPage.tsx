@@ -1,18 +1,19 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useData } from '../context/DataContext'
 import { useToast } from '../components/Toast'
 import KanbanBoard from '../components/KanbanBoard'
 import MessageThread from '../components/MessageThread'
+import Timeline from '../components/Timeline'
 import {
-  Farmacia, Rilievo, FaseNumero,
+  Farmacia, Rilievo, FaseNumero, RilievoEvento,
   getStatoFarmacia, getLabelStato, getLabelFase, getFaseCorrente, StatoFarmacia,
 } from '../types'
 import {
   ArrowLeft, Mail, Phone, Trash2, Plus, Search, MapPin, X, Unlink,
   LayoutList, Columns, MessageSquare, ChevronDown, ChevronUp, CheckCircle2,
   AlertTriangle, Ruler, Wrench, Package, Navigation, Image as ImageIcon,
-  Download, Filter,
+  Download, Filter, Clock,
 } from 'lucide-react'
 import JSZip from 'jszip'
 
@@ -394,8 +395,21 @@ function FarmaciaRilievoModal({
   onClose: () => void
   onFilterChat?: (farmaciaId: string) => void
 }) {
+  const { fetchEventiForFarmacia, eventi } = useData()
   const [zoomedImage, setZoomedImage] = useState<string | null>(null)
   const [downloading, setDownloading] = useState(false)
+  const [farmaciaEventi, setFarmaciaEventi] = useState<RilievoEvento[]>([])
+  const [showTimeline, setShowTimeline] = useState(true)
+
+  // Load events on mount
+  useEffect(() => {
+    fetchEventiForFarmacia(farmacia.id).then(setFarmaciaEventi).catch(console.error)
+  }, [farmacia.id, fetchEventiForFarmacia])
+
+  useEffect(() => {
+    setFarmaciaEventi(eventi.filter(e => e.farmaciaId === farmacia.id))
+  }, [eventi, farmacia.id])
+
   const stato = getStatoFarmacia(rilievi, farmacia.id)
   const sc = statoColors[stato]
   const faseIcons = { 1: Ruler, 2: Wrench, 3: Package }
@@ -422,9 +436,12 @@ function FarmaciaRilievoModal({
       for (const fase of [1, 2, 3] as FaseNumero[]) {
         const rilievo = getRilievoFase(fase)
         report += `--- FASE ${fase}: ${getLabelFase(fase).toUpperCase()} ---\n`
-        if (!rilievo?.completata) {
-          report += `Non completata\n\n`
+        if (!rilievo) {
+          report += `Non iniziata\n\n`
           continue
+        }
+        if (!rilievo.completata) {
+          report += `In compilazione (dati parziali)\n`
         }
         report += `Completata il ${rilievo.dataCompletamento || '—'}${rilievo.oraCompletamento ? ` alle ${rilievo.oraCompletamento}` : ''}\n`
 
@@ -599,7 +616,7 @@ function FarmaciaRilievoModal({
             return (
               <div
                 key={fase}
-                className={`card overflow-hidden ${done ? 'border-status-done-100' : 'border-brand-100'}`}
+                className={`card overflow-hidden ${done ? 'border-status-done-100' : rilievo ? 'border-accent-100' : 'border-brand-100'}`}
               >
                 {/* Fase header */}
                 <div className={`px-5 py-3.5 border-b flex items-center gap-3 ${
@@ -618,16 +635,30 @@ function FarmaciaRilievoModal({
                       </p>
                     )}
                   </div>
-                  {!done && (
+                  {!done && rilievo && (
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-accent-50 text-accent-600 font-medium border border-accent-100">
+                      In compilazione
+                    </span>
+                  )}
+                  {!done && !rilievo && (
                     <span className="text-xs text-brand-400 italic">Non completata</span>
                   )}
                 </div>
 
-                {/* Fase body — only show if rilievo exists */}
-                {done && rilievo && (
+                {/* Fase body — show if rilievo exists (completed or partial) */}
+                {rilievo && (
                   <div className="px-5 py-4 space-y-4">
+                    {/* Partial data badge */}
+                    {!done && (
+                      <div className="flex items-center gap-2 text-accent-600 text-xs">
+                        <span className="px-2 py-0.5 rounded bg-accent-50 border border-accent-100 font-medium text-[10px]">
+                          Dati parziali (fase non completata)
+                        </span>
+                      </div>
+                    )}
+
                     {/* Fase 1: Misure */}
-                    {fase === 1 && (
+                    {fase === 1 && (rilievo.valoriDinamici || rilievo.profonditaScaffale != null) && (
                       <FaseMisureDisplay rilievo={rilievo} campiConfigurazione={campiConfigurazione} />
                     )}
 
@@ -713,6 +744,30 @@ function FarmaciaRilievoModal({
               </div>
             )
           })}
+
+          {/* ── Timeline storico attivita ── */}
+          <div className="card overflow-hidden">
+            <button
+              onClick={() => setShowTimeline(!showTimeline)}
+              className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-brand-50/50 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Clock size={15} className="text-accent-600" />
+                <span className="text-sm font-semibold text-brand-800">Storico attivita</span>
+                {farmaciaEventi.length > 0 && (
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-brand-100 text-brand-500 font-medium">
+                    {farmaciaEventi.length}
+                  </span>
+                )}
+              </div>
+              {showTimeline ? <ChevronUp size={14} className="text-brand-400" /> : <ChevronDown size={14} className="text-brand-400" />}
+            </button>
+            {showTimeline && (
+              <div className="px-5 pb-4 border-t border-brand-100 pt-3">
+                <Timeline eventi={farmaciaEventi} rilievi={rilievi} farmaciaId={farmacia.id} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

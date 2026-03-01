@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione, RegistrazionePending, RegistrazioneStato, Messaggio, MessaggioLetto } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione, RegistrazionePending, RegistrazioneStato, Messaggio, MessaggioLetto, RilievoEvento } from '../types'
 
 // ── Mapping helpers (snake_case DB ↔ camelCase TS) ──
 
@@ -449,5 +449,46 @@ export async function markMessaggiAsRead(ids: string[], userId: string): Promise
   const { error } = await supabase.from('messaggi_letti').upsert(rows, {
     onConflict: 'messaggio_id,user_id',
   })
+  if (error) throw error
+}
+
+// ── Rilievi Eventi CRUD ──
+
+function eventoFromDb(row: any): RilievoEvento {
+  return {
+    id: row.id,
+    farmaciaId: row.farmacia_id,
+    merchandiserId: row.merchandiser_id,
+    fase: row.fase as FaseNumero,
+    tipo: row.tipo,
+    dettaglio: row.dettaglio || undefined,
+    createdAt: row.created_at,
+  }
+}
+
+function eventoToDb(e: RilievoEvento): any {
+  return {
+    id: e.id,
+    farmacia_id: e.farmaciaId,
+    merchandiser_id: e.merchandiserId,
+    fase: e.fase,
+    tipo: e.tipo,
+    dettaglio: e.dettaglio || null,
+    created_at: e.createdAt,
+  }
+}
+
+export async function fetchEventiByFarmacia(farmaciaId: string): Promise<RilievoEvento[]> {
+  const { data, error } = await supabase
+    .from('rilievi_eventi')
+    .select('*')
+    .eq('farmacia_id', farmaciaId)
+    .order('created_at', { ascending: true })
+  if (error) throw error
+  return (data || []).map(eventoFromDb)
+}
+
+export async function insertEvento(e: RilievoEvento): Promise<void> {
+  const { error } = await supabase.from('rilievi_eventi').insert(eventoToDb(e))
   if (error) throw error
 }

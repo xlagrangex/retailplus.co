@@ -178,3 +178,44 @@ export function getDescrizioneFase(fase: FaseNumero): string {
     case 3: return 'Posiziona i prodotti sugli scaffali e fotografa il risultato finale'
   }
 }
+
+// ── Eventi / Timeline ──
+
+export type EventoTipo =
+  | 'fase_iniziata' | 'substep_completato' | 'substep_annullato'
+  | 'problema_segnalato' | 'problema_rimosso' | 'foto_caricata'
+  | 'fase_completata' | 'in_attesa_attivata' | 'in_attesa_rimossa'
+  | 'misure_salvate'
+
+export interface RilievoEvento {
+  id: string
+  farmaciaId: string
+  merchandiserId: string
+  fase: FaseNumero
+  tipo: EventoTipo
+  dettaglio?: string
+  createdAt: string
+}
+
+const substepLabels: Record<string, string> = {
+  kitRicevuto: 'Kit materiale ricevuto',
+  pezziRicevuti: 'Pezzi di plexiglass ricevuti',
+  scaricamentoCompleto: 'Scaricamento/svuotamento scaffale completato',
+  montaggioCompleto: 'Montaggio materiale completato',
+  prodottiPosizionati: 'Prodotti posizionati sugli scaffali',
+}
+
+export function getLabelEvento(tipo: EventoTipo, dettaglio?: string): string {
+  switch (tipo) {
+    case 'fase_iniziata': return 'Fase iniziata'
+    case 'substep_completato': return substepLabels[dettaglio || ''] || dettaglio || 'Sottostep completato'
+    case 'substep_annullato': return (substepLabels[dettaglio || ''] || dettaglio || 'Sottostep') + ' (annullato)'
+    case 'problema_segnalato': return 'Problema segnalato' + (dettaglio ? `: ${dettaglio}` : '')
+    case 'problema_rimosso': return 'Problema rimosso'
+    case 'foto_caricata': return 'Foto caricata'
+    case 'fase_completata': return 'Fase completata'
+    case 'in_attesa_attivata': return 'In attesa materiale attivata'
+    case 'in_attesa_rimossa': return 'In attesa materiale rimossa'
+    case 'misure_salvate': return 'Misure salvate'
+  }
+}

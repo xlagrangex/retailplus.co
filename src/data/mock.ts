@@ -1,4 +1,4 @@
-import { User, Farmacia, Assegnazione, Rilievo, CampoConfigurazione, RegistrazionePending, Messaggio, MessaggioLetto } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, CampoConfigurazione, RegistrazionePending, Messaggio, MessaggioLetto, RilievoEvento } from '../types'
 import importedFarmacie from './farmacie-import.json'
 
 export const mockUsers: User[] = [
@@ -124,4 +124,11 @@ export function getMessaggiLetti(): MessaggioLetto[] {
 }
 export function saveMessaggiLetti(letti: MessaggioLetto[]) {
   localStorage.setItem('logplus_messaggi_letti', JSON.stringify(letti))
+}
+
+export function getEventi(): RilievoEvento[] {
+  return JSON.parse(localStorage.getItem('logplus_eventi') || '[]')
+}
+export function saveEventi(eventi: RilievoEvento[]) {
+  localStorage.setItem('logplus_eventi', JSON.stringify(eventi))
 }

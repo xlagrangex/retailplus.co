@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useData } from '../context/DataContext'
 import { useToast } from '../components/Toast'
@@ -6,16 +6,19 @@ import OnboardingModal, { useOnboardingTrigger } from '../components/OnboardingM
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPhoto } from '../lib/supabase'
 import {
-  Farmacia, Rilievo, FaseNumero, StatoFarmacia, getStatoFarmacia, getColoreStato,
+  Farmacia, Rilievo, FaseNumero, StatoFarmacia, RilievoEvento,
+  getStatoFarmacia, getColoreStato,
   getLabelStato, getLabelFase, getDescrizioneFase, getFaseCorrente,
 } from '../types'
 import {
   ArrowLeft, Camera, Check, ChevronRight, Lock, MapPin, Phone, Mail,
   Ruler, X, AlertTriangle, CheckCircle2, Info, ImagePlus, Package, Wrench,
   Pause, Play, FileText, Send, Download, LayoutList, Columns, Navigation,
+  Clock, ChevronDown, ChevronUp,
 } from 'lucide-react'
 import KanbanBoard from '../components/KanbanBoard'
 import MessageThread from '../components/MessageThread'
+import Timeline from '../components/Timeline'
 
 // Colori corporate per stati
 const statoConfig: Record<StatoFarmacia, { dot: string; bg: string; text: string; border: string }> = {
@@ -245,8 +248,19 @@ export default function MerchandiserPage() {
 
 function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () => void }) {
   const { user } = useAuth()
-  const { rilievi, saveRilievo } = useData()
+  const { rilievi, saveRilievo, addEvento, fetchEventiForFarmacia, eventi } = useData()
   const [activeFase, setActiveFase] = useState<FaseNumero | null>(null)
+  const [farmaciaEventi, setFarmaciaEventi] = useState<RilievoEvento[]>([])
+  const [showTimeline, setShowTimeline] = useState(false)
+
+  useEffect(() => {
+    fetchEventiForFarmacia(farmacia.id).then(setFarmaciaEventi).catch(console.error)
+  }, [farmacia.id, fetchEventiForFarmacia])
+
+  // Keep local events in sync
+  useEffect(() => {
+    setFarmaciaEventi(eventi.filter(e => e.farmaciaId === farmacia.id))
+  }, [eventi, farmacia.id])
 
   if (!user) return null
 
@@ -282,6 +296,14 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
         inAttesaMateriale: true,
       })
     }
+    addEvento({
+      id: crypto.randomUUID(),
+      farmaciaId: farmacia.id,
+      merchandiserId: user!.id,
+      fase: getFaseCorrente(rilievi, farmacia.id),
+      tipo: isCurrentlyInAttesa ? 'in_attesa_rimossa' : 'in_attesa_attivata',
+      createdAt: new Date().toISOString(),
+    })
   }
 
   // Email results (Task 11)
@@ -328,6 +350,8 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
         onBack={() => setActiveFase(null)}
         onSave={async (r) => { await saveRilievo(r); setActiveFase(null) }}
         userId={user.id}
+        saveRilievo={saveRilievo}
+        addEvento={addEvento}
       />
     )
   }
@@ -444,6 +468,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
         {([1, 2, 3] as FaseNumero[]).map(fase => {
           const rilievo = getRilievoFase(fase)
           const done = rilievo?.completata
+          const hasPartialData = rilievo && !done
           const unlocked = isFaseUnlocked(fase)
           const FaseIcon = faseIcons[fase]
 
@@ -476,6 +501,11 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                       <p className="text-[11px] text-brand-400">{getDescrizioneFase(fase)}</p>
                     </div>
                   </div>
+                  {hasPartialData && (
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-accent-50 text-accent-600 font-medium border border-accent-100">
+                      In compilazione
+                    </span>
+                  )}
                   {!unlocked && <Lock size={15} className="text-brand-300 shrink-0" />}
                 </div>
               </div>
@@ -485,6 +515,22 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                 {/* Sbloccata ma non fatta */}
                 {!done && unlocked && (
                   <div className="space-y-3">
+                    {/* Show partial data if exists */}
+                    {hasPartialData && fase === 2 && (
+                      <div className="space-y-1 mb-2 pb-2 border-b border-brand-50">
+                        <p className="text-[10px] font-semibold text-accent-600 uppercase tracking-wider mb-1">Dati salvati</p>
+                        {rilievo.kitRicevuto && <CheckItem checked={rilievo.kitRicevuto} label="Kit materiale ricevuto" />}
+                        {rilievo.pezziRicevuti && <CheckItem checked={rilievo.pezziRicevuti} label="Pezzi ricevuti" />}
+                        {rilievo.scaricamentoCompleto && <CheckItem checked={rilievo.scaricamentoCompleto} label="Scaricamento completato" />}
+                        {rilievo.montaggioCompleto && <CheckItem checked={rilievo.montaggioCompleto} label="Montaggio completato" />}
+                      </div>
+                    )}
+                    {hasPartialData && fase === 3 && rilievo.prodottiPosizionati && (
+                      <div className="space-y-1 mb-2 pb-2 border-b border-brand-50">
+                        <p className="text-[10px] font-semibold text-accent-600 uppercase tracking-wider mb-1">Dati salvati</p>
+                        <CheckItem checked={rilievo.prodottiPosizionati} label="Prodotti posizionati" />
+                      </div>
+                    )}
                     <div className="bg-status-waiting-50 border border-status-waiting-100 rounded-sm p-3">
                       <p className="text-[11px] font-semibold text-status-waiting-600 uppercase tracking-wider flex items-center gap-1 mb-2">
                         <Info size={11} /> Istruzioni
@@ -519,7 +565,7 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
                       )}
                     </div>
                     <button onClick={() => setActiveFase(fase)} className="btn-primary w-full py-3">
-                      <Camera size={16} /> Inizia Fase {fase}
+                      <Camera size={16} /> {hasPartialData ? 'Continua' : 'Inizia'} Fase {fase}
                     </button>
                   </div>
                 )}
@@ -582,6 +628,25 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
         })}
       </div>
 
+      {/* Timeline collapsabile */}
+      <div className="card overflow-hidden">
+        <button
+          onClick={() => setShowTimeline(!showTimeline)}
+          className="w-full flex items-center justify-between px-4 py-3 hover:bg-brand-50/50 transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <Clock size={14} className="text-accent-600" />
+            <span className="text-[13px] font-semibold text-brand-800">Storico attivita</span>
+          </div>
+          {showTimeline ? <ChevronUp size={14} className="text-brand-400" /> : <ChevronDown size={14} className="text-brand-400" />}
+        </button>
+        {showTimeline && (
+          <div className="px-4 pb-4 border-t border-brand-100 pt-3">
+            <Timeline eventi={farmaciaEventi} rilievi={rilievi} farmaciaId={farmacia.id} />
+          </div>
+        )}
+      </div>
+
     </div>
   )
 }
@@ -642,10 +707,12 @@ function CheckItem({ checked, label }: { checked?: boolean; label: string }) {
 // ============================================================
 
 function FaseForm({
-  farmacia, fase, existing, onBack, onSave, userId
+  farmacia, fase, existing, onBack, onSave, userId, saveRilievo: saveRilievoFn, addEvento,
 }: {
   farmacia: Farmacia; fase: FaseNumero; existing?: Rilievo
   onBack: () => void; onSave: (r: Rilievo) => Promise<void>; userId: string
+  saveRilievo: (r: Rilievo) => Promise<void>
+  addEvento: (e: RilievoEvento) => void
 }) {
   const { campiConfigurazione } = useData()
   const campiFase = campiConfigurazione.filter(c => c.fase === fase && c.attivo).sort((a, b) => a.ordine - b.ordine)
@@ -665,6 +732,104 @@ function FaseForm({
   const [saving, setSaving] = useState(false)
   const { showToast } = useToast()
 
+  // Stable rilievo ID for incremental saves
+  const rilievoIdRef = useRef(existing?.id || `ril-${Date.now()}`)
+  const faseStartedRef = useRef(!!existing)
+
+  // Fire fase_iniziata event on first entry (only if no existing rilievo)
+  useEffect(() => {
+    if (!faseStartedRef.current) {
+      faseStartedRef.current = true
+      addEvento({
+        id: crypto.randomUUID(),
+        farmaciaId: farmacia.id,
+        merchandiserId: userId,
+        fase,
+        tipo: 'fase_iniziata',
+        createdAt: new Date().toISOString(),
+      })
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Build partial rilievo for incremental saves
+  const buildPartialRilievo = useCallback((): Rilievo => ({
+    id: rilievoIdRef.current,
+    farmaciaId: farmacia.id,
+    merchandiserId: userId,
+    fase,
+    foto,
+    completata: false,
+    pezziRicevuti: fase === 2 ? pezziRicevuti : undefined,
+    scaricamentoCompleto: fase === 2 ? scaricamentoCompleto : undefined,
+    montaggioCompleto: fase === 2 ? montaggioCompleto : undefined,
+    kitRicevuto: fase === 2 ? kitRicevuto : undefined,
+    problemaKit: fase === 2 ? problemaKit : undefined,
+    descrizioneProblema: fase === 2 && problemaKit ? descrizioneProblema : undefined,
+    fotoProblema: fase === 2 && problemaKit ? fotoProblema : undefined,
+    prodottiPosizionati: fase === 3 ? prodottiPosizionati : undefined,
+  }), [farmacia.id, userId, fase, foto, pezziRicevuti, scaricamentoCompleto, montaggioCompleto, kitRicevuto, problemaKit, descrizioneProblema, fotoProblema, prodottiPosizionati])
+
+  // Incremental save on checkbox toggle (Fase 2 & 3)
+  function saveSubstep(fieldName: string, value: boolean) {
+    const partial = buildPartialRilievo()
+    // Update the specific field
+    ;(partial as any)[fieldName] = value
+    saveRilievoFn(partial).catch(console.error)
+    addEvento({
+      id: crypto.randomUUID(),
+      farmaciaId: farmacia.id,
+      merchandiserId: userId,
+      fase,
+      tipo: value ? 'substep_completato' : 'substep_annullato',
+      dettaglio: fieldName,
+      createdAt: new Date().toISOString(),
+    })
+  }
+
+  // Debounced save for Fase 1 (misure)
+  const misureTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  function debouncedSaveMisure() {
+    if (misureTimerRef.current) clearTimeout(misureTimerRef.current)
+    misureTimerRef.current = setTimeout(() => {
+      const form = document.getElementById('fase-form') as HTMLFormElement | null
+      if (!form) return
+      const fd = new FormData(form)
+      const valoriDinamici: Record<string, string | number | boolean> = {}
+      campiFase.forEach(campo => {
+        if (campo.tipo === 'number') {
+          valoriDinamici[campo.nome] = parseFloat(fd.get(campo.nome) as string || '0') || 0
+        } else if (campo.tipo === 'checkbox') {
+          valoriDinamici[campo.nome] = fd.get(campo.nome) === 'on'
+        } else {
+          valoriDinamici[campo.nome] = (fd.get(campo.nome) as string) || ''
+        }
+      })
+      const partial: Rilievo = {
+        id: rilievoIdRef.current,
+        farmaciaId: farmacia.id,
+        merchandiserId: userId,
+        fase,
+        foto,
+        completata: false,
+        valoriDinamici,
+        profonditaScaffale: valoriDinamici.profonditaScaffale as number ?? undefined,
+        profonditaMensola: valoriDinamici.profonditaMensola as number ?? undefined,
+        larghezza: valoriDinamici.larghezza as number ?? undefined,
+        altezza: valoriDinamici.altezza as number ?? undefined,
+        numScaffali: valoriDinamici.numScaffali as number ?? undefined,
+      }
+      saveRilievoFn(partial).catch(console.error)
+      addEvento({
+        id: crypto.randomUUID(),
+        farmaciaId: farmacia.id,
+        merchandiserId: userId,
+        fase,
+        tipo: 'misure_salvate',
+        createdAt: new Date().toISOString(),
+      })
+    }, 2000)
+  }
+
   async function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files
     if (!files) return
@@ -674,7 +839,22 @@ function FaseForm({
         try {
           const path = `rilievi/${farmacia.id}/${fase}/${Date.now()}-${file.name}`
           const url = await uploadPhoto(file, path)
-          setFoto(prev => [...prev, url])
+          setFoto(prev => {
+            const updated = [...prev, url]
+            // Save incrementally with new photo
+            const partial = buildPartialRilievo()
+            partial.foto = updated
+            saveRilievoFn(partial).catch(console.error)
+            return updated
+          })
+          addEvento({
+            id: crypto.randomUUID(),
+            farmaciaId: farmacia.id,
+            merchandiserId: userId,
+            fase,
+            tipo: 'foto_caricata',
+            createdAt: new Date().toISOString(),
+          })
         } catch (err) {
           console.error('Upload failed:', err)
         }
@@ -683,7 +863,23 @@ function FaseForm({
     } else {
       Array.from(files).forEach(file => {
         const reader = new FileReader()
-        reader.onload = () => setFoto(prev => [...prev, reader.result as string])
+        reader.onload = () => {
+          setFoto(prev => {
+            const updated = [...prev, reader.result as string]
+            const partial = buildPartialRilievo()
+            partial.foto = updated
+            saveRilievoFn(partial).catch(console.error)
+            return updated
+          })
+          addEvento({
+            id: crypto.randomUUID(),
+            farmaciaId: farmacia.id,
+            merchandiserId: userId,
+            fase,
+            tipo: 'foto_caricata',
+            createdAt: new Date().toISOString(),
+          })
+        }
         reader.readAsDataURL(file)
       })
     }
@@ -736,7 +932,7 @@ function FaseForm({
     setSaving(true)
     const now = new Date()
     const rilievo: Rilievo = {
-      id: existing?.id || `ril-${Date.now()}`,
+      id: rilievoIdRef.current,
       farmaciaId: farmacia.id,
       merchandiserId: userId,
       fase,
@@ -778,6 +974,14 @@ function FaseForm({
     if (fase === 3) { rilievo.prodottiPosizionati = prodottiPosizionati }
     try {
       await onSave(rilievo)
+      addEvento({
+        id: crypto.randomUUID(),
+        farmaciaId: farmacia.id,
+        merchandiserId: userId,
+        fase,
+        tipo: 'fase_completata',
+        createdAt: new Date().toISOString(),
+      })
       showToast('Fase ' + fase + ' completata con successo!', 'success')
     } catch (err) {
       console.error('Errore salvataggio:', err)
@@ -899,6 +1103,7 @@ function FaseForm({
                           required={campo.obbligatorio}
                           defaultValue={existingVal ?? ''}
                           className="input"
+                          onInput={debouncedSaveMisure}
                         />
                       )}
                       {campo.tipo === 'text' && (
@@ -908,6 +1113,7 @@ function FaseForm({
                           required={campo.obbligatorio}
                           defaultValue={existingVal ?? ''}
                           className="input"
+                          onInput={debouncedSaveMisure}
                         />
                       )}
                       {campo.tipo === 'select' && (
@@ -916,6 +1122,7 @@ function FaseForm({
                           required={campo.obbligatorio}
                           defaultValue={existingVal ?? ''}
                           className="input"
+                          onChange={debouncedSaveMisure}
                         >
                           <option value="">Seleziona...</option>
                           {campo.opzioni?.map(o => (
@@ -945,7 +1152,7 @@ function FaseForm({
                     <Package size={14} className="text-accent-500" /> Ricezione kit
                   </h3>
                   <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
-                    <input type="checkbox" checked={kitRicevuto} onChange={e => setKitRicevuto(e.target.checked)}
+                    <input type="checkbox" checked={kitRicevuto} onChange={e => { setKitRicevuto(e.target.checked); saveSubstep('kitRicevuto', e.target.checked) }}
                       className="mt-0.5 w-4 h-4 rounded border-brand-300 text-accent-600 focus:ring-accent-200" />
                     <div>
                       <p className="text-xs font-medium text-brand-800">Kit materiale ricevuto *</p>
@@ -953,7 +1160,21 @@ function FaseForm({
                     </div>
                   </label>
                   <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
-                    <input type="checkbox" checked={problemaKit} onChange={e => setProblemaKit(e.target.checked)}
+                    <input type="checkbox" checked={problemaKit} onChange={e => {
+                      setProblemaKit(e.target.checked)
+                      const partial = buildPartialRilievo()
+                      partial.problemaKit = e.target.checked
+                      saveRilievoFn(partial).catch(console.error)
+                      addEvento({
+                        id: crypto.randomUUID(),
+                        farmaciaId: farmacia.id,
+                        merchandiserId: userId,
+                        fase,
+                        tipo: e.target.checked ? 'problema_segnalato' : 'problema_rimosso',
+                        dettaglio: descrizioneProblema || undefined,
+                        createdAt: new Date().toISOString(),
+                      })
+                    }}
                       className="mt-0.5 w-4 h-4 rounded border-brand-300 text-brand-600 focus:ring-brand-200" />
                     <div>
                       <p className="text-xs font-medium text-brand-800">Segnala un problema</p>
@@ -999,7 +1220,7 @@ function FaseForm({
                     <Wrench size={14} className="text-brand-500" /> Checklist montaggio
                   </h3>
                   <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
-                    <input type="checkbox" checked={pezziRicevuti} onChange={e => setPezziRicevuti(e.target.checked)}
+                    <input type="checkbox" checked={pezziRicevuti} onChange={e => { setPezziRicevuti(e.target.checked); saveSubstep('pezziRicevuti', e.target.checked) }}
                       className="mt-0.5 w-4 h-4 rounded border-brand-300 text-accent-600 focus:ring-accent-200" />
                     <div>
                       <p className="text-xs font-medium text-brand-800">Pezzi di plexiglass ricevuti</p>
@@ -1009,7 +1230,7 @@ function FaseForm({
 
                   {/* Sottopunto 1: Scaricamento materiale */}
                   <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
-                    <input type="checkbox" checked={scaricamentoCompleto} onChange={e => setScaricamentoCompleto(e.target.checked)}
+                    <input type="checkbox" checked={scaricamentoCompleto} onChange={e => { setScaricamentoCompleto(e.target.checked); saveSubstep('scaricamentoCompleto', e.target.checked) }}
                       className="mt-0.5 w-4 h-4 rounded border-brand-300 text-accent-600 focus:ring-accent-200" />
                     <div>
                       <p className="text-xs font-medium text-brand-800">Scaricamento materiale (svuotamento scaffale)</p>
@@ -1019,7 +1240,7 @@ function FaseForm({
 
                   {/* Sottopunto 2: Montaggio materiale */}
                   <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
-                    <input type="checkbox" checked={montaggioCompleto} onChange={e => setMontaggioCompleto(e.target.checked)}
+                    <input type="checkbox" checked={montaggioCompleto} onChange={e => { setMontaggioCompleto(e.target.checked); saveSubstep('montaggioCompleto', e.target.checked) }}
                       className="mt-0.5 w-4 h-4 rounded border-brand-300 text-accent-600 focus:ring-accent-200" />
                     <div>
                       <p className="text-xs font-medium text-brand-800">Montaggio materiale completato</p>
@@ -1037,7 +1258,7 @@ function FaseForm({
                   <Package size={14} className="text-status-waiting-500" /> Caricamento prodotti
                 </h3>
                 <label className="flex items-start gap-3 p-3 rounded-sm border border-brand-100 cursor-pointer hover:bg-brand-50 transition-colors">
-                  <input type="checkbox" checked={prodottiPosizionati} onChange={e => setProdottiPosizionati(e.target.checked)}
+                  <input type="checkbox" checked={prodottiPosizionati} onChange={e => { setProdottiPosizionati(e.target.checked); saveSubstep('prodottiPosizionati', e.target.checked) }}
                     className="mt-0.5 w-4 h-4 rounded border-brand-300 text-accent-600 focus:ring-accent-200" />
                   <div>
                     <p className="text-xs font-medium text-brand-800">Tutti i prodotti posizionati</p>
