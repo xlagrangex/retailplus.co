@@ -6,7 +6,7 @@ import { ArrowRight, Eye, EyeOff, Shield, Users, BarChart3 } from 'lucide-react'
 const demoAccounts = [
   { email: 'admin@logplus.it', label: 'Amministratore', desc: 'Gestione completa', icon: Shield },
   { email: 'brand@cosmetica.it', label: 'Cliente Brand', desc: 'Dashboard e reportistica', icon: BarChart3 },
-  { email: 'lucia@logplus.it', label: 'Merchandiser', desc: 'Operativita sul campo', icon: Users },
+  { email: 'sara@logplus.it', label: 'Merchandiser', desc: 'Operativita sul campo', icon: Users },
 ]
 
 export default function LoginPage() {
