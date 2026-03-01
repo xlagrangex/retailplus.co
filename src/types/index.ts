@@ -7,6 +7,13 @@ export interface User {
   cognome: string
   ruolo: UserRole
   telefono?: string
+  codiceFiscale?: string
+  indirizzo?: string
+  citta?: string
+  provincia?: string
+  partitaIva?: string
+  iban?: string
+  fotoDocumento?: string
 }
 
 export type RegistrazioneStato = 'pending' | 'approved' | 'rejected'

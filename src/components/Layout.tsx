@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { resetOnboarding } from './OnboardingModal'
 import {
   LayoutDashboard, Map, Users, Store, ClipboardList,
-  LogOut, Menu, X, ChevronDown, Settings, Columns, HelpCircle, MessageSquare
+  LogOut, Menu, X, ChevronDown, Settings, Columns, HelpCircle, MessageSquare, UserCircle
 } from 'lucide-react'
 import { useData } from '../context/DataContext'
 import { useState } from 'react'
@@ -25,7 +25,7 @@ const navItems = {
   ],
   merchandiser: [
     { to: '/merchandiser', label: 'Le mie farmacie', icon: ClipboardList },
-    { to: '/merchandiser/messaggi', label: 'Messaggi', icon: MessageSquare },
+    { to: '/merchandiser/profilo', label: 'Profilo', icon: UserCircle },
   ],
 }
 

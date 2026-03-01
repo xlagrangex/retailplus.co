@@ -5,7 +5,7 @@ import {
   fetchUsers, fetchFarmacie, fetchAssegnazioni, fetchRilievi,
   insertFarmacia as sbInsertFarmacia, insertFarmacie as sbInsertFarmacie,
   deleteFarmaciaDb, updateFarmaciaDb,
-  insertUser as sbInsertUser, deleteUserDb,
+  insertUser as sbInsertUser, deleteUserDb, updateUserDb,
   upsertAssegnazione, deleteAssegnazione,
   upsertRilievo,
   fetchCampiConfigurazione,
@@ -43,6 +43,7 @@ interface DataContextType {
   updateFarmacia: (id: string, updates: Partial<Farmacia>) => void
   addUser: (u: User) => void
   removeUser: (id: string) => void
+  updateUser: (id: string, updates: Partial<User>) => void
   assignFarmacia: (farmaciaId: string, merchandiserId: string) => void
   unassignFarmacia: (farmaciaId: string) => void
   saveRilievo: (r: Rilievo) => void
@@ -233,6 +234,19 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }
   }, [users])
 
+  const updateUser = useCallback((id: string, updates: Partial<User>) => {
+    if (isSupabaseConfigured) {
+      updateUserDb(id, updates).then(() => {
+        fetchUsers().then(setUsers).catch(console.error)
+      }).catch(console.error)
+    } else {
+      const current = getUsers()
+      const updated = current.map(u => u.id === id ? { ...u, ...updates } : u)
+      saveUsers(updated)
+      setUsers(updated)
+    }
+  }, [])
+
   const assignFarmacia = useCallback((farmaciaId: string, merchandiserId: string) => {
     if (isSupabaseConfigured) {
       upsertAssegnazione(farmaciaId, merchandiserId).then(() => {
@@ -350,6 +364,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
       cognome: reg.cognome,
       ruolo: 'merchandiser',
       telefono: reg.telefono,
+      codiceFiscale: reg.codiceFiscale,
+      indirizzo: reg.indirizzo,
+      citta: reg.citta,
+      provincia: reg.provincia,
+      partitaIva: reg.partitaIva,
+      iban: reg.iban,
+      fotoDocumento: reg.fotoDocumento,
     }
 
     if (isSupabaseConfigured) {
@@ -465,7 +486,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
     <DataContext.Provider value={{
       farmacie, assegnazioni, rilievi, users, isLoading, refresh,
       addFarmacia, removeFarmacia, importFarmacie, updateFarmacia,
-      addUser, removeUser,
+      addUser, removeUser, updateUser,
       assignFarmacia, unassignFarmacia,
       saveRilievo: saveRilievoFn,
       campiConfigurazione, addCampo, updateCampo, removeCampo,

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useData } from '../context/DataContext'
 import { useToast } from '../components/Toast'
@@ -589,14 +590,13 @@ const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: str
 }
 
 export function AdminMerchandiserPage() {
+  const navigate = useNavigate()
   const { users, assegnazioni, farmacie, rilievi, addUser, removeUser, assignFarmacia, unassignFarmacia, registrazioniPending, approveRegistrazione, rejectRegistrazione } = useData()
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
   const [showAdd, setShowAdd] = useState(false)
   const [expandedReg, setExpandedReg] = useState<string | null>(null)
-  const [selectedMerchId, setSelectedMerchId] = useState<string | null>(null)
   const [viewMode, setViewMode] = useState<'table' | 'grid'>('table')
   const [merchSearch, setMerchSearch] = useState('')
-  const selectedMerch = selectedMerchId ? merchandisers.find(m => m.id === selectedMerchId) || null : null
 
   function handleAdd(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -843,7 +843,7 @@ export function AdminMerchandiserPage() {
                       return (
                         <tr
                           key={m.id}
-                          onClick={() => setSelectedMerchId(m.id)}
+                          onClick={() => navigate(`/admin/merchandiser/${m.id}`)}
                           className="hover:bg-brand-50/50 cursor-pointer transition-colors"
                         >
                           <td className="px-4 py-3">
@@ -914,7 +914,7 @@ export function AdminMerchandiserPage() {
               return (
                 <div
                   key={m.id}
-                  onClick={() => setSelectedMerchId(m.id)}
+                  onClick={() => navigate(`/admin/merchandiser/${m.id}`)}
                   className="card p-4 cursor-pointer hover:shadow-md hover:border-brand-200 transition-all group"
                 >
                   <div className="flex items-center gap-3 mb-3">
@@ -978,261 +978,6 @@ export function AdminMerchandiserPage() {
         </div>
       )}
 
-      {/* Merchandiser Detail Slide-over */}
-      {selectedMerch && (
-        <MerchandiserDetailPanel
-          merchandiser={selectedMerch}
-          farmacie={farmacie}
-          rilievi={rilievi}
-          assegnazioni={assegnazioni}
-          onClose={() => setSelectedMerchId(null)}
-          removeUser={removeUser}
-          assignFarmacia={assignFarmacia}
-          unassignFarmacia={unassignFarmacia}
-        />
-      )}
-    </div>
-  )
-}
-
-// ============================================================
-// MERCHANDISER DETAIL PANEL
-// ============================================================
-
-function MerchandiserDetailPanel({
-  merchandiser, farmacie, rilievi, assegnazioni, onClose, removeUser,
-  assignFarmacia, unassignFarmacia,
-}: {
-  merchandiser: User
-  farmacie: Farmacia[]
-  rilievi: Rilievo[]
-  assegnazioni: Assegnazione[]
-  onClose: () => void
-  removeUser: (id: string) => void
-  assignFarmacia: (farmaciaId: string, merchandiserId: string) => void
-  unassignFarmacia: (farmaciaId: string) => void
-}) {
-  const { showToast } = useToast()
-  const [showAddFarmacie, setShowAddFarmacie] = useState(false)
-  const [farmaciaSearch, setFarmaciaSearch] = useState('')
-  const assigned = assegnazioni.filter(a => a.merchandiserId === merchandiser.id)
-  const assignedFarmacie = farmacie.filter(f => assigned.some(a => a.farmaciaId === f.id))
-  const completate = assignedFarmacie.filter(f => getStatoFarmacia(rilievi, f.id) === 'completata').length
-  const pct = assignedFarmacie.length > 0 ? Math.round((completate / assignedFarmacie.length) * 100) : 0
-
-  // Farmacie non assegnate (available)
-  const assignedIds = new Set(assegnazioni.map(a => a.farmaciaId))
-  const unassignedFarmacie = farmacie.filter(f => !assignedIds.has(f.id))
-  const filteredUnassigned = unassignedFarmacie.filter(f =>
-    (f.nome + f.citta + f.provincia).toLowerCase().includes(farmaciaSearch.toLowerCase())
-  )
-
-  const statoColorsLocal: Record<StatoFarmacia, { bg: string; text: string; border: string; dot: string }> = {
-    da_fare: { bg: 'bg-status-todo-50', text: 'text-status-todo-600', border: 'border-status-todo-100', dot: '#8da4b8' },
-    in_corso: { bg: 'bg-status-progress-50', text: 'text-status-progress-600', border: 'border-status-progress-100', dot: '#5d8a82' },
-    completata: { bg: 'bg-status-done-50', text: 'text-status-done-600', border: 'border-status-done-100', dot: '#2b7268' },
-    in_attesa: { bg: 'bg-status-waiting-50', text: 'text-status-waiting-600', border: 'border-status-waiting-100', dot: '#4a6fa5' },
-  }
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" onClick={onClose} />
-      <div className="relative w-full max-w-2xl max-h-[90vh] bg-white shadow-2xl rounded-xl overflow-y-auto" onClick={e => e.stopPropagation()}>
-        {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-brand-100 px-5 py-4 z-10 rounded-t-xl">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center">
-              <span className="text-sm font-bold text-brand-600">{merchandiser.nome[0]}{merchandiser.cognome[0]}</span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <h2 className="text-base font-heading font-bold text-brand-900 truncate">{merchandiser.nome} {merchandiser.cognome}</h2>
-              <p className="text-[11px] text-brand-400">{merchandiser.email}</p>
-            </div>
-            <button type="button" onClick={onClose} className="text-brand-400 hover:text-brand-700 transition-colors p-1">
-              <X size={18} />
-            </button>
-          </div>
-        </div>
-
-        <div className="p-5 space-y-5">
-          {/* Contact info */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Contatti</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex items-center gap-2">
-                <Mail size={13} className="text-brand-400" />
-                <div>
-                  <p className="text-[10px] text-brand-400">Email</p>
-                  <a href={`mailto:${merchandiser.email}`} className="text-xs text-accent-600 hover:text-accent-700 hover:underline">
-                    {merchandiser.email}
-                  </a>
-                </div>
-              </div>
-              {merchandiser.telefono && (
-                <div className="flex items-center gap-2">
-                  <Phone size={13} className="text-brand-400" />
-                  <div>
-                    <p className="text-[10px] text-brand-400">Telefono</p>
-                    <a href={`tel:${merchandiser.telefono}`} className="text-xs text-accent-600 hover:text-accent-700 hover:underline">
-                      {merchandiser.telefono}
-                    </a>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Statistiche</h3>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="card p-3 text-center">
-                <p className="text-xl font-heading font-bold text-brand-900">{assignedFarmacie.length}</p>
-                <p className="text-[10px] text-brand-400">Farmacie</p>
-              </div>
-              <div className="card p-3 text-center">
-                <p className="text-xl font-heading font-bold text-status-done-500">{completate}</p>
-                <p className="text-[10px] text-brand-400">Completate</p>
-              </div>
-              <div className="card p-3 text-center">
-                <p className="text-xl font-heading font-bold text-brand-900">{pct}%</p>
-                <p className="text-[10px] text-brand-400">Progresso</p>
-              </div>
-            </div>
-            {assignedFarmacie.length > 0 && (
-              <div className="w-full bg-brand-100 rounded-full h-2">
-                <div className="h-2 rounded-full bg-accent-500 transition-all" style={{ width: `${pct}%` }} />
-              </div>
-            )}
-          </div>
-
-          {/* Farmacie assegnate */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">
-                Farmacie assegnate ({assignedFarmacie.length})
-              </h3>
-              <button
-                type="button"
-                onClick={() => setShowAddFarmacie(!showAddFarmacie)}
-                className="flex items-center gap-1 text-[11px] font-medium text-accent-600 hover:text-accent-700 transition-colors"
-              >
-                <Plus size={13} /> Assegna farmacie
-              </button>
-            </div>
-
-            {/* Add farmacie dropdown */}
-            {showAddFarmacie && (
-              <div className="border border-brand-200 rounded-md overflow-hidden">
-                <div className="p-2 border-b border-brand-100">
-                  <div className="relative">
-                    <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-brand-400" />
-                    <input
-                      type="text"
-                      placeholder="Cerca farmacia non assegnata..."
-                      value={farmaciaSearch}
-                      onChange={e => setFarmaciaSearch(e.target.value)}
-                      className="input pl-8 py-1.5 text-xs"
-                      autoFocus
-                    />
-                  </div>
-                </div>
-                <div className="max-h-48 overflow-y-auto">
-                  {filteredUnassigned.length > 0 ? (
-                    filteredUnassigned.slice(0, 20).map(f => (
-                      <button
-                        key={f.id}
-                        type="button"
-                        onClick={() => {
-                          assignFarmacia(f.id, merchandiser.id)
-                          showToast(`${f.nome} assegnata a ${merchandiser.nome} ${merchandiser.cognome}`)
-                        }}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-brand-50 transition-colors"
-                      >
-                        <MapPin size={12} className="text-brand-400 shrink-0" />
-                        <div className="min-w-0">
-                          <p className="text-xs font-medium text-brand-800 truncate">{f.nome}</p>
-                          <p className="text-[10px] text-brand-400">{f.citta} ({f.provincia})</p>
-                        </div>
-                      </button>
-                    ))
-                  ) : (
-                    <p className="text-xs text-brand-400 italic text-center py-3">Nessuna farmacia disponibile</p>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {assignedFarmacie.length > 0 ? (
-              <div className="space-y-2">
-                {assignedFarmacie.map(f => {
-                  const stato = getStatoFarmacia(rilievi, f.id)
-                  const sc = statoColorsLocal[stato]
-                  const lastRil = rilievi.filter(r => r.farmaciaId === f.id && r.completata).sort((a, b) => (b.dataCompletamento || '').localeCompare(a.dataCompletamento || ''))[0]
-                  const faseCorrente = getFaseCorrente(rilievi, f.id)
-
-                  return (
-                    <div key={f.id} className="rounded-md border border-brand-100 p-3 hover:bg-brand-50/50 transition-colors">
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="text-xs font-medium text-brand-900 flex-1">{f.nome}</p>
-                        <span className={`badge text-[10px] py-0 px-1.5 ${sc.bg} ${sc.text} border ${sc.border}`}>
-                          <span className="w-1 h-1 rounded-full" style={{ backgroundColor: sc.dot }} />
-                          {getLabelStato(stato)}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            unassignFarmacia(f.id)
-                            showToast(`Assegnazione rimossa: ${f.nome}`)
-                          }}
-                          className="text-brand-300 hover:text-brand-600 transition-colors p-0.5"
-                          title="Rimuovi assegnazione"
-                        >
-                          <X size={13} />
-                        </button>
-                      </div>
-                      <p className="text-[11px] text-brand-400">{f.citta} ({f.provincia})</p>
-                      <div className="flex items-center gap-3 mt-1.5">
-                        <p className="text-[10px] text-brand-400">
-                          Fase corrente: <span className="font-medium text-brand-600">{faseCorrente}/3</span>
-                        </p>
-                        {lastRil && (
-                          <p className="text-[10px] text-brand-400">
-                            Ultimo: {lastRil.dataCompletamento}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            ) : (
-              <div className="text-center py-4">
-                <p className="text-xs text-brand-400 italic">Nessuna farmacia assegnata</p>
-              </div>
-            )}
-          </div>
-
-          {/* Comunicazioni */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Comunicazioni</h3>
-            <div className="border border-brand-100 rounded-lg overflow-hidden">
-              <MessageThread merchandiserId={merchandiser.id} maxHeight="250px" compact />
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="pt-3 border-t border-brand-100">
-            <button
-              type="button"
-              onClick={() => { if (confirm(`Eliminare ${merchandiser.nome} ${merchandiser.cognome}?`)) { removeUser(merchandiser.id); onClose() } }}
-              className="flex items-center gap-1.5 text-xs font-medium text-brand-500 hover:text-brand-700 transition-colors"
-            >
-              <Trash2 size={13} /> Elimina merchandiser
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }

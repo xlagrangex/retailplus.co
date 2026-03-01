@@ -11,6 +11,13 @@ function userFromDb(row: any): User {
     cognome: row.cognome,
     ruolo: row.ruolo,
     telefono: row.telefono || undefined,
+    codiceFiscale: row.codice_fiscale || undefined,
+    indirizzo: row.indirizzo || undefined,
+    citta: row.citta_residenza || undefined,
+    provincia: row.provincia || undefined,
+    partitaIva: row.partita_iva || undefined,
+    iban: row.iban || undefined,
+    fotoDocumento: row.foto_documento || undefined,
   }
 }
 
@@ -217,7 +224,30 @@ export async function insertUser(u: User): Promise<void> {
     cognome: u.cognome,
     ruolo: u.ruolo,
     telefono: u.telefono || null,
+    codice_fiscale: u.codiceFiscale || null,
+    indirizzo: u.indirizzo || null,
+    citta_residenza: u.citta || null,
+    provincia: u.provincia || null,
+    partita_iva: u.partitaIva || null,
+    iban: u.iban || null,
+    foto_documento: u.fotoDocumento || null,
   })
+  if (error) throw error
+}
+
+export async function updateUserDb(id: string, updates: Partial<User>): Promise<void> {
+  const dbUpdates: any = {}
+  if (updates.nome !== undefined) dbUpdates.nome = updates.nome
+  if (updates.cognome !== undefined) dbUpdates.cognome = updates.cognome
+  if (updates.telefono !== undefined) dbUpdates.telefono = updates.telefono
+  if (updates.codiceFiscale !== undefined) dbUpdates.codice_fiscale = updates.codiceFiscale
+  if (updates.indirizzo !== undefined) dbUpdates.indirizzo = updates.indirizzo
+  if (updates.citta !== undefined) dbUpdates.citta_residenza = updates.citta
+  if (updates.provincia !== undefined) dbUpdates.provincia = updates.provincia
+  if (updates.partitaIva !== undefined) dbUpdates.partita_iva = updates.partitaIva
+  if (updates.iban !== undefined) dbUpdates.iban = updates.iban
+  if (updates.fotoDocumento !== undefined) dbUpdates.foto_documento = updates.fotoDocumento
+  const { error } = await supabase.from('users').update(dbUpdates).eq('id', id)
   if (error) throw error
 }
 

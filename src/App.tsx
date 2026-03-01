@@ -10,7 +10,8 @@ import RegisterPage from './pages/RegisterPage'
 import BrandDashboard, { BrandMapPage, BrandFarmaciePage } from './pages/BrandDashboard'
 import AdminDashboard, { AdminFarmaciePage, AdminMerchandiserPage, AdminMapPage, AdminKanbanPage, AdminConfigurazionePage } from './pages/AdminDashboard'
 import MerchandiserPage from './pages/MerchandiserPage'
-import MessaggiPage from './pages/MessaggiPage'
+import MerchandiserProfiloPage from './pages/MerchandiserProfiloPage'
+import AdminMerchandiserDetailPage from './pages/AdminMerchandiserDetailPage'
 
 // Initialize mock data only if Supabase is not configured
 if (!isSupabaseConfigured) {
@@ -24,6 +25,7 @@ function getRoutesForRole(ruolo: string) {
         <Route key="admin" path="/admin" element={<AdminDashboard />} />,
         <Route key="admin-farm" path="/admin/farmacie" element={<AdminFarmaciePage />} />,
         <Route key="admin-merch" path="/admin/merchandiser" element={<AdminMerchandiserPage />} />,
+        <Route key="admin-merch-detail" path="/admin/merchandiser/:id" element={<AdminMerchandiserDetailPage />} />,
         <Route key="admin-map" path="/admin/mappa" element={<AdminMapPage />} />,
         <Route key="admin-kanban" path="/admin/kanban" element={<AdminKanbanPage />} />,
         <Route key="admin-config" path="/admin/configurazione" element={<AdminConfigurazionePage />} />,
@@ -39,7 +41,7 @@ function getRoutesForRole(ruolo: string) {
     case 'merchandiser':
       return [
         <Route key="merch" path="/merchandiser" element={<MerchandiserPage />} />,
-        <Route key="merch-msg" path="/merchandiser/messaggi" element={<MessaggiPage />} />,
+        <Route key="merch-profilo" path="/merchandiser/profilo" element={<MerchandiserProfiloPage />} />,
         <Route key="merch-catch" path="*" element={<Navigate to="/merchandiser" replace />} />,
       ]
     default:

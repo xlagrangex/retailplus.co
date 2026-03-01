@@ -8,6 +8,7 @@ interface AuthContextType {
   user: User | null
   login: (email: string, password: string) => Promise<boolean>
   logout: () => void
+  updateCurrentUser: (updates: Partial<User>) => void
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -48,8 +49,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('logplus_current_user')
   }, [])
 
+  const updateCurrentUser = useCallback((updates: Partial<User>) => {
+    setUser(prev => {
+      if (!prev) return prev
+      const updated = { ...prev, ...updates }
+      localStorage.setItem('logplus_current_user', JSON.stringify(updated))
+      return updated
+    })
+  }, [])
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, updateCurrentUser }}>
       {children}
     </AuthContext.Provider>
   )
