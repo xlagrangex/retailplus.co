@@ -156,8 +156,8 @@ export default function OnboardingModal({
             {slide.isLogo ? (
               <img
                 src="/Retaillogo.png"
-                alt="Retail+"
-                className="h-16 mb-6"
+                alt="Retail+ Pharma | Euroteam 3D"
+                className="h-12 mb-6"
               />
             ) : Icon ? (
               <div className="w-16 h-16 rounded-2xl bg-accent-50 flex items-center justify-center mb-6">

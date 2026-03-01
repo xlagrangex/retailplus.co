@@ -84,7 +84,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 {mobileOpen ? <X size={20} className="text-brand-600" /> : <Menu size={20} className="text-brand-600" />}
               </button>
               <Link to="/" className="flex items-center gap-2">
-                <img src="/Retaillogo.png" alt="Retail+" className="h-8" />
+                <img src="/Retaillogo.png" alt="Retail+ Pharma | Euroteam 3D" className="h-8" />
               </Link>
             </div>
 

@@ -10,14 +10,14 @@ const LOGO_WHITE_URL = 'https://retailplus.co/Retaillogobianco.png'
 
 const emailHeader = `
   <div style="text-align: center; background-color: #273E3A; padding: 28px 24px; border-radius: 6px 6px 0 0;">
-    <img src="${LOGO_WHITE_URL}" alt="Retail+ Pharma" style="height: 52px; max-width: 200px;" />
+    <img src="${LOGO_WHITE_URL}" alt="Retail+ Pharma | Euroteam 3D" style="height: 40px; max-width: 340px;" />
   </div>
 `
 
 const emailFooter = `
   <hr style="border: none; border-top: 1px solid #e5ebe9; margin: 32px 0 24px;" />
   <div style="text-align: center;">
-    <img src="${LOGO_URL}" alt="Retail+ Pharma" style="height: 36px; max-width: 140px; opacity: 0.5; margin-bottom: 12px;" />
+    <img src="${LOGO_URL}" alt="Retail+ Pharma | Euroteam 3D" style="height: 28px; max-width: 280px; opacity: 0.5; margin-bottom: 12px;" />
     <p style="color: #8a9e9b; font-size: 12px; margin: 0;">Retail+ Pharma — Gestione merchandising farmacie</p>
     <p style="color: #a0bfb9; font-size: 11px; margin: 4px 0 0;">retailplus.co</p>
   </div>

@@ -46,7 +46,7 @@ export default function LoginPage() {
         }} />
         <div className="relative">
           <div className="flex items-center gap-3 mb-16">
-            <img src="/Retaillogobianco.png" alt="Retail+" className="h-20" />
+            <img src="/Retaillogobianco.png" alt="Retail+ Pharma | Euroteam 3D" className="h-12" />
           </div>
           <h1 className="font-heading text-3xl font-bold text-white leading-tight mb-4">
             Dashboard gestione<br />merchandising farmacie
@@ -84,15 +84,6 @@ export default function LoginPage() {
               <p className="text-xs" style={{ color: '#7da39c' }}>Dashboard e mappa interattiva</p>
             </div>
           </div>
-          {/* Developed by - with logos */}
-          <div className="pt-6 mt-4 border-t border-white/10">
-            <p className="text-[11px] uppercase tracking-widest mb-3" style={{ color: '#7da39c' }}>Developed by</p>
-            <div className="flex items-center gap-5">
-              <img src="/logo-logplus.png" alt="LogPlus" className="h-7 brightness-0 invert opacity-90" />
-              <span className="text-white/20 text-lg">|</span>
-              <img src="/logo-euroteam3d.png" alt="Euroteam 3D" className="h-7 brightness-0 invert opacity-90" />
-            </div>
-          </div>
         </div>
       </div>
 
@@ -101,7 +92,7 @@ export default function LoginPage() {
         <div className="w-full max-w-[400px]">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-10">
-            <img src="/Retaillogo.png" alt="Retail+" className="h-10" />
+            <img src="/Retaillogo.png" alt="Retail+ Pharma | Euroteam 3D" className="h-10" />
           </div>
 
           <div className="mb-8">
@@ -194,16 +185,10 @@ export default function LoginPage() {
           </div>
 
           {/* Footer with branding */}
-          <div className="mt-8 space-y-3">
+          <div className="mt-8">
             <p className="text-center text-xs text-brand-400">
               Retail+ v1.0 — Ambiente demo
             </p>
-            <div className="flex items-center justify-center gap-3">
-              <span className="text-[10px] text-brand-300">Developed by</span>
-              <img src="/logo-logplus.png" alt="LogPlus" className="h-4" />
-              <span className="text-brand-200">|</span>
-              <img src="/logo-euroteam3d.png" alt="Euroteam 3D" className="h-4" />
-            </div>
           </div>
         </div>
       </div>

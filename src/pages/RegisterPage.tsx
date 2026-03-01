@@ -77,7 +77,7 @@ export default function RegisterPage() {
         }} />
         <div className="relative">
           <div className="flex items-center gap-3 mb-16">
-            <img src="/Retaillogobianco.png" alt="Retail+" className="h-20" />
+            <img src="/Retaillogobianco.png" alt="Retail+ Pharma | Euroteam 3D" className="h-12" />
           </div>
           <h1 className="font-heading text-3xl font-bold text-white leading-tight mb-4">
             Diventa Merchandiser
@@ -110,7 +110,7 @@ export default function RegisterPage() {
         <div className="w-full max-w-[520px] mx-auto">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-8">
-            <img src="/Retaillogo.png" alt="Retail+" className="h-10" />
+            <img src="/Retaillogo.png" alt="Retail+ Pharma | Euroteam 3D" className="h-10" />
           </div>
 
           <div className="mb-6">
