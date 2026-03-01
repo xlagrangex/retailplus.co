@@ -360,6 +360,7 @@ function messaggioFromDb(row: any): Messaggio {
     autoreId: row.autore_id,
     autoreNome: row.autore_nome,
     autoreRuolo: row.autore_ruolo,
+    merchandiserId: row.merchandiser_id,
     farmaciaId: row.farmacia_id || undefined,
     createdAt: row.created_at,
   }
@@ -398,6 +399,7 @@ export async function insertMessaggio(m: Messaggio): Promise<void> {
     autore_id: m.autoreId,
     autore_nome: m.autoreNome,
     autore_ruolo: m.autoreRuolo,
+    merchandiser_id: m.merchandiserId,
     farmacia_id: m.farmaciaId || null,
     created_at: m.createdAt,
   })

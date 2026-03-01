@@ -14,7 +14,6 @@ import {
   Pause, Play, FileText, Send, Download, LayoutList, Columns, Navigation,
 } from 'lucide-react'
 import KanbanBoard from '../components/KanbanBoard'
-import MessageThread from '../components/MessageThread'
 
 // Colori corporate per stati
 const statoConfig: Record<StatoFarmacia, { dot: string; bg: string; text: string; border: string }> = {
@@ -541,13 +540,6 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
         })}
       </div>
 
-      {/* Comunicazioni */}
-      <div className="space-y-2">
-        <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Comunicazioni</h3>
-        <div className="border border-brand-100 rounded-md overflow-hidden">
-          <MessageThread farmaciaId={farmacia.id} maxHeight="300px" compact />
-        </div>
-      </div>
     </div>
   )
 }

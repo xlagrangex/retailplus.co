@@ -57,7 +57,7 @@ interface DataContextType {
   messaggi: Messaggio[]
   messaggiLettiIds: Set<string>
   unreadCount: number
-  sendMessaggio: (testo: string, farmaciaId?: string) => void
+  sendMessaggio: (testo: string, merchandiserId: string, farmaciaId?: string) => void
   markAsRead: (ids: string[]) => void
 }
 
@@ -374,9 +374,21 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }).catch(console.error)
   }, [registrazioniPending])
 
-  const unreadCount = messaggi.filter(m => !messaggiLettiIds.has(m.id) && m.autoreId !== currentUserId).length
+  const currentUserRuolo = (() => {
+    const saved = localStorage.getItem('logplus_current_user')
+    return saved ? JSON.parse(saved).ruolo : null
+  })()
 
-  const sendMessaggio = useCallback((testo: string, farmaciaId?: string) => {
+  const unreadCount = (() => {
+    if (currentUserRuolo === 'brand') return 0
+    if (currentUserRuolo === 'merchandiser') {
+      return messaggi.filter(m => m.merchandiserId === currentUserId && m.autoreId !== currentUserId && !messaggiLettiIds.has(m.id)).length
+    }
+    // admin: all unread messages not sent by me
+    return messaggi.filter(m => m.autoreId !== currentUserId && !messaggiLettiIds.has(m.id)).length
+  })()
+
+  const sendMessaggio = useCallback((testo: string, merchandiserId: string, farmaciaId?: string) => {
     const saved = localStorage.getItem('logplus_current_user')
     const user = saved ? JSON.parse(saved) : null
     if (!user) return
@@ -387,6 +399,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       autoreId: user.id,
       autoreNome: `${user.nome} ${user.cognome}`,
       autoreRuolo: user.ruolo,
+      merchandiserId,
       farmaciaId,
       createdAt: new Date().toISOString(),
     }

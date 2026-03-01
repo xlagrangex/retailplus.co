@@ -31,30 +31,23 @@ function formatTime(iso: string): string {
 }
 
 export default function MessageThread({
-  farmaciaId,
-  farmaciIds,
+  merchandiserId,
   maxHeight = '400px',
   compact = false,
 }: {
-  farmaciaId?: string
-  farmaciIds?: string[]
+  merchandiserId: string
   maxHeight?: string
   compact?: boolean
 }) {
   const { user } = useAuth()
-  const { messaggi, messaggiLettiIds, sendMessaggio, markAsRead, farmacie } = useData()
+  const { messaggi, messaggiLettiIds, sendMessaggio, markAsRead } = useData()
   const [testo, setTesto] = useState('')
   const scrollRef = useRef<HTMLDivElement>(null)
   const prevCountRef = useRef(0)
 
   const filtered = useMemo(() => {
-    if (farmaciaId) return messaggi.filter(m => m.farmaciaId === farmaciaId)
-    if (farmaciIds && farmaciIds.length > 0) {
-      const idSet = new Set(farmaciIds)
-      return messaggi.filter(m => m.farmaciaId && idSet.has(m.farmaciaId))
-    }
-    return messaggi
-  }, [messaggi, farmaciaId, farmaciIds])
+    return messaggi.filter(m => m.merchandiserId === merchandiserId)
+  }, [messaggi, merchandiserId])
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -85,7 +78,7 @@ export default function MessageThread({
   function handleSend() {
     const trimmed = testo.trim()
     if (!trimmed) return
-    sendMessaggio(trimmed, farmaciaId)
+    sendMessaggio(trimmed, merchandiserId)
     setTesto('')
   }
 
@@ -94,10 +87,6 @@ export default function MessageThread({
       e.preventDefault()
       handleSend()
     }
-  }
-
-  function getFarmaciaName(id: string): string {
-    return farmacie.find(f => f.id === id)?.nome || 'Farmacia'
   }
 
   return (
@@ -142,15 +131,6 @@ export default function MessageThread({
                       : 'bg-brand-50 text-brand-800 rounded-bl-sm border border-brand-100'
                   }`}
                 >
-                  {/* Farmacia badge (in inbox view, show which pharmacy the message is about) */}
-                  {!farmaciaId && msg.farmaciaId && (
-                    <div className={`text-[10px] font-medium mb-1 flex items-center gap-1 ${
-                      isMine ? 'text-white/70' : 'text-accent-600'
-                    }`}>
-                      <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                      {getFarmaciaName(msg.farmaciaId)}
-                    </div>
-                  )}
                   <p className="whitespace-pre-wrap break-words">{msg.testo}</p>
                 </div>
                 {/* Timestamp */}

@@ -571,13 +571,6 @@ function FarmaciaDetailPanel({
             </div>
           )}
 
-          {/* Comunicazioni */}
-          <div className="space-y-2">
-            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Comunicazioni</h3>
-            <div className="border border-brand-100 rounded-md overflow-hidden">
-              <MessageThread farmaciaId={farmacia.id} maxHeight="300px" compact />
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -1221,14 +1214,12 @@ function MerchandiserDetailPanel({
           </div>
 
           {/* Comunicazioni */}
-          {assignedFarmacie.length > 0 && (
-            <div className="space-y-3">
-              <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Comunicazioni</h3>
-              <div className="border border-brand-100 rounded-lg overflow-hidden">
-                <MessageThread farmaciIds={assignedFarmacie.map(f => f.id)} maxHeight="250px" compact />
-              </div>
+          <div className="space-y-3">
+            <h3 className="text-xs font-semibold text-brand-500 uppercase tracking-wider">Comunicazioni</h3>
+            <div className="border border-brand-100 rounded-lg overflow-hidden">
+              <MessageThread merchandiserId={merchandiser.id} maxHeight="250px" compact />
             </div>
-          )}
+          </div>
 
           {/* Actions */}
           <div className="pt-3 border-t border-brand-100">

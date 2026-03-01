@@ -27,7 +27,6 @@ function getRoutesForRole(ruolo: string) {
         <Route key="admin-map" path="/admin/mappa" element={<AdminMapPage />} />,
         <Route key="admin-kanban" path="/admin/kanban" element={<AdminKanbanPage />} />,
         <Route key="admin-config" path="/admin/configurazione" element={<AdminConfigurazionePage />} />,
-        <Route key="admin-msg" path="/admin/messaggi" element={<MessaggiPage />} />,
         <Route key="admin-catch" path="*" element={<Navigate to="/admin" replace />} />,
       ]
     case 'brand':
@@ -35,7 +34,6 @@ function getRoutesForRole(ruolo: string) {
         <Route key="brand" path="/brand" element={<BrandDashboard />} />,
         <Route key="brand-map" path="/brand/mappa" element={<BrandMapPage />} />,
         <Route key="brand-farm" path="/brand/farmacie" element={<BrandFarmaciePage />} />,
-        <Route key="brand-msg" path="/brand/messaggi" element={<MessaggiPage />} />,
         <Route key="brand-catch" path="*" element={<Navigate to="/brand" replace />} />,
       ]
     case 'merchandiser':

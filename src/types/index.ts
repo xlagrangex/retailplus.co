@@ -92,6 +92,7 @@ export interface Messaggio {
   autoreId: string
   autoreNome: string
   autoreRuolo: UserRole
+  merchandiserId: string
   farmaciaId?: string
   createdAt: string
 }

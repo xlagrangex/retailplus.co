@@ -17,13 +17,11 @@ const navItems = {
     { to: '/admin/mappa', label: 'Mappa', icon: Map },
     { to: '/admin/kanban', label: 'Kanban', icon: Columns },
     { to: '/admin/configurazione', label: 'Configurazione', icon: Settings },
-    { to: '/admin/messaggi', label: 'Messaggi', icon: MessageSquare },
   ],
   brand: [
     { to: '/brand', label: 'Dashboard', icon: LayoutDashboard },
     { to: '/brand/mappa', label: 'Mappa', icon: Map },
     { to: '/brand/farmacie', label: 'Farmacie', icon: Store },
-    { to: '/brand/messaggi', label: 'Messaggi', icon: MessageSquare },
   ],
   merchandiser: [
     { to: '/merchandiser', label: 'Le mie farmacie', icon: ClipboardList },
