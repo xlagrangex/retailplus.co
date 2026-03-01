@@ -14,7 +14,7 @@ import {
   ArrowLeft, Camera, Check, ChevronRight, Lock, MapPin, Phone, Mail,
   Ruler, X, AlertTriangle, CheckCircle2, Info, ImagePlus, Package, Wrench,
   Pause, Play, FileText, Send, Download, LayoutList, Columns, Navigation,
-  Clock, ChevronDown, ChevronUp,
+  Clock, ChevronDown, ChevronUp, MessageSquare,
 } from 'lucide-react'
 import KanbanBoard from '../components/KanbanBoard'
 import MessageThread from '../components/MessageThread'
@@ -62,7 +62,7 @@ export default function MerchandiserPage() {
   }
 
   if (selectedFarmacia) {
-    return <FarmaciaDetail farmacia={selectedFarmacia} onBack={() => setSelectedFarmacia(null)} />
+    return <FarmaciaDetail farmacia={selectedFarmacia} onBack={() => setSelectedFarmacia(null)} assignedFarmacie={mieFarmacie} />
   }
 
   return (
@@ -246,12 +246,12 @@ export default function MerchandiserPage() {
 // DETTAGLIO FARMACIA (Task 5: contatti, Task 10: in_attesa, Task 11: email)
 // ============================================================
 
-function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () => void }) {
+function FarmaciaDetail({ farmacia, onBack, assignedFarmacie }: { farmacia: Farmacia; onBack: () => void; assignedFarmacie: Farmacia[] }) {
   const { user } = useAuth()
   const { rilievi, saveRilievo, addEvento, fetchEventiForFarmacia, eventi } = useData()
   const [activeFase, setActiveFase] = useState<FaseNumero | null>(null)
   const [farmaciaEventi, setFarmaciaEventi] = useState<RilievoEvento[]>([])
-  const [showTimeline, setShowTimeline] = useState(false)
+  const [showChat, setShowChat] = useState(false)
 
   useEffect(() => {
     fetchEventiForFarmacia(farmacia.id).then(setFarmaciaEventi).catch(console.error)
@@ -359,72 +359,67 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
   const faseIcons = { 1: Ruler, 2: Wrench, 3: Package }
 
   return (
-    <div className="space-y-4 max-w-2xl mx-auto">
-      <button onClick={onBack} className="btn-ghost -ml-3 text-brand-500">
-        <ArrowLeft size={15} /> Torna alla lista
-      </button>
-
-      {/* Header */}
-      <div className="card p-5">
-        <div className="flex items-start justify-between">
-          <div>
-            <h2 className="text-lg font-heading font-bold text-brand-900">{farmacia.nome}</h2>
-            <p className="text-sm text-brand-400 flex items-center gap-1 mt-1">
-              <MapPin size={14} className="shrink-0" /> {farmacia.indirizzo}, {farmacia.citta} ({farmacia.provincia})
-            </p>
+    <div className="space-y-5">
+      {/* ── Header with back button ── */}
+      <div className="flex items-center gap-4">
+        <button onClick={onBack} className="p-2 rounded-lg hover:bg-brand-100 transition-colors">
+          <ArrowLeft size={20} className="text-brand-500" />
+        </button>
+        <div className="flex-1 min-w-0">
+          <h1 className="text-xl font-heading font-bold text-brand-900 truncate">{farmacia.nome}</h1>
+          <div className="flex items-center gap-3 mt-0.5 text-sm text-brand-400">
+            <span className="flex items-center gap-1"><MapPin size={13} /> {farmacia.indirizzo}, {farmacia.citta} ({farmacia.provincia})</span>
+            {farmacia.codiceCliente && <span className="font-mono text-xs">#{farmacia.codiceCliente}</span>}
           </div>
-          <span className={`badge ${cfg.bg} ${cfg.text} border ${cfg.border}`}>
-            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: cfg.dot }} />
-            {getLabelStato(stato)}
+        </div>
+        <span className={`badge ${cfg.bg} ${cfg.text} border ${cfg.border}`}>
+          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: cfg.dot }} />
+          {getLabelStato(stato)}
+        </span>
+      </div>
+
+      {/* ── Quick info row ── */}
+      <div className="flex flex-wrap gap-2">
+        {farmacia.referente && (
+          <span className="badge bg-brand-50 text-brand-600 border border-brand-100 py-1.5 text-xs">
+            Ref: {farmacia.referente}
           </span>
-        </div>
-
-        {/* Contatti completi (Task 5) */}
-        <div className="flex flex-wrap gap-2 mt-3">
-          {farmacia.referente && (
-            <span className="badge bg-brand-50 text-brand-600 border border-brand-100">
-              Ref: {farmacia.referente}
-            </span>
-          )}
-          {farmacia.telefono && (
-            <a href={`tel:${farmacia.telefono}`} className="btn-secondary text-xs py-1.5">
-              <Phone size={13} /> {farmacia.telefono}
-            </a>
-          )}
-          {farmacia.email && (
-            <a href={`mailto:${farmacia.email}`} className="btn-secondary text-xs py-1.5">
-              <Mail size={13} /> {farmacia.email}
-            </a>
-          )}
-          <a
-            href={`https://www.google.com/maps/dir/?api=1&destination=${farmacia.lat},${farmacia.lng}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-secondary text-xs py-1.5"
-          >
-            <Navigation size={13} /> Indicazioni
+        )}
+        {farmacia.telefono && (
+          <a href={`tel:${farmacia.telefono}`} className="btn-secondary text-xs py-2">
+            <Phone size={13} /> {farmacia.telefono}
           </a>
-        </div>
-
-        {/* Toggle in attesa materiale (Task 10) */}
+        )}
+        {farmacia.email && (
+          <a href={`mailto:${farmacia.email}`} className="btn-secondary text-xs py-2">
+            <Mail size={13} /> {farmacia.email}
+          </a>
+        )}
+        <a
+          href={`https://www.google.com/maps/dir/?api=1&destination=${farmacia.lat},${farmacia.lng}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-secondary text-xs py-2"
+        >
+          <Navigation size={13} /> Indicazioni
+        </a>
+        {/* Toggle in attesa materiale */}
         {stato !== 'completata' && (
-          <div className="mt-3 pt-3 border-t border-brand-50">
-            <button
-              onClick={toggleInAttesa}
-              className={`text-xs font-medium flex items-center gap-1.5 px-3 py-1.5 rounded-sm border transition-colors ${
-                stato === 'in_attesa'
-                  ? 'bg-status-waiting-50 text-status-waiting-600 border-status-waiting-100'
-                  : 'bg-brand-50 text-brand-500 border-brand-100 hover:bg-brand-100'
-              }`}
-            >
-              {stato === 'in_attesa' ? <Play size={12} /> : <Pause size={12} />}
-              {stato === 'in_attesa' ? 'Rimuovi attesa materiale' : 'Segna in attesa materiale'}
-            </button>
-          </div>
+          <button
+            onClick={toggleInAttesa}
+            className={`text-xs font-medium flex items-center gap-1.5 px-3 py-2 rounded-lg border transition-colors ${
+              stato === 'in_attesa'
+                ? 'bg-status-waiting-50 text-status-waiting-600 border-status-waiting-100'
+                : 'bg-brand-50 text-brand-500 border-brand-100 hover:bg-brand-100'
+            }`}
+          >
+            {stato === 'in_attesa' ? <Play size={12} /> : <Pause size={12} />}
+            {stato === 'in_attesa' ? 'Rimuovi attesa' : 'In attesa materiale'}
+          </button>
         )}
       </div>
 
-      {/* Email results (Task 11) */}
+      {/* ── Email results (only when completata) ── */}
       {stato === 'completata' && (
         <div className="card p-4">
           <h3 className="text-[13px] font-semibold text-brand-800 flex items-center gap-2 mb-3">
@@ -436,25 +431,26 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
         </div>
       )}
 
-      {/* Progress stepper */}
+      {/* ── Progress stepper ── */}
       <div className="card p-4">
-        <p className="section-title text-[11px] mb-3">Avanzamento</p>
         <div className="flex items-center gap-0">
           {([1, 2, 3] as FaseNumero[]).map((fase, i) => {
-            const done = getRilievoFase(fase)?.completata
-            const unlocked = isFaseUnlocked(fase)
+            const rilievo = getRilievoFase(fase)
+            const done = rilievo?.completata
+            const partial = rilievo && !done
             return (
               <div key={fase} className="flex-1 flex items-center">
-                <div className={`w-8 h-8 rounded-sm flex items-center justify-center text-xs font-semibold transition-colors ${
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold transition-colors ${
                   done ? 'bg-status-done-500 text-white' :
-                  unlocked ? 'bg-accent-100 text-accent-700 ring-1 ring-accent-300' :
-                  'bg-brand-50 text-brand-400'
+                  partial ? 'bg-accent-100 text-accent-700 ring-2 ring-accent-300' :
+                  isFaseUnlocked(fase) ? 'bg-brand-100 text-brand-600' :
+                  'bg-brand-100 text-brand-400'
                 }`}>
-                  {done ? <Check size={14} /> : fase}
+                  {done ? <CheckCircle2 size={18} /> : fase}
                 </div>
                 {i < 2 && (
-                  <div className={`flex-1 h-px mx-2 ${
-                    getRilievoFase(fase)?.completata ? 'bg-status-done-100' : 'bg-brand-100'
+                  <div className={`flex-1 h-0.5 mx-3 rounded ${
+                    done ? 'bg-status-done-300' : 'bg-brand-100'
                   }`} />
                 )}
               </div>
@@ -463,188 +459,217 @@ function FarmaciaDetail({ farmacia, onBack }: { farmacia: Farmacia; onBack: () =
         </div>
       </div>
 
-      {/* 3 Fasi */}
-      <div className="space-y-2">
-        {([1, 2, 3] as FaseNumero[]).map(fase => {
-          const rilievo = getRilievoFase(fase)
-          const done = rilievo?.completata
-          const hasPartialData = rilievo && !done
-          const unlocked = isFaseUnlocked(fase)
-          const FaseIcon = faseIcons[fase]
+      {/* ── Two-column layout: Fasi left, Timeline+Chat right ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
 
-          return (
-            <div
-              key={fase}
-              className={`card overflow-hidden transition-all ${
-                done ? 'border-status-done-100' :
-                unlocked ? 'border-accent-200' :
-                'opacity-50'
-              }`}
-            >
-              {/* Header */}
-              <div className={`px-4 py-3 border-b ${
-                done ? 'bg-status-done-50/50 border-status-done-100' :
-                unlocked ? 'bg-accent-50/30 border-accent-100' :
-                'bg-brand-50/50 border-brand-50'
-              }`}>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-9 h-9 rounded-sm flex items-center justify-center ${
-                      done ? 'bg-status-done-500 text-white' :
-                      unlocked ? 'bg-accent-600 text-white' :
-                      'bg-brand-200 text-brand-400'
-                    }`}>
-                      {done ? <CheckCircle2 size={18} /> : <FaseIcon size={16} />}
+        {/* LEFT: 3 Fasi (3/5 width) */}
+        <div className="lg:col-span-3 space-y-3">
+          {([1, 2, 3] as FaseNumero[]).map(fase => {
+            const rilievo = getRilievoFase(fase)
+            const done = rilievo?.completata
+            const hasPartialData = rilievo && !done
+            const unlocked = isFaseUnlocked(fase)
+            const FaseIcon = faseIcons[fase]
+
+            return (
+              <div
+                key={fase}
+                className={`card overflow-hidden transition-all ${
+                  done ? 'border-status-done-100' :
+                  unlocked ? 'border-accent-200' :
+                  'opacity-50'
+                }`}
+              >
+                {/* Fase header */}
+                <div className={`px-5 py-3.5 border-b ${
+                  done ? 'bg-status-done-50/50 border-status-done-100' :
+                  unlocked ? 'bg-accent-50/30 border-accent-100' :
+                  'bg-brand-50/50 border-brand-50'
+                }`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
+                        done ? 'bg-status-done-500 text-white' :
+                        unlocked ? 'bg-accent-600 text-white' :
+                        'bg-brand-200 text-brand-400'
+                      }`}>
+                        {done ? <CheckCircle2 size={18} /> : <FaseIcon size={16} />}
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-brand-900">Fase {fase} — {getLabelFase(fase)}</p>
+                        <p className="text-[11px] text-brand-400">{getDescrizioneFase(fase)}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[13px] font-medium text-brand-900">Fase {fase} — {getLabelFase(fase)}</p>
-                      <p className="text-[11px] text-brand-400">{getDescrizioneFase(fase)}</p>
-                    </div>
+                    {hasPartialData && (
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-accent-50 text-accent-600 font-medium border border-accent-100">
+                        In compilazione
+                      </span>
+                    )}
+                    {!unlocked && <Lock size={15} className="text-brand-300 shrink-0" />}
                   </div>
-                  {hasPartialData && (
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-accent-50 text-accent-600 font-medium border border-accent-100">
-                      In compilazione
-                    </span>
-                  )}
-                  {!unlocked && <Lock size={15} className="text-brand-300 shrink-0" />}
                 </div>
-              </div>
 
-              {/* Body */}
-              <div className="px-4 py-3">
-                {/* Sbloccata ma non fatta */}
-                {!done && unlocked && (
-                  <div className="space-y-3">
-                    {/* Show partial data if exists */}
-                    {hasPartialData && fase === 2 && (
-                      <div className="space-y-1 mb-2 pb-2 border-b border-brand-50">
-                        <p className="text-[10px] font-semibold text-accent-600 uppercase tracking-wider mb-1">Dati salvati</p>
-                        {rilievo.kitRicevuto && <CheckItem checked={rilievo.kitRicevuto} label="Kit materiale ricevuto" />}
-                        {rilievo.pezziRicevuti && <CheckItem checked={rilievo.pezziRicevuti} label="Pezzi ricevuti" />}
-                        {rilievo.scaricamentoCompleto && <CheckItem checked={rilievo.scaricamentoCompleto} label="Scaricamento completato" />}
-                        {rilievo.montaggioCompleto && <CheckItem checked={rilievo.montaggioCompleto} label="Montaggio completato" />}
-                      </div>
-                    )}
-                    {hasPartialData && fase === 3 && rilievo.prodottiPosizionati && (
-                      <div className="space-y-1 mb-2 pb-2 border-b border-brand-50">
-                        <p className="text-[10px] font-semibold text-accent-600 uppercase tracking-wider mb-1">Dati salvati</p>
-                        <CheckItem checked={rilievo.prodottiPosizionati} label="Prodotti posizionati" />
-                      </div>
-                    )}
-                    <div className="bg-status-waiting-50 border border-status-waiting-100 rounded-sm p-3">
-                      <p className="text-[11px] font-semibold text-status-waiting-600 uppercase tracking-wider flex items-center gap-1 mb-2">
-                        <Info size={11} /> Istruzioni
-                      </p>
-                      {fase === 1 && (
-                        <ol className="text-xs text-brand-700 space-y-1 list-decimal list-inside">
-                          <li>Individua l'espositore dedicato alla cosmetica</li>
-                          <li>Misura la <b>profondita dello scaffale</b> (struttura esterna)</li>
-                          <li>Misura la <b>profondita della mensola</b> (ripiano interno)</li>
-                          <li>Misura <b>larghezza</b> e <b>altezza</b> complessive</li>
-                          <li>Conta il <b>numero di scaffali</b></li>
-                          <li>Scatta <b>almeno 1 foto</b> dell'espositore</li>
-                        </ol>
+                {/* Fase body */}
+                <div className="px-5 py-4">
+                  {/* Sbloccata ma non fatta */}
+                  {!done && unlocked && (
+                    <div className="space-y-3">
+                      {/* Show partial data if exists */}
+                      {hasPartialData && fase === 2 && (
+                        <div className="space-y-1 mb-2 pb-2 border-b border-brand-50">
+                          <p className="text-[10px] font-semibold text-accent-600 uppercase tracking-wider mb-1">Dati salvati</p>
+                          {rilievo.kitRicevuto && <CheckItem checked={rilievo.kitRicevuto} label="Kit materiale ricevuto" />}
+                          {rilievo.pezziRicevuti && <CheckItem checked={rilievo.pezziRicevuti} label="Pezzi ricevuti" />}
+                          {rilievo.scaricamentoCompleto && <CheckItem checked={rilievo.scaricamentoCompleto} label="Scaricamento completato" />}
+                          {rilievo.montaggioCompleto && <CheckItem checked={rilievo.montaggioCompleto} label="Montaggio completato" />}
+                        </div>
                       )}
-                      {fase === 2 && (
-                        <ol className="text-xs text-brand-700 space-y-1 list-decimal list-inside">
-                          <li>Verifica di aver ricevuto tutti i <b>pezzi di plexiglass</b></li>
-                          <li>Ogni elle ha il <b>nome del prodotto</b> stampato</li>
-                          <li>Applica il <b>biadesivo</b> sul retro di ogni elle</li>
-                          <li><b>Attacca</b> le elle sugli scaffali dell'espositore</li>
-                          <li>Verifica che ogni pezzo sia <b>ben fissato e dritto</b></li>
-                          <li>Scatta <b>almeno 1 foto</b> del risultato</li>
-                        </ol>
+                      {hasPartialData && fase === 3 && rilievo.prodottiPosizionati && (
+                        <div className="space-y-1 mb-2 pb-2 border-b border-brand-50">
+                          <p className="text-[10px] font-semibold text-accent-600 uppercase tracking-wider mb-1">Dati salvati</p>
+                          <CheckItem checked={rilievo.prodottiPosizionati} label="Prodotti posizionati" />
+                        </div>
                       )}
-                      {fase === 3 && (
-                        <ol className="text-xs text-brand-700 space-y-1 list-decimal list-inside">
-                          <li>Verifica di aver ricevuto <b>tutti i prodotti</b></li>
-                          <li>Posiziona ogni prodotto sullo <b>scaffale corrispondente</b></li>
-                          <li>Verifica che l'espositore sia <b>completo e ordinato</b></li>
-                          <li>Scatta <b>almeno 1 foto</b> del risultato finale</li>
-                        </ol>
-                      )}
-                    </div>
-                    <button onClick={() => setActiveFase(fase)} className="btn-primary w-full py-3">
-                      <Camera size={16} /> {hasPartialData ? 'Continua' : 'Inizia'} Fase {fase}
-                    </button>
-                  </div>
-                )}
-
-                {/* Bloccata */}
-                {!done && !unlocked && (
-                  <div className="flex items-center gap-2 text-brand-400 py-1">
-                    <Lock size={13} />
-                    <p className="text-xs">Completa la Fase {fase - 1} per sbloccare</p>
-                  </div>
-                )}
-
-                {/* Completata */}
-                {done && rilievo && (
-                  <div className="space-y-2.5">
-                    <div className="flex items-center gap-2 text-status-done-600 text-xs">
-                      <CheckCircle2 size={13} />
-                      <span>Completata il {rilievo.dataCompletamento}{rilievo.oraCompletamento ? ` alle ${rilievo.oraCompletamento}` : ''}</span>
-                    </div>
-                    {fase === 1 && (
-                      <DynamicMisureDisplay rilievo={rilievo} />
-                    )}
-                    {fase === 2 && (
-                      <div className="space-y-1">
-                        {rilievo.kitRicevuto !== undefined && <CheckItem checked={rilievo.kitRicevuto} label="Kit materiale ricevuto" />}
-                        <CheckItem checked={rilievo.pezziRicevuti} label="Pezzi ricevuti" />
-                        <CheckItem checked={rilievo.scaricamentoCompleto} label="Scaricamento materiale (svuotamento scaffale)" />
-                        <CheckItem checked={rilievo.montaggioCompleto} label="Montaggio materiale completato" />
-                        {rilievo.problemaKit && (
-                          <div className="bg-brand-50 border border-brand-200 rounded-sm p-2 mt-1">
-                            <p className="text-[11px] font-medium text-brand-700 flex items-center gap-1">
-                              <AlertTriangle size={11} /> Problema segnalato
-                            </p>
-                            {rilievo.descrizioneProblema && (
-                              <p className="text-xs text-brand-700 mt-1">{rilievo.descrizioneProblema}</p>
-                            )}
-                          </div>
+                      <div className="bg-status-waiting-50 border border-status-waiting-100 rounded-lg p-3">
+                        <p className="text-[11px] font-semibold text-status-waiting-600 uppercase tracking-wider flex items-center gap-1 mb-2">
+                          <Info size={11} /> Istruzioni
+                        </p>
+                        {fase === 1 && (
+                          <ol className="text-xs text-brand-700 space-y-1 list-decimal list-inside">
+                            <li>Individua l'espositore dedicato alla cosmetica</li>
+                            <li>Misura la <b>profondita dello scaffale</b> (struttura esterna)</li>
+                            <li>Misura la <b>profondita della mensola</b> (ripiano interno)</li>
+                            <li>Misura <b>larghezza</b> e <b>altezza</b> complessive</li>
+                            <li>Conta il <b>numero di scaffali</b></li>
+                            <li>Scatta <b>almeno 1 foto</b> dell'espositore</li>
+                          </ol>
+                        )}
+                        {fase === 2 && (
+                          <ol className="text-xs text-brand-700 space-y-1 list-decimal list-inside">
+                            <li>Verifica di aver ricevuto tutti i <b>pezzi di plexiglass</b></li>
+                            <li>Ogni elle ha il <b>nome del prodotto</b> stampato</li>
+                            <li>Applica il <b>biadesivo</b> sul retro di ogni elle</li>
+                            <li><b>Attacca</b> le elle sugli scaffali dell'espositore</li>
+                            <li>Verifica che ogni pezzo sia <b>ben fissato e dritto</b></li>
+                            <li>Scatta <b>almeno 1 foto</b> del risultato</li>
+                          </ol>
+                        )}
+                        {fase === 3 && (
+                          <ol className="text-xs text-brand-700 space-y-1 list-decimal list-inside">
+                            <li>Verifica di aver ricevuto <b>tutti i prodotti</b></li>
+                            <li>Posiziona ogni prodotto sullo <b>scaffale corrispondente</b></li>
+                            <li>Verifica che l'espositore sia <b>completo e ordinato</b></li>
+                            <li>Scatta <b>almeno 1 foto</b> del risultato finale</li>
+                          </ol>
                         )}
                       </div>
-                    )}
-                    {fase === 3 && <CheckItem checked={rilievo.prodottiPosizionati} label="Prodotti posizionati" />}
-                    {rilievo.foto?.length > 0 && (
-                      <div className="flex gap-1.5 overflow-x-auto pb-1">
-                        {rilievo.foto.map((f, i) => (
-                          <img key={i} src={f} alt="" className="w-16 h-16 object-cover rounded border border-brand-100 shrink-0" />
-                        ))}
-                      </div>
-                    )}
-                    {rilievo.note && (
-                      <div className="bg-brand-50 rounded-sm p-2.5">
-                        <p className="text-[11px] text-brand-400 mb-0.5">Note</p>
-                        <p className="text-xs text-brand-700">{rilievo.note}</p>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          )
-        })}
-      </div>
+                      <button onClick={() => setActiveFase(fase)} className="btn-primary w-full py-3">
+                        <Camera size={16} /> {hasPartialData ? 'Continua' : 'Inizia'} Fase {fase}
+                      </button>
+                    </div>
+                  )}
 
-      {/* Timeline collapsabile */}
-      <div className="card overflow-hidden">
-        <button
-          onClick={() => setShowTimeline(!showTimeline)}
-          className="w-full flex items-center justify-between px-4 py-3 hover:bg-brand-50/50 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <Clock size={14} className="text-accent-600" />
-            <span className="text-[13px] font-semibold text-brand-800">Storico attivita</span>
+                  {/* Bloccata */}
+                  {!done && !unlocked && (
+                    <div className="flex items-center gap-2 text-brand-400 py-1">
+                      <Lock size={13} />
+                      <p className="text-xs">Completa la Fase {fase - 1} per sbloccare</p>
+                    </div>
+                  )}
+
+                  {/* Completata */}
+                  {done && rilievo && (
+                    <div className="space-y-2.5">
+                      <div className="flex items-center gap-2 text-status-done-600 text-xs">
+                        <CheckCircle2 size={13} />
+                        <span>Completata il {rilievo.dataCompletamento}{rilievo.oraCompletamento ? ` alle ${rilievo.oraCompletamento}` : ''}</span>
+                      </div>
+                      {fase === 1 && (
+                        <DynamicMisureDisplay rilievo={rilievo} />
+                      )}
+                      {fase === 2 && (
+                        <div className="space-y-1">
+                          {rilievo.kitRicevuto !== undefined && <CheckItem checked={rilievo.kitRicevuto} label="Kit materiale ricevuto" />}
+                          <CheckItem checked={rilievo.pezziRicevuti} label="Pezzi ricevuti" />
+                          <CheckItem checked={rilievo.scaricamentoCompleto} label="Scaricamento materiale (svuotamento scaffale)" />
+                          <CheckItem checked={rilievo.montaggioCompleto} label="Montaggio materiale completato" />
+                          {rilievo.problemaKit && (
+                            <div className="bg-brand-50 border border-brand-200 rounded-lg p-2 mt-1">
+                              <p className="text-[11px] font-medium text-brand-700 flex items-center gap-1">
+                                <AlertTriangle size={11} /> Problema segnalato
+                              </p>
+                              {rilievo.descrizioneProblema && (
+                                <p className="text-xs text-brand-700 mt-1">{rilievo.descrizioneProblema}</p>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      {fase === 3 && <CheckItem checked={rilievo.prodottiPosizionati} label="Prodotti posizionati" />}
+                      {rilievo.foto?.length > 0 && (
+                        <div className="flex gap-1.5 overflow-x-auto pb-1">
+                          {rilievo.foto.map((f, i) => (
+                            <img key={i} src={f} alt="" className="w-20 h-20 object-cover rounded-lg border border-brand-100 shrink-0" />
+                          ))}
+                        </div>
+                      )}
+                      {rilievo.note && (
+                        <div className="bg-brand-50 rounded-lg p-2.5">
+                          <p className="text-[11px] text-brand-400 mb-0.5">Note</p>
+                          <p className="text-xs text-brand-700">{rilievo.note}</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* RIGHT: Timeline + Chat (2/5 width) */}
+        <div className="lg:col-span-2 space-y-4">
+          {/* Timeline */}
+          <div className="card p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <Clock size={15} className="text-accent-600" />
+              <h3 className="text-sm font-heading font-bold text-brand-800">Storico attivita</h3>
+              {farmaciaEventi.length > 0 && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-brand-100 text-brand-500 font-medium">
+                  {farmaciaEventi.length}
+                </span>
+              )}
+            </div>
+            <div className="max-h-[400px] overflow-y-auto">
+              <Timeline eventi={farmaciaEventi} rilievi={rilievi} farmaciaId={farmacia.id} />
+            </div>
           </div>
-          {showTimeline ? <ChevronUp size={14} className="text-brand-400" /> : <ChevronDown size={14} className="text-brand-400" />}
-        </button>
-        {showTimeline && (
-          <div className="px-4 pb-4 border-t border-brand-100 pt-3">
-            <Timeline eventi={farmaciaEventi} rilievi={rilievi} farmaciaId={farmacia.id} />
+
+          {/* Chat */}
+          <div className="card overflow-hidden">
+            <button
+              onClick={() => setShowChat(!showChat)}
+              className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-brand-50/50 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <MessageSquare size={15} className="text-accent-600" />
+                <h3 className="text-sm font-heading font-bold text-brand-800">Chat con Admin</h3>
+              </div>
+              {showChat ? <ChevronUp size={14} className="text-brand-400" /> : <ChevronDown size={14} className="text-brand-400" />}
+            </button>
+            {showChat && (
+              <div className="border-t border-brand-100">
+                <MessageThread
+                  merchandiserId={user.id}
+                  maxHeight="350px"
+                  selectedFarmaciaId={farmacia.id}
+                  onClearFarmaciaFilter={() => {}}
+                  farmacie={assignedFarmacie}
+                />
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
     </div>
