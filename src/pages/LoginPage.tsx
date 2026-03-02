@@ -185,10 +185,16 @@ export default function LoginPage() {
           </div>
 
           {/* Footer with branding */}
-          <div className="mt-8">
+          <div className="mt-8 space-y-3">
             <p className="text-center text-xs text-brand-400">
               Retail+ v1.0 — Ambiente demo
             </p>
+            <div className="flex items-center justify-center gap-3">
+              <span className="text-[10px] text-brand-300">Developed by</span>
+              <img src="/logo-logplus.png" alt="LogPlus" className="h-4" />
+              <span className="text-brand-200">|</span>
+              <img src="/logo-euroteam3d.png" alt="Euroteam 3D" className="h-4" />
+            </div>
           </div>
         </div>
       </div>
