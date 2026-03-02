@@ -54,7 +54,7 @@ export default function FarmaciaMap({ farmacie, rilievi, sopralluoghi = [], onFa
 
         return (
           <CircleMarker
-            key={f.id}
+            key={`${f.id}-${stato}`}
             center={[f.lat, f.lng]}
             radius={8}
             pathOptions={{
