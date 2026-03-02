@@ -185,6 +185,29 @@ export function DataProvider({ children }: { children: ReactNode }) {
     return () => { cancelled = true }
   }, [])
 
+  // Poll messaggi + read receipts every 10s for near-real-time updates
+  useEffect(() => {
+    if (!isSupabaseConfigured) return
+    const interval = setInterval(async () => {
+      try {
+        const [msgs, allLetti] = await Promise.all([fetchMessaggi(), fetchAllMessaggiLetti()])
+        setMessaggi(msgs)
+        const byOthers = new Set<string>()
+        allLetti.forEach(l => {
+          const msg = msgs.find(m => m.id === l.messaggioId)
+          if (msg && l.userId !== msg.autoreId) byOthers.add(l.messaggioId)
+        })
+        setMessaggiLettiByOthers(byOthers)
+        // Also refresh own read set
+        if (currentUserId) {
+          const letti = allLetti.filter(l => l.userId === currentUserId)
+          setMessaggiLettiIds(new Set(letti.map(l => l.messaggioId)))
+        }
+      } catch { /* ignore polling errors */ }
+    }, 10000)
+    return () => clearInterval(interval)
+  }, [currentUserId])
+
   const refresh = useCallback(() => {
     if (isSupabaseConfigured) {
       Promise.all([fetchUsers(), fetchFarmacie(), fetchAssegnazioni(), fetchRilievi()])
