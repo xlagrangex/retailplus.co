@@ -1,4 +1,4 @@
-import { User, Farmacia, Assegnazione, Rilievo, CampoConfigurazione, RegistrazionePending, Messaggio, MessaggioLetto, RilievoEvento, Sopralluogo } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, CampoConfigurazione, RegistrazionePending, Messaggio, MessaggioLetto, RilievoEvento, Sopralluogo, Appuntamento } from '../types'
 import importedFarmacie from './farmacie-import.json'
 
 export const mockUsers: User[] = [
@@ -23,10 +23,11 @@ const STORAGE_KEYS = {
   assegnazioni: 'logplus_assegnazioni',
   rilievi: 'logplus_rilievi',
   sopralluoghi: 'logplus_sopralluoghi',
+  appuntamenti: 'logplus_appuntamenti',
 }
 
 // Bump this version when mock data changes to force localStorage reset
-const MOCK_DATA_VERSION = '6'
+const MOCK_DATA_VERSION = '7'
 const VERSION_KEY = 'logplus_mock_version'
 
 export function initMockData() {
@@ -52,6 +53,9 @@ export function initMockData() {
   if (!localStorage.getItem(STORAGE_KEYS.sopralluoghi)) {
     localStorage.setItem(STORAGE_KEYS.sopralluoghi, JSON.stringify([]))
   }
+  if (!localStorage.getItem(STORAGE_KEYS.appuntamenti)) {
+    localStorage.setItem(STORAGE_KEYS.appuntamenti, JSON.stringify([]))
+  }
 }
 
 export function resetMockData() {
@@ -60,6 +64,7 @@ export function resetMockData() {
   localStorage.setItem(STORAGE_KEYS.assegnazioni, JSON.stringify(mockAssegnazioni))
   localStorage.setItem(STORAGE_KEYS.rilievi, JSON.stringify(mockRilievi))
   localStorage.setItem(STORAGE_KEYS.sopralluoghi, JSON.stringify([]))
+  localStorage.setItem(STORAGE_KEYS.appuntamenti, JSON.stringify([]))
 }
 
 // CRUD helpers
@@ -143,4 +148,11 @@ export function getSopralluoghi(): Sopralluogo[] {
 }
 export function saveSopralluoghi(sopralluoghi: Sopralluogo[]) {
   localStorage.setItem(STORAGE_KEYS.sopralluoghi, JSON.stringify(sopralluoghi))
+}
+
+export function getAppuntamenti(): Appuntamento[] {
+  return JSON.parse(localStorage.getItem(STORAGE_KEYS.appuntamenti) || '[]')
+}
+export function saveAppuntamenti(appuntamenti: Appuntamento[]) {
+  localStorage.setItem(STORAGE_KEYS.appuntamenti, JSON.stringify(appuntamenti))
 }

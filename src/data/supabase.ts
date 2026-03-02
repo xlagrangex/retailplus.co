@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione, RegistrazionePending, RegistrazioneStato, Messaggio, MessaggioLetto, RilievoEvento, Sopralluogo } from '../types'
+import { User, Farmacia, Assegnazione, Rilievo, FaseNumero, CampoConfigurazione, RegistrazionePending, RegistrazioneStato, Messaggio, MessaggioLetto, RilievoEvento, Sopralluogo, Appuntamento } from '../types'
 
 // ── Mapping helpers (snake_case DB ↔ camelCase TS) ──
 
@@ -537,5 +537,46 @@ export async function fetchSopralluoghiByFarmacia(farmaciaId: string): Promise<S
 
 export async function insertSopralluogo(s: Sopralluogo): Promise<void> {
   const { error } = await supabase.from('sopralluoghi').insert(sopralluogoToDb(s))
+  if (error) throw error
+}
+
+// ── Appuntamenti CRUD ──
+
+function appuntamentoFromDb(row: any): Appuntamento {
+  return {
+    id: row.id,
+    farmaciaId: row.farmacia_id,
+    merchandiserId: row.merchandiser_id,
+    fase: row.fase as FaseNumero,
+    data: row.data,
+    ora: row.ora,
+    nota: row.nota || undefined,
+    referente: row.referente || undefined,
+    createdAt: row.created_at,
+  }
+}
+
+function appuntamentoToDb(a: Appuntamento): any {
+  return {
+    id: a.id,
+    farmacia_id: a.farmaciaId,
+    merchandiser_id: a.merchandiserId,
+    fase: a.fase,
+    data: a.data,
+    ora: a.ora,
+    nota: a.nota || null,
+    referente: a.referente || null,
+    created_at: a.createdAt,
+  }
+}
+
+export async function fetchAppuntamenti(): Promise<Appuntamento[]> {
+  const { data, error } = await supabase.from('appuntamenti').select('*').order('created_at', { ascending: true })
+  if (error) throw error
+  return (data || []).map(appuntamentoFromDb)
+}
+
+export async function insertAppuntamento(a: Appuntamento): Promise<void> {
+  const { error } = await supabase.from('appuntamenti').insert(appuntamentoToDb(a))
   if (error) throw error
 }

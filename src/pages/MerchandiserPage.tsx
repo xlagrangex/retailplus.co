@@ -6,7 +6,7 @@ import OnboardingModal, { useOnboardingTrigger } from '../components/OnboardingM
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPhoto } from '../lib/supabase'
 import {
-  Farmacia, Rilievo, FaseNumero, StatoFarmacia, RilievoEvento, Sopralluogo, EsitoSopralluogo,
+  Farmacia, Rilievo, FaseNumero, StatoFarmacia, RilievoEvento, Sopralluogo, EsitoSopralluogo, Appuntamento,
   getStatoFarmacia, getColoreStato,
   getLabelStato, getLabelFase, getDescrizioneFase, getFaseCorrente,
 } from '../types'
@@ -14,7 +14,7 @@ import {
   ArrowLeft, Camera, Check, ChevronRight, Lock, MapPin, Phone, Mail,
   Ruler, X, AlertTriangle, CheckCircle2, Info, ImagePlus, Package, Wrench,
   FileText, Send, Download, LayoutList, Columns, Navigation,
-  Clock, ChevronDown, ChevronUp, MessageSquare,
+  Clock, ChevronDown, ChevronUp, MessageSquare, Calendar,
 } from 'lucide-react'
 import KanbanBoard from '../components/KanbanBoard'
 import MessageThread from '../components/MessageThread'
@@ -235,9 +235,10 @@ export default function MerchandiserPage() {
 
 function FarmaciaDetail({ farmacia, onBack, assignedFarmacie }: { farmacia: Farmacia; onBack: () => void; assignedFarmacie: Farmacia[] }) {
   const { user } = useAuth()
-  const { rilievi, saveRilievo, addEvento, fetchEventiForFarmacia, eventi, sopralluoghi, addSopralluogo, sendMessaggio } = useData()
+  const { rilievi, saveRilievo, addEvento, fetchEventiForFarmacia, eventi, sopralluoghi, addSopralluogo, sendMessaggio, appuntamenti, addAppuntamento } = useData()
   const [activeFase, setActiveFase] = useState<FaseNumero | null>(null)
   const [showSopralluogoForm, setShowSopralluogoForm] = useState<FaseNumero | null>(null)
+  const [showAppuntamentoForm, setShowAppuntamentoForm] = useState<FaseNumero | null>(null)
   const [farmaciaEventi, setFarmaciaEventi] = useState<RilievoEvento[]>([])
   const [showChat, setShowChat] = useState(false)
 
@@ -296,6 +297,21 @@ function FarmaciaDetail({ farmacia, onBack, assignedFarmacie }: { farmacia: Farm
     const encodedBody = encodeURIComponent(body)
     const to = farmacia.email || ''
     return `mailto:${to}?subject=${subject}&body=${encodedBody}`
+  }
+
+  if (showAppuntamentoForm) {
+    return (
+      <AppuntamentoForm
+        farmacia={farmacia}
+        fase={showAppuntamentoForm}
+        userId={user.id}
+        appuntamenti={appuntamenti.filter(a => a.farmaciaId === farmacia.id && a.fase === showAppuntamentoForm)}
+        onDone={() => setShowAppuntamentoForm(null)}
+        onBack={() => setShowAppuntamentoForm(null)}
+        addAppuntamento={addAppuntamento}
+        addEvento={addEvento}
+      />
+    )
   }
 
   if (showSopralluogoForm) {
@@ -525,9 +541,46 @@ function FarmaciaDetail({ farmacia, onBack, assignedFarmacie }: { farmacia: Farm
                           </ol>
                         )}
                       </div>
-                      <button onClick={() => setShowSopralluogoForm(fase)} className="btn-primary w-full py-3">
-                        <MapPin size={16} /> {hasPartialData ? 'Continua' : 'Inizia'} Fase {fase}
-                      </button>
+                      {/* Appuntamenti for this fase */}
+                      {(() => {
+                        const faseAppuntamenti = appuntamenti.filter(a => a.farmaciaId === farmacia.id && a.fase === fase)
+                        if (faseAppuntamenti.length > 0) {
+                          return (
+                            <div className="space-y-1 mb-2">
+                              <p className="text-[10px] font-semibold text-brand-400 uppercase tracking-wider">Appuntamenti</p>
+                              {faseAppuntamenti.map(a => {
+                                const isFuturo = a.data >= new Date().toISOString().split('T')[0]
+                                return (
+                                  <div key={a.id} className={`text-xs flex items-center gap-2 px-2 py-1.5 rounded border ${isFuturo ? 'bg-accent-50 border-accent-100 text-accent-700' : 'bg-brand-50 border-brand-100 text-brand-600'}`}>
+                                    <Calendar size={11} className="shrink-0" />
+                                    <span className="font-medium">{a.data} {a.ora}</span>
+                                    {a.referente && <span className="text-brand-400">Ref: {a.referente}</span>}
+                                    {a.nota && <span className="truncate text-brand-400 ml-auto max-w-[150px]">{a.nota}</span>}
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          )
+                        }
+                        return null
+                      })()}
+
+                      <div className="flex gap-2">
+                        <button onClick={() => setShowAppuntamentoForm(fase)} className="btn-secondary flex-1 py-3">
+                          <Calendar size={16} /> Fissa appuntamento
+                        </button>
+                        {(() => {
+                          const hasAppuntamento = appuntamenti.some(a => a.farmaciaId === farmacia.id && a.fase === fase)
+                          if (hasAppuntamento || hasPartialData) {
+                            return (
+                              <button onClick={() => setShowSopralluogoForm(fase)} className="btn-primary flex-1 py-3">
+                                <MapPin size={16} /> {hasPartialData ? 'Continua' : 'Registra sopralluogo'}
+                              </button>
+                            )
+                          }
+                          return null
+                        })()}
+                      </div>
                       {/* Sopralluoghi history for this fase */}
                       {(() => {
                         const faseSopralluoghi = sopralluoghi.filter(s => s.farmaciaId === farmacia.id && s.fase === fase)
@@ -702,6 +755,166 @@ function CheckItem({ checked, label }: { checked?: boolean; label: string }) {
         : <AlertTriangle size={14} className="text-status-waiting-500 shrink-0" />
       }
       <span className={checked ? 'text-brand-700' : 'text-status-waiting-600'}>{label}</span>
+    </div>
+  )
+}
+
+// ============================================================
+// APPUNTAMENTO FORM
+// ============================================================
+
+function AppuntamentoForm({
+  farmacia, fase, userId, appuntamenti, onDone, onBack, addAppuntamento, addEvento,
+}: {
+  farmacia: Farmacia; fase: FaseNumero; userId: string
+  appuntamenti: Appuntamento[]
+  onDone: () => void; onBack: () => void
+  addAppuntamento: (a: Appuntamento) => Promise<void>
+  addEvento: (e: RilievoEvento) => void
+}) {
+  const tomorrow = new Date()
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  const [data, setData] = useState(tomorrow.toISOString().split('T')[0])
+  const [ora, setOra] = useState('09:00')
+  const [referente, setReferente] = useState(farmacia.referente || '')
+  const [nota, setNota] = useState('')
+  const [saving, setSaving] = useState(false)
+  const { showToast } = useToast()
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setSaving(true)
+
+    const appuntamento: Appuntamento = {
+      id: crypto.randomUUID(),
+      farmaciaId: farmacia.id,
+      merchandiserId: userId,
+      fase,
+      data,
+      ora,
+      nota: nota.trim() || undefined,
+      referente: referente.trim() || undefined,
+      createdAt: new Date().toISOString(),
+    }
+
+    try {
+      await addAppuntamento(appuntamento)
+      addEvento({
+        id: crypto.randomUUID(),
+        farmaciaId: farmacia.id,
+        merchandiserId: userId,
+        fase,
+        tipo: 'appuntamento_fissato',
+        dettaglio: `${data} ${ora}`,
+        createdAt: new Date().toISOString(),
+      })
+      showToast('Appuntamento fissato con successo.', 'success')
+      onDone()
+    } catch (err) {
+      console.error('Errore salvataggio appuntamento:', err)
+      showToast('Errore durante il salvataggio. Riprova.', 'error')
+      setSaving(false)
+    }
+  }
+
+  return (
+    <div className="space-y-4 max-w-2xl mx-auto">
+      <button onClick={onBack} className="btn-ghost -ml-3 text-brand-500">
+        <ArrowLeft size={15} /> Torna alla scheda
+      </button>
+
+      <div className="card p-4 bg-accent-50 border border-accent-100">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded flex items-center justify-center bg-accent-600 text-white">
+            <Calendar size={20} />
+          </div>
+          <div>
+            <h2 className="text-base font-heading font-bold text-brand-900">Fissa appuntamento — Fase {fase}</h2>
+            <p className="text-xs text-brand-500">{farmacia.nome} — {farmacia.citta}</p>
+          </div>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="card p-5 space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="label">Data *</label>
+              <input type="date" value={data} onChange={e => setData(e.target.value)} required className="input" />
+            </div>
+            <div>
+              <label className="label">Ora *</label>
+              <input type="time" value={ora} onChange={e => setOra(e.target.value)} required className="input" />
+            </div>
+          </div>
+
+          <div>
+            <label className="label">Referente</label>
+            <input
+              type="text"
+              value={referente}
+              onChange={e => setReferente(e.target.value)}
+              className="input"
+              placeholder="Nome del referente in farmacia"
+            />
+          </div>
+
+          <div>
+            <label className="label">Nota (opzionale)</label>
+            <textarea
+              value={nota}
+              onChange={e => setNota(e.target.value)}
+              rows={3}
+              className="input"
+              placeholder="Eventuali note sull'appuntamento..."
+            />
+            {nota.trim() && (
+              <p className="text-[10px] text-accent-500 mt-1">La nota verra inviata automaticamente in chat.</p>
+            )}
+          </div>
+        </div>
+
+        <button type="submit" disabled={saving} className="w-full py-3 rounded-lg font-medium text-white transition-colors bg-accent-600 hover:bg-accent-700">
+          {saving ? (
+            <span className="flex items-center justify-center gap-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Salvataggio...
+            </span>
+          ) : (
+            <span className="flex items-center justify-center gap-2">
+              <Calendar size={16} />
+              Conferma appuntamento
+            </span>
+          )}
+        </button>
+      </form>
+
+      {/* Previous appointments */}
+      {appuntamenti.length > 0 && (
+        <div className="card p-4">
+          <h3 className="text-[13px] font-semibold text-brand-800 mb-3">Appuntamenti precedenti ({appuntamenti.length})</h3>
+          <div className="space-y-2">
+            {appuntamenti.map(a => {
+              const isFuturo = a.data >= new Date().toISOString().split('T')[0]
+              return (
+                <div key={a.id} className={`flex items-center gap-3 p-3 rounded-lg border ${isFuturo ? 'bg-accent-50 border-accent-100' : 'bg-brand-50 border-brand-100'}`}>
+                  <Calendar size={14} className={`shrink-0 ${isFuturo ? 'text-accent-600' : 'text-brand-400'}`} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium text-brand-800">{a.data} alle {a.ora}</p>
+                    {a.referente && <p className="text-[11px] text-brand-500 mt-0.5">Ref: {a.referente}</p>}
+                    {a.nota && <p className="text-[11px] text-brand-400 mt-0.5 truncate">{a.nota}</p>}
+                  </div>
+                  {isFuturo && (
+                    <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-accent-100 text-accent-700">
+                      Futuro
+                    </span>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

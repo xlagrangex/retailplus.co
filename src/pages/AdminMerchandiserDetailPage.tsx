@@ -6,14 +6,14 @@ import KanbanBoard from '../components/KanbanBoard'
 import MessageThread from '../components/MessageThread'
 import Timeline from '../components/Timeline'
 import {
-  Farmacia, Rilievo, FaseNumero, RilievoEvento, Sopralluogo,
+  Farmacia, Rilievo, FaseNumero, RilievoEvento, Sopralluogo, Appuntamento,
   getStatoFarmacia, getLabelStato, getLabelFase, getFaseCorrente, StatoFarmacia,
 } from '../types'
 import {
   ArrowLeft, Mail, Phone, Trash2, Plus, Search, MapPin, X, Unlink,
   LayoutList, Columns, MessageSquare, ChevronDown, ChevronUp, CheckCircle2,
   AlertTriangle, Ruler, Wrench, Package, Navigation, Image as ImageIcon,
-  Download, Filter, Clock,
+  Download, Filter, Clock, Calendar,
 } from 'lucide-react'
 import JSZip from 'jszip'
 
@@ -28,7 +28,7 @@ const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: str
 export default function AdminMerchandiserDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { users, farmacie, rilievi, assegnazioni, campiConfigurazione, removeUser, assignFarmacia, unassignFarmacia, sopralluoghi } = useData()
+  const { users, farmacie, rilievi, assegnazioni, campiConfigurazione, removeUser, assignFarmacia, unassignFarmacia, sopralluoghi, appuntamenti } = useData()
   const { showToast } = useToast()
   const [selectedFarmaciaForChat, setSelectedFarmaciaForChat] = useState<string | null>(null)
   const [detailFarmaciaId, setDetailFarmaciaId] = useState<string | null>(null)
@@ -74,6 +74,7 @@ export default function AdminMerchandiserDetailPage() {
         rilievi={rilievi}
         campiConfigurazione={campiConfigurazione}
         sopralluoghi={sopralluoghi}
+        appuntamenti={appuntamenti}
         onBack={() => setDetailFarmaciaId(null)}
         onFilterChat={(fId) => {
           setDetailFarmaciaId(null)
@@ -399,13 +400,14 @@ export default function AdminMerchandiserDetailPage() {
 // ============================================================
 
 function FarmaciaFullView({
-  farmacia, merchandiser, rilievi, campiConfigurazione, sopralluoghi = [], onBack, onFilterChat, assignedFarmacie,
+  farmacia, merchandiser, rilievi, campiConfigurazione, sopralluoghi = [], appuntamenti = [], onBack, onFilterChat, assignedFarmacie,
 }: {
   farmacia: Farmacia
   merchandiser: { id: string; nome: string; cognome: string }
   rilievi: Rilievo[]
   campiConfigurazione: { id: string; fase: FaseNumero; nome: string; label: string; tipo: string; unita?: string; attivo: boolean; ordine: number }[]
   sopralluoghi?: Sopralluogo[]
+  appuntamenti?: Appuntamento[]
   onBack: () => void
   onFilterChat?: (farmaciaId: string) => void
   assignedFarmacie: Farmacia[]
@@ -428,6 +430,7 @@ function FarmaciaFullView({
   const sc = statoColors[stato]
   const faseIcons = { 1: Ruler, 2: Wrench, 3: Package }
   const farmaciaSopralluoghi = sopralluoghi.filter(s => s.farmaciaId === farmacia.id)
+  const farmaciaAppuntamenti = appuntamenti.filter(a => a.farmaciaId === farmacia.id)
 
   const getRilievoFase = (fase: FaseNumero) =>
     rilievi.find(r => r.farmaciaId === farmacia.id && r.fase === fase)
@@ -729,6 +732,35 @@ function FarmaciaFullView({
                     )}
                   </div>
                 )}
+
+                {/* Appuntamenti for this fase */}
+                {(() => {
+                  const faseAppts = farmaciaAppuntamenti.filter(a => a.fase === fase)
+                  if (faseAppts.length === 0) return null
+                  return (
+                    <div className="px-5 py-3 border-t border-brand-100">
+                      <p className="text-[10px] font-semibold text-brand-400 uppercase tracking-wider mb-2">Appuntamenti ({faseAppts.length})</p>
+                      <div className="space-y-1.5">
+                        {faseAppts.map(a => {
+                          const isFuturo = a.data >= new Date().toISOString().split('T')[0]
+                          return (
+                            <div key={a.id} className={`flex items-center gap-3 px-3 py-2 rounded-lg border text-xs ${
+                              isFuturo ? 'bg-accent-50 border-accent-100' : 'bg-brand-50 border-brand-100'
+                            }`}>
+                              <Calendar size={13} className={`shrink-0 ${isFuturo ? 'text-accent-600' : 'text-brand-400'}`} />
+                              <span className="text-brand-700 font-medium">{a.data} {a.ora}</span>
+                              {a.referente && <span className="text-brand-500">Ref: {a.referente}</span>}
+                              {a.nota && <span className="text-brand-400 truncate ml-auto max-w-[200px]">{a.nota}</span>}
+                              {isFuturo && (
+                                <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-accent-100 text-accent-700 shrink-0">Futuro</span>
+                              )}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )
+                })()}
 
                 {/* Sopralluoghi for this fase */}
                 {(() => {

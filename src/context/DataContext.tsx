@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
-import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione, RegistrazionePending, Messaggio, RilievoEvento, Sopralluogo } from '../types'
+import { Farmacia, Assegnazione, Rilievo, User, CampoConfigurazione, RegistrazionePending, Messaggio, RilievoEvento, Sopralluogo, Appuntamento } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import {
   fetchUsers, fetchFarmacie, fetchAssegnazioni, fetchRilievi,
@@ -23,6 +23,8 @@ import {
   insertEvento as sbInsertEvento,
   fetchSopralluoghi,
   insertSopralluogo as sbInsertSopralluogo,
+  fetchAppuntamenti,
+  insertAppuntamento as sbInsertAppuntamento,
 } from '../data/supabase'
 import {
   getFarmacie, saveFarmacie,
@@ -35,6 +37,7 @@ import {
   getMessaggiLetti, saveMessaggiLetti,
   getEventi, saveEventi,
   getSopralluoghi, saveSopralluoghi,
+  getAppuntamenti, saveAppuntamenti,
 } from '../data/mock'
 
 interface DataContextType {
@@ -73,6 +76,8 @@ interface DataContextType {
   fetchEventiForFarmacia: (farmaciaId: string) => Promise<RilievoEvento[]>
   sopralluoghi: Sopralluogo[]
   addSopralluogo: (s: Sopralluogo) => Promise<void>
+  appuntamenti: Appuntamento[]
+  addAppuntamento: (a: Appuntamento) => Promise<void>
 }
 
 const DataContext = createContext<DataContextType | null>(null)
@@ -111,6 +116,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   })
   const [eventi, setEventi] = useState<RilievoEvento[]>(() => isSupabaseConfigured ? [] : getEventi())
   const [sopralluoghi, setSopralluoghi] = useState<Sopralluogo[]>(() => isSupabaseConfigured ? [] : getSopralluoghi())
+  const [appuntamenti, setAppuntamenti] = useState<Appuntamento[]>(() => isSupabaseConfigured ? [] : getAppuntamenti())
   const [isLoading, setIsLoading] = useState(isSupabaseConfigured)
 
   const currentUserId = (() => {
@@ -161,10 +167,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
           setRegistrazioniPending(regs)
           let sopr: Sopralluogo[] = []
           try { sopr = await fetchSopralluoghi() } catch { /* table may not exist yet */ }
+          let appts: Appuntamento[] = []
+          try { appts = await fetchAppuntamenti() } catch { /* table may not exist yet */ }
           setMessaggi(msgs)
           setMessaggiLettiIds(lettiIds)
           setMessaggiLettiByOthers(byOthers)
           setSopralluoghi(sopr)
+          setAppuntamenti(appts)
           setIsLoading(false)
         }
       } catch (err) {
@@ -560,6 +569,46 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  const addAppuntamento = useCallback(async (a: Appuntamento) => {
+    if (isSupabaseConfigured) {
+      await sbInsertAppuntamento(a)
+      const fresh = await fetchAppuntamenti()
+      setAppuntamenti(fresh)
+    } else {
+      const updated = [...getAppuntamenti(), a]
+      saveAppuntamenti(updated)
+      setAppuntamenti(updated)
+    }
+
+    // If nota is present, auto-send as chat message
+    if (a.nota) {
+      const saved = localStorage.getItem('logplus_current_user')
+      const user = saved ? JSON.parse(saved) : null
+      if (user) {
+        const testo = `[Appuntamento Fase ${a.fase} — ${a.data} ${a.ora}] ${a.nota}`
+        const msg: Messaggio = {
+          id: crypto.randomUUID(),
+          testo,
+          autoreId: user.id,
+          autoreNome: `${user.nome} ${user.cognome}`,
+          autoreRuolo: user.ruolo,
+          merchandiserId: a.merchandiserId,
+          farmaciaId: a.farmaciaId,
+          createdAt: new Date().toISOString(),
+        }
+        if (isSupabaseConfigured) {
+          sbInsertMessaggio(msg).then(() => {
+            fetchMessaggi().then(setMessaggi).catch(console.error)
+          }).catch(console.error)
+        } else {
+          const updatedMsgs = [...getMessaggi(), msg]
+          saveMessaggi(updatedMsgs)
+          setMessaggi(updatedMsgs)
+        }
+      }
+    }
+  }, [])
+
   const addEvento = useCallback((e: RilievoEvento) => {
     if (isSupabaseConfigured) {
       sbInsertEvento(e).catch(console.error)
@@ -621,6 +670,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       messaggi, messaggiLettiIds, messaggiLettiByOthers, unreadCount, sendMessaggio, markAsRead,
       eventi, addEvento, fetchEventiForFarmacia,
       sopralluoghi, addSopralluogo,
+      appuntamenti, addAppuntamento,
     }}>
       {children}
     </DataContext.Provider>

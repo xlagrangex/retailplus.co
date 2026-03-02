@@ -140,6 +140,18 @@ export interface Sopralluogo {
   createdAt: string
 }
 
+export interface Appuntamento {
+  id: string
+  farmaciaId: string
+  merchandiserId: string
+  fase: FaseNumero
+  data: string           // YYYY-MM-DD
+  ora: string            // HH:MM
+  nota?: string
+  referente?: string
+  createdAt: string
+}
+
 export type StatoFarmacia = 'assegnato' | 'fase_1' | 'fase_2' | 'fase_3' | 'completato'
 
 export function getStatoFarmacia(rilievi: Rilievo[], farmaciaId: string, sopralluoghi?: Sopralluogo[]): StatoFarmacia {
@@ -204,7 +216,7 @@ export type EventoTipo =
   | 'fase_iniziata' | 'substep_completato' | 'substep_annullato'
   | 'problema_segnalato' | 'problema_rimosso' | 'foto_caricata'
   | 'fase_completata' | 'sopralluogo_registrato'
-  | 'misure_salvate'
+  | 'misure_salvate' | 'appuntamento_fissato'
 
 export interface RilievoEvento {
   id: string
@@ -235,5 +247,6 @@ export function getLabelEvento(tipo: EventoTipo, dettaglio?: string): string {
     case 'fase_completata': return 'Fase completata'
     case 'sopralluogo_registrato': return 'Sopralluogo registrato' + (dettaglio ? ` — ${dettaglio}` : '')
     case 'misure_salvate': return 'Misure salvate'
+    case 'appuntamento_fissato': return 'Appuntamento fissato' + (dettaglio ? ` — ${dettaglio}` : '')
   }
 }

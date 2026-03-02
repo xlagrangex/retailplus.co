@@ -6,7 +6,7 @@ import { useToast } from '../components/Toast'
 import StatsCards from '../components/StatsCards'
 import FarmaciaMap from '../components/FarmaciaMap'
 import OnboardingModal, { useOnboardingTrigger } from '../components/OnboardingModal'
-import { getStatoFarmacia, getLabelStato, getColoreStato, getLabelFase, getDescrizioneFase, getFaseCorrente, User, Farmacia, Rilievo, Assegnazione, StatoFarmacia, CampoConfigurazione, FaseNumero, Sopralluogo } from '../types'
+import { getStatoFarmacia, getLabelStato, getColoreStato, getLabelFase, getDescrizioneFase, getFaseCorrente, User, Farmacia, Rilievo, Assegnazione, StatoFarmacia, CampoConfigurazione, FaseNumero, Sopralluogo, Appuntamento } from '../types'
 import { isSupabaseConfigured } from '../lib/supabase'
 import { uploadPlanogramma } from '../lib/supabase'
 import {
@@ -67,7 +67,7 @@ export default function AdminDashboard() {
 }
 
 export function AdminFarmaciePage() {
-  const { farmacie, rilievi, assegnazioni, users, sopralluoghi, addFarmacia, removeFarmacia, importFarmacie, assignFarmacia, unassignFarmacia, updateFarmacia } = useData()
+  const { farmacie, rilievi, assegnazioni, users, sopralluoghi, appuntamenti, addFarmacia, removeFarmacia, importFarmacie, assignFarmacia, unassignFarmacia, updateFarmacia } = useData()
   const [search, setSearch] = useState('')
   const [showAdd, setShowAdd] = useState(false)
   const [assigning, setAssigning] = useState<string | null>(null)
@@ -312,6 +312,7 @@ export function AdminFarmaciePage() {
           users={users}
           merchandisers={merchandisers}
           sopralluoghi={sopralluoghi}
+          appuntamenti={appuntamenti}
           onClose={() => setSelectedFarmaciaId(null)}
           assignFarmacia={assignFarmacia}
           unassignFarmacia={unassignFarmacia}
@@ -326,7 +327,7 @@ export function AdminFarmaciePage() {
 // ============================================================
 
 function FarmaciaDetailPanel({
-  farmacia, rilievi, assegnazioni, users, merchandisers, sopralluoghi, onClose,
+  farmacia, rilievi, assegnazioni, users, merchandisers, sopralluoghi, appuntamenti = [], onClose,
   assignFarmacia, unassignFarmacia,
 }: {
   farmacia: Farmacia
@@ -335,9 +336,10 @@ function FarmaciaDetailPanel({
   users: User[]
   merchandisers: User[]
   sopralluoghi: Sopralluogo[]
+  appuntamenti?: Appuntamento[]
   onClose: () => void
-  assignFarmacia: (farmaciaId: string, merchandiserId: string) => void
-  unassignFarmacia: (farmaciaId: string) => void
+  assignFarmacia?: (farmaciaId: string, merchandiserId: string) => void
+  unassignFarmacia?: (farmaciaId: string) => void
 }) {
   const { showToast } = useToast()
   const [showAssignDropdown, setShowAssignDropdown] = useState(false)
@@ -555,6 +557,29 @@ function FarmaciaDetailPanel({
                       <Clock size={10} /> In attesa materiale
                     </p>
                   )}
+                  {/* Appuntamenti for this fase */}
+                  {(() => {
+                    const faseAppts = appuntamenti.filter(a => a.farmaciaId === farmacia.id && a.fase === fase)
+                    if (faseAppts.length === 0) return null
+                    return (
+                      <div className="ml-7 mt-2 space-y-1">
+                        <p className="text-[10px] font-semibold text-brand-400 uppercase tracking-wider">Appuntamenti ({faseAppts.length})</p>
+                        {faseAppts.map(a => {
+                          const isFuturo = a.data >= new Date().toISOString().split('T')[0]
+                          return (
+                            <div key={a.id} className={`flex items-center gap-2 text-[11px] px-2 py-1 rounded border ${
+                              isFuturo ? 'bg-accent-50 border-accent-100 text-accent-700' : 'bg-brand-50 border-brand-100 text-brand-600'
+                            }`}>
+                              <Calendar size={10} className="shrink-0" />
+                              <span className="font-medium">{a.data} {a.ora}</span>
+                              {a.referente && <span className="text-brand-400">Ref: {a.referente}</span>}
+                              {a.nota && <span className="text-brand-400 truncate max-w-[120px]">{a.nota}</span>}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )
+                  })()}
                 </div>
               )
             })}
@@ -596,7 +621,7 @@ const statoColors: Record<StatoFarmacia, { bg: string; text: string; border: str
 
 export function AdminMerchandiserPage() {
   const navigate = useNavigate()
-  const { users, assegnazioni, farmacie, rilievi, sopralluoghi, addUser, removeUser, assignFarmacia, unassignFarmacia, registrazioniPending, approveRegistrazione, rejectRegistrazione } = useData()
+  const { users, assegnazioni, farmacie, rilievi, sopralluoghi, appuntamenti, addUser, removeUser, assignFarmacia, unassignFarmacia, registrazioniPending, approveRegistrazione, rejectRegistrazione } = useData()
   const merchandisers = users.filter(u => u.ruolo === 'merchandiser')
   const [showAdd, setShowAdd] = useState(false)
   const [expandedReg, setExpandedReg] = useState<string | null>(null)
@@ -1367,6 +1392,7 @@ export function AdminKanbanPage() {
           users={users}
           merchandisers={merchandisers}
           sopralluoghi={sopralluoghi}
+          appuntamenti={appuntamenti}
           onClose={() => setSelectedFarmaciaId(null)}
         />
       )}
