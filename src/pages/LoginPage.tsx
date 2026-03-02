@@ -191,7 +191,21 @@ export default function LoginPage() {
             </p>
             <div className="flex items-center justify-center gap-3">
               <span className="text-[10px] text-brand-300">Developed by</span>
-              <img src="/logo-logplus.png" alt="LogPlus" className="h-4" />
+              <span
+                className="inline-block h-4"
+                role="img"
+                aria-label="LogPlus"
+                style={{
+                  width: '64px',
+                  backgroundColor: '#2b7268',
+                  WebkitMaskImage: 'url(/logo-logplus.png)',
+                  WebkitMaskSize: 'contain',
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskImage: 'url(/logo-logplus.png)',
+                  maskSize: 'contain',
+                  maskRepeat: 'no-repeat',
+                }}
+              />
               <span className="text-brand-200">|</span>
               <img src="/logo-euroteam3d.png" alt="Euroteam 3D" className="h-4" />
             </div>
